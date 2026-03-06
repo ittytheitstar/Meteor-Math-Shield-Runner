@@ -1,0 +1,2750 @@
+{
+  "specVersion": "1.0.0",
+  "curriculum": {
+    "country": "NZ",
+    "source": {
+      "name": "NZC – Mathematics and Statistics Phases 1–4 (Years 0–10)",
+      "url": "https://newzealandcurriculum.tahurangi.education.govt.nz/nzc---mathematics-and-statistics-years-0-8/5637238338.p",
+      "notes": "Year-by-year teaching sequences organised into six strands: Number, Algebra, Measurement, Geometry, Statistics, Probability."
+    },
+    "strands": [
+      "number",
+      "algebra",
+      "measurement",
+      "geometry",
+      "statistics",
+      "probability"
+    ]
+  },
+  "difficultyScale": {
+    "min": 1,
+    "max": 7,
+    "meaning": {
+      "1": "small numbers; single-step; strong scaffolds",
+      "2": "within 20–50; simple models; single-step",
+      "3": "within 100; early regrouping; intro fractions/decimals; time basics",
+      "4": "within 1000; times tables; benchmark angles/fractions; time conversions",
+      "5": "multi-step; 2-digit×1-digit; fraction equivalence; decimals hundredths; unit conversions",
+      "6": "advanced multi-step; decimals ops; fractions of amounts; algebraic notation",
+      "7": "integers fluency; linear patterns; compound probability; data-claim evaluation"
+    }
+  },
+  "yearDifficultyMap": {
+    "NZYears2to8": [
+      {
+        "year": 2,
+        "approxAge": 6,
+        "difficultyRange": [
+          1,
+          2
+        ],
+        "focusSummary": [
+          "Build ability to investigate/classify/describe quantities, shapes, and data",
+          "Use materials/pictures to support number sense"
+        ],
+        "enabledStrands": {
+          "number": [
+            "bonds_to_10",
+            "add_within_20",
+            "sub_within_20",
+            "place_value_tens_ones",
+            "compare_order"
+          ],
+          "measurement": [
+            "time_hour_half_hour"
+          ],
+          "geometry": [
+            "shape_properties_basic",
+            "symmetry_basic"
+          ],
+          "statistics": [
+            "sort_and_count"
+          ],
+          "algebra": [
+            "repeating_patterns"
+          ],
+          "probability": [
+            "likely_unlikely_language"
+          ]
+        }
+      },
+      {
+        "year": 3,
+        "approxAge": 7,
+        "difficultyRange": [
+          1,
+          3
+        ],
+        "focusSummary": [
+          "Connect representations of number; extend addition/subtraction",
+          "Early multiplicative grouping and simple data displays"
+        ],
+        "enabledStrands": {
+          "number": [
+            "add_sub_within_100_no_borrow",
+            "skip_counting",
+            "place_value_to_100",
+            "intro_multiplication_groups"
+          ],
+          "measurement": [
+            "time_quarter_hour"
+          ],
+          "geometry": [
+            "2d_3d_shapes"
+          ],
+          "statistics": [
+            "bar_graph_simple"
+          ],
+          "algebra": [
+            "growing_patterns"
+          ],
+          "probability": [
+            "simple_events"
+          ]
+        }
+      },
+      {
+        "year": 4,
+        "approxAge": 8,
+        "difficultyRange": [
+          2,
+          4
+        ],
+        "focusSummary": [
+          "Model number operations and solve word problems",
+          "Extend whole numbers to fractions/decimals",
+          "Classify/draw angles using benchmarks; tell time and convert time units"
+        ],
+        "enabledStrands": {
+          "number": [
+            "add_sub_within_100_with_borrow",
+            "times_tables_2_5_10",
+            "division_sharing",
+            "unit_fractions",
+            "decimals_tenths"
+          ],
+          "measurement": [
+            "time_to_5_minutes",
+            "time_unit_conversions"
+          ],
+          "geometry": [
+            "angles_benchmark"
+          ],
+          "statistics": [
+            "bar_graph",
+            "dot_plot_simple"
+          ],
+          "algebra": [
+            "input_output",
+            "missing_number"
+          ],
+          "probability": [
+            "probability_fraction_simple"
+          ]
+        }
+      },
+      {
+        "year": 5,
+        "approxAge": 9,
+        "difficultyRange": [
+          3,
+          5
+        ],
+        "focusSummary": [
+          "Apply number operations to measurement reasoning",
+          "Investigate patterns/variation in shapes, probabilities, and data",
+          "Begin to work with exponents"
+        ],
+        "enabledStrands": {
+          "number": [
+            "times_tables",
+            "multi_digit_add_sub",
+            "fraction_equivalence",
+            "decimals_hundredths",
+            "percent_benchmarks"
+          ],
+          "measurement": [
+            "metric_conversions_simple",
+            "elapsed_time"
+          ],
+          "geometry": [
+            "missing_angles_intro",
+            "coordinate_grid_quadrant1"
+          ],
+          "statistics": [
+            "mean_median_intro",
+            "compare_graphs"
+          ],
+          "algebra": [
+            "rules_for_patterns"
+          ],
+          "probability": [
+            "events_dice_spinner"
+          ]
+        }
+      },
+      {
+        "year": 6,
+        "approxAge": 10,
+        "difficultyRange": [
+          3,
+          6
+        ],
+        "focusSummary": [
+          "Extend to fractions/decimals; multi-step word problems",
+          "Benchmarks for angles; exponents; time conversions"
+        ],
+        "enabledStrands": {
+          "number": [
+            "two_digit_by_one_digit_mult",
+            "division",
+            "fractions_of_amount",
+            "add_sub_decimals",
+            "percent_of_amount"
+          ],
+          "measurement": [
+            "metric_conversions",
+            "time_timetables"
+          ],
+          "geometry": [
+            "angles_on_lines_triangles"
+          ],
+          "statistics": [
+            "interpret_graphs_multi_step"
+          ],
+          "algebra": [
+            "tables_to_rules"
+          ],
+          "probability": [
+            "two_step_probability_intro"
+          ]
+        }
+      },
+      {
+        "year": 7,
+        "approxAge": 11,
+        "difficultyRange": [
+          4,
+          7
+        ],
+        "focusSummary": [
+          "Use logic/reasoning; use algebraic notation",
+          "Use number lines for integers; equations for linear patterns"
+        ],
+        "enabledStrands": {
+          "number": [
+            "integers",
+            "fraction_decimal_percent_conversions",
+            "ratio_intro",
+            "exponents"
+          ],
+          "measurement": [
+            "unit_conversions_complex"
+          ],
+          "geometry": [
+            "angle_chasing",
+            "coordinate_plane"
+          ],
+          "statistics": [
+            "evaluate_claims_from_data"
+          ],
+          "algebra": [
+            "solve_linear_equations",
+            "linear_patterns"
+          ],
+          "probability": [
+            "compound_probability_intro"
+          ]
+        }
+      },
+      {
+        "year": 8,
+        "approxAge": 12,
+        "difficultyRange": [
+          4,
+          7
+        ],
+        "focusSummary": [
+          "Generalise and calculate unknown quantities (e.g., angles)",
+          "Operate fluently with integers; evaluate claims using data visualisations"
+        ],
+        "enabledStrands": {
+          "number": [
+            "integers_operations",
+            "order_of_operations",
+            "rates_ratio"
+          ],
+          "measurement": [
+            "scale_and_proportion_contexts"
+          ],
+          "geometry": [
+            "angles_polygons"
+          ],
+          "statistics": [
+            "compare_distributions"
+          ],
+          "algebra": [
+            "equations_inequalities_intro"
+          ],
+          "probability": [
+            "two_step_probability"
+          ]
+        }
+      }
+    ]
+  },
+  "distractorLibrary": {
+    "version": "1.0.0",
+    "note": "Pseudo-code patterns; implement without eval.",
+    "types": {
+      "near_miss": {
+        "description": "Close to correct (off-by-1/2/10, small decimal shift)",
+        "patterns": [
+          "correct±1",
+          "correct±2",
+          "correct±10",
+          "correct×10",
+          "correct÷10"
+        ]
+      },
+      "operation_swap": {
+        "description": "Wrong operation chosen",
+        "patterns": [
+          "a+b",
+          "a-b",
+          "a*b",
+          "a/b"
+        ]
+      },
+      "inverse_confusion": {
+        "description": "Wrong inverse step when solving",
+        "patterns": [
+          "solve using opposite sign",
+          "divide instead of subtract",
+          "multiply instead of divide"
+        ]
+      },
+      "place_value_error": {
+        "description": "Digit/zero/carry mistakes",
+        "patterns": [
+          "drop a zero",
+          "carry/borrow not applied",
+          "swap tens/ones"
+        ]
+      },
+      "rounding_error": {
+        "description": "Round to wrong place or direction",
+        "patterns": [
+          "truncate",
+          "round down when ≥5",
+          "round to tens instead of hundreds"
+        ]
+      },
+      "fraction_misread": {
+        "description": "Swap numerator/denominator or treat as whole-number divide",
+        "patterns": [
+          "use d/n",
+          "use a/d only",
+          "use n*d"
+        ]
+      },
+      "decimal_point_shift": {
+        "description": "Decimal place shift (×10/÷10/÷100 confusion)",
+        "patterns": [
+          "shift 1 place",
+          "shift 2 places"
+        ]
+      },
+      "percent_as_whole": {
+        "description": "Treat p% as p not p/100",
+        "patterns": [
+          "p*a",
+          "a+p"
+        ]
+      },
+      "unit_conversion_error": {
+        "description": "Wrong metric factor/direction",
+        "patterns": [
+          "multiply instead of divide",
+          "use ×100 not ×1000"
+        ]
+      },
+      "time_carry_error": {
+        "description": "Ignore minute/hour carry or crossing hour",
+        "patterns": [
+          "add minutes without mod 60",
+          "ignore crossing hour/noon"
+        ]
+      },
+      "angle_rule_misuse": {
+        "description": "Wrong angle sum/relationship",
+        "patterns": [
+          "line sum 90",
+          "triangle sum 360",
+          "forget vertically opposite"
+        ]
+      },
+      "probability_reciprocal": {
+        "description": "Swap favourable and total; or use complement incorrectly",
+        "patterns": [
+          "total/favourable",
+          "(total-fav)/total"
+        ]
+      },
+      "graph_reading_error": {
+        "description": "Read wrong bar/axis or compare incorrectly",
+        "patterns": [
+          "neighbour bar",
+          "max instead of value",
+          "sum instead of difference"
+        ]
+      }
+    },
+    "topicDefaults": {
+      "operations_addition": [
+        "near_miss",
+        "place_value_error"
+      ],
+      "operations_subtraction": [
+        "near_miss",
+        "operation_swap",
+        "place_value_error"
+      ],
+      "operations_multiplication": [
+        "near_miss",
+        "operation_swap"
+      ],
+      "operations_division": [
+        "near_miss",
+        "operation_swap"
+      ],
+      "place_value": [
+        "place_value_error"
+      ],
+      "rounding": [
+        "rounding_error",
+        "near_miss"
+      ],
+      "fractions": [
+        "fraction_misread",
+        "near_miss"
+      ],
+      "fraction_equivalence": [
+        "fraction_misread",
+        "near_miss"
+      ],
+      "fraction_of_amount": [
+        "fraction_misread",
+        "near_miss"
+      ],
+      "decimals": [
+        "decimal_point_shift",
+        "near_miss"
+      ],
+      "percentages": [
+        "percent_as_whole",
+        "decimal_point_shift",
+        "near_miss"
+      ],
+      "measurement_units": [
+        "unit_conversion_error",
+        "near_miss"
+      ],
+      "time": [
+        "time_carry_error",
+        "near_miss"
+      ],
+      "geometry_angles": [
+        "angle_rule_misuse",
+        "near_miss"
+      ],
+      "statistics_graphs": [
+        "graph_reading_error",
+        "near_miss"
+      ],
+      "probability": [
+        "probability_reciprocal",
+        "near_miss"
+      ]
+    }
+  },
+  "questionBanks": [
+    {
+      "id": "nz_num_bonds10",
+      "strand": "number",
+      "topic": "operations_addition",
+      "years": [
+        2
+      ],
+      "difficulty": {
+        "min": 1,
+        "max": 2,
+        "steps": [
+          {
+            "level": 1,
+            "a": [
+              0,
+              10
+            ],
+            "b": [
+              0,
+              10
+            ],
+            "maxSum": 10
+          },
+          {
+            "level": 2,
+            "a": [
+              0,
+              10
+            ],
+            "b": [
+              0,
+              10
+            ],
+            "maxSum": 12
+          }
+        ]
+      },
+      "prompt": {
+        "template": "{a} + {b} = ?"
+      },
+      "answer": {
+        "type": "integer",
+        "compute": "a+b",
+        "tolerance": 0
+      },
+      "distractors": {
+        "count": 3,
+        "use": [
+          "near_miss"
+        ]
+      },
+      "constraints": {
+        "uniqueOptions": true
+      },
+      "params": {
+        "ensureComplements": true
+      }
+    },
+    {
+      "id": "nz_num_add20",
+      "strand": "number",
+      "topic": "operations_addition",
+      "years": [
+        2,
+        3
+      ],
+      "difficulty": {
+        "min": 1,
+        "max": 2,
+        "steps": [
+          {
+            "level": 1,
+            "a": [
+              0,
+              20
+            ],
+            "b": [
+              0,
+              20
+            ],
+            "maxSum": 20,
+            "carry": false
+          },
+          {
+            "level": 2,
+            "a": [
+              0,
+              20
+            ],
+            "b": [
+              0,
+              20
+            ],
+            "maxSum": 30,
+            "carry": true
+          }
+        ]
+      },
+      "prompt": {
+        "template": "{a} + {b} = ?"
+      },
+      "answer": {
+        "type": "integer",
+        "compute": "a+b",
+        "tolerance": 0
+      },
+      "distractors": {
+        "count": 3,
+        "use": [
+          "near_miss",
+          "place_value_error"
+        ]
+      },
+      "constraints": {
+        "uniqueOptions": true
+      }
+    },
+    {
+      "id": "nz_num_sub20",
+      "strand": "number",
+      "topic": "operations_subtraction",
+      "years": [
+        2,
+        3
+      ],
+      "difficulty": {
+        "min": 1,
+        "max": 2,
+        "steps": [
+          {
+            "level": 1,
+            "a": [
+              0,
+              20
+            ],
+            "b": [
+              0,
+              20
+            ],
+            "aGteB": true
+          },
+          {
+            "level": 2,
+            "a": [
+              0,
+              30
+            ],
+            "b": [
+              0,
+              20
+            ],
+            "aGteB": true
+          }
+        ]
+      },
+      "prompt": {
+        "template": "{a} − {b} = ?"
+      },
+      "answer": {
+        "type": "integer",
+        "compute": "a-b",
+        "tolerance": 0
+      },
+      "distractors": {
+        "count": 3,
+        "use": [
+          "near_miss",
+          "operation_swap"
+        ]
+      },
+      "constraints": {
+        "aGteB": true,
+        "uniqueOptions": true
+      }
+    },
+    {
+      "id": "nz_num_addsub100",
+      "strand": "number",
+      "topic": "operations_add_sub",
+      "years": [
+        3,
+        4
+      ],
+      "difficulty": {
+        "min": 2,
+        "max": 4,
+        "steps": [
+          {
+            "level": 2,
+            "a": [
+              0,
+              100
+            ],
+            "b": [
+              0,
+              100
+            ],
+            "op": [
+              "+",
+              "-"
+            ],
+            "noBorrow": true
+          },
+          {
+            "level": 3,
+            "a": [
+              0,
+              200
+            ],
+            "b": [
+              0,
+              200
+            ],
+            "op": [
+              "+",
+              "-"
+            ],
+            "borrow": true
+          },
+          {
+            "level": 4,
+            "a": [
+              0,
+              1000
+            ],
+            "b": [
+              0,
+              1000
+            ],
+            "op": [
+              "+",
+              "-"
+            ],
+            "borrow": true
+          }
+        ]
+      },
+      "prompt": {
+        "template": "{a} {op} {b} = ?"
+      },
+      "answer": {
+        "type": "integer",
+        "compute": "op=='+'? a+b : a-b",
+        "tolerance": 0
+      },
+      "distractors": {
+        "count": 3,
+        "use": [
+          "near_miss",
+          "place_value_error"
+        ]
+      },
+      "constraints": {
+        "avoidNegativeIfNotEnabled": true
+      }
+    },
+    {
+      "id": "nz_num_place_tens_ones",
+      "strand": "number",
+      "topic": "place_value",
+      "years": [
+        2,
+        3
+      ],
+      "difficulty": {
+        "min": 1,
+        "max": 3,
+        "steps": [
+          {
+            "level": 1,
+            "t": [
+              0,
+              9
+            ],
+            "o": [
+              0,
+              9
+            ]
+          },
+          {
+            "level": 2,
+            "t": [
+              1,
+              9
+            ],
+            "o": [
+              0,
+              9
+            ]
+          },
+          {
+            "level": 3,
+            "t": [
+              0,
+              9
+            ],
+            "o": [
+              0,
+              9
+            ],
+            "includeHundreds": false
+          }
+        ]
+      },
+      "prompt": {
+        "template": "What number has {t} tens and {o} ones?"
+      },
+      "answer": {
+        "type": "integer",
+        "compute": "10*t+o",
+        "tolerance": 0
+      },
+      "distractors": {
+        "count": 3,
+        "use": [
+          "place_value_error",
+          "near_miss"
+        ]
+      },
+      "constraints": {
+        "uniqueOptions": true
+      }
+    },
+    {
+      "id": "nz_num_place_hundreds",
+      "strand": "number",
+      "topic": "place_value",
+      "years": [
+        4,
+        5
+      ],
+      "difficulty": {
+        "min": 2,
+        "max": 5,
+        "steps": [
+          {
+            "level": 2,
+            "h": [
+              1,
+              9
+            ],
+            "t": [
+              0,
+              9
+            ],
+            "o": [
+              0,
+              9
+            ]
+          },
+          {
+            "level": 3,
+            "h": [
+              0,
+              9
+            ],
+            "t": [
+              0,
+              9
+            ],
+            "o": [
+              0,
+              9
+            ]
+          },
+          {
+            "level": 4,
+            "h": [
+              1,
+              9
+            ],
+            "t": [
+              0,
+              9
+            ],
+            "o": [
+              0,
+              9
+            ],
+            "includeThousands": false
+          },
+          {
+            "level": 5,
+            "includeThousands": true,
+            "th": [
+              1,
+              9
+            ]
+          }
+        ]
+      },
+      "prompt": {
+        "template": "What number has {h} hundreds, {t} tens and {o} ones?"
+      },
+      "answer": {
+        "type": "integer",
+        "compute": "100*h+10*t+o",
+        "tolerance": 0
+      },
+      "distractors": {
+        "count": 3,
+        "use": [
+          "place_value_error",
+          "near_miss"
+        ]
+      },
+      "constraints": {
+        "uniqueOptions": true
+      }
+    },
+    {
+      "id": "nz_num_compare_order",
+      "strand": "number",
+      "topic": "comparison_order",
+      "years": [
+        2,
+        3,
+        4
+      ],
+      "difficulty": {
+        "min": 1,
+        "max": 4,
+        "steps": [
+          {
+            "level": 1,
+            "a": [
+              0,
+              20
+            ],
+            "b": [
+              0,
+              20
+            ],
+            "comp": [
+              "greater",
+              "smaller"
+            ]
+          },
+          {
+            "level": 2,
+            "a": [
+              0,
+              100
+            ],
+            "b": [
+              0,
+              100
+            ]
+          },
+          {
+            "level": 3,
+            "a": [
+              0,
+              1000
+            ],
+            "b": [
+              0,
+              1000
+            ]
+          },
+          {
+            "level": 4,
+            "a": [
+              0,
+              10000
+            ],
+            "b": [
+              0,
+              10000
+            ],
+            "includeClose": true
+          }
+        ]
+      },
+      "prompt": {
+        "template": "Which is {comp}: {a} or {b}?"
+      },
+      "answer": {
+        "type": "integer",
+        "compute": "comp=='greater'? max(a,b): min(a,b)",
+        "tolerance": 0
+      },
+      "distractors": {
+        "count": 3,
+        "use": [
+          "near_miss"
+        ]
+      },
+      "constraints": {
+        "uniqueOptions": true
+      }
+    },
+    {
+      "id": "nz_num_mult_tables_basic",
+      "strand": "number",
+      "topic": "operations_multiplication",
+      "years": [
+        4
+      ],
+      "difficulty": {
+        "min": 2,
+        "max": 4,
+        "steps": [
+          {
+            "level": 2,
+            "tables": [
+              2,
+              5,
+              10
+            ],
+            "b": [
+              0,
+              10
+            ]
+          },
+          {
+            "level": 3,
+            "tables": [
+              2,
+              5,
+              10
+            ],
+            "b": [
+              0,
+              12
+            ]
+          },
+          {
+            "level": 4,
+            "tables": [
+              2,
+              3,
+              4,
+              5,
+              10
+            ],
+            "b": [
+              0,
+              12
+            ]
+          }
+        ]
+      },
+      "prompt": {
+        "template": "{a} × {b} = ?"
+      },
+      "answer": {
+        "type": "integer",
+        "compute": "a*b",
+        "tolerance": 0
+      },
+      "distractors": {
+        "count": 3,
+        "use": [
+          "near_miss",
+          "operation_swap"
+        ]
+      },
+      "constraints": {
+        "uniqueOptions": true
+      },
+      "params": {
+        "chooseAFromTables": true
+      }
+    },
+    {
+      "id": "nz_num_mult_tables_all",
+      "strand": "number",
+      "topic": "operations_multiplication",
+      "years": [
+        5,
+        6
+      ],
+      "difficulty": {
+        "min": 3,
+        "max": 5,
+        "steps": [
+          {
+            "level": 3,
+            "tables": [
+              2,
+              3,
+              4,
+              5,
+              10
+            ],
+            "b": [
+              0,
+              12
+            ]
+          },
+          {
+            "level": 4,
+            "tables": [
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12
+            ],
+            "b": [
+              0,
+              12
+            ]
+          },
+          {
+            "level": 5,
+            "tables": [
+              6,
+              7,
+              8,
+              9,
+              11,
+              12
+            ],
+            "b": [
+              0,
+              12
+            ]
+          }
+        ]
+      },
+      "prompt": {
+        "template": "{a} × {b} = ?"
+      },
+      "answer": {
+        "type": "integer",
+        "compute": "a*b",
+        "tolerance": 0
+      },
+      "distractors": {
+        "count": 3,
+        "use": [
+          "near_miss",
+          "operation_swap"
+        ]
+      },
+      "constraints": {
+        "uniqueOptions": true
+      },
+      "params": {
+        "chooseAFromTables": true
+      }
+    },
+    {
+      "id": "nz_num_div_facts",
+      "strand": "number",
+      "topic": "operations_division",
+      "years": [
+        4,
+        5,
+        6
+      ],
+      "difficulty": {
+        "min": 2,
+        "max": 5,
+        "steps": [
+          {
+            "level": 2,
+            "b": [
+              2,
+              10
+            ],
+            "q": [
+              0,
+              10
+            ],
+            "c": "b*q",
+            "exact": true
+          },
+          {
+            "level": 3,
+            "b": [
+              2,
+              12
+            ],
+            "q": [
+              0,
+              12
+            ],
+            "c": "b*q",
+            "exact": true
+          },
+          {
+            "level": 4,
+            "b": [
+              2,
+              12
+            ],
+            "q": [
+              0,
+              12
+            ],
+            "c": "b*q",
+            "exact": true
+          },
+          {
+            "level": 5,
+            "b": [
+              2,
+              12
+            ],
+            "q": [
+              0,
+              12
+            ],
+            "c": "b*q",
+            "exact": true
+          }
+        ]
+      },
+      "prompt": {
+        "template": "{c} ÷ {b} = ?"
+      },
+      "answer": {
+        "type": "integer",
+        "compute": "c/b",
+        "tolerance": 0
+      },
+      "distractors": {
+        "count": 3,
+        "use": [
+          "near_miss",
+          "operation_swap"
+        ]
+      },
+      "constraints": {
+        "exactDivision": true,
+        "uniqueOptions": true
+      }
+    },
+    {
+      "id": "nz_num_2d_by_1d_mult",
+      "strand": "number",
+      "topic": "operations_multiplication",
+      "years": [
+        6
+      ],
+      "difficulty": {
+        "min": 4,
+        "max": 6,
+        "steps": [
+          {
+            "level": 4,
+            "a": [
+              10,
+              99
+            ],
+            "b": [
+              2,
+              9
+            ]
+          },
+          {
+            "level": 5,
+            "a": [
+              20,
+              99
+            ],
+            "b": [
+              2,
+              12
+            ]
+          },
+          {
+            "level": 6,
+            "a": [
+              10,
+              999
+            ],
+            "b": [
+              2,
+              12
+            ]
+          }
+        ]
+      },
+      "prompt": {
+        "template": "{a} × {b} = ?"
+      },
+      "answer": {
+        "type": "integer",
+        "compute": "a*b",
+        "tolerance": 0
+      },
+      "distractors": {
+        "count": 3,
+        "use": [
+          "near_miss",
+          "place_value_error"
+        ]
+      },
+      "constraints": {
+        "uniqueOptions": true
+      }
+    },
+    {
+      "id": "nz_num_unit_fractions",
+      "strand": "number",
+      "topic": "fractions",
+      "years": [
+        4
+      ],
+      "difficulty": {
+        "min": 2,
+        "max": 4,
+        "steps": [
+          {
+            "level": 2,
+            "denoms": [
+              2,
+              3,
+              4,
+              5
+            ],
+            "visual": "area"
+          },
+          {
+            "level": 3,
+            "denoms": [
+              2,
+              3,
+              4,
+              5,
+              6,
+              8
+            ],
+            "visual": "area"
+          },
+          {
+            "level": 4,
+            "denoms": [
+              2,
+              3,
+              4,
+              5,
+              6,
+              8,
+              10
+            ],
+            "visual": "set"
+          }
+        ]
+      },
+      "prompt": {
+        "template": "Which fraction matches the shaded part?"
+      },
+      "answer": {
+        "type": "fraction",
+        "compute": "fraction",
+        "tolerance": 0
+      },
+      "distractors": {
+        "count": 3,
+        "use": [
+          "fraction_misread",
+          "near_miss"
+        ]
+      },
+      "constraints": {
+        "uniqueOptions": true
+      },
+      "assets": {
+        "required": [
+          "fraction_renderer"
+        ]
+      }
+    },
+    {
+      "id": "nz_num_dec_addsub",
+      "strand": "number",
+      "topic": "decimals",
+      "years": [
+        6,
+        7,
+        8
+      ],
+      "difficulty": {
+        "min": 4,
+        "max": 7,
+        "steps": [
+          {
+            "level": 4,
+            "dp": 1,
+            "a": [
+              0.0,
+              9.9
+            ],
+            "b": [
+              0.0,
+              9.9
+            ],
+            "op": [
+              "+",
+              "-"
+            ]
+          },
+          {
+            "level": 5,
+            "dp": 2,
+            "a": [
+              0.0,
+              99.99
+            ],
+            "b": [
+              0.0,
+              99.99
+            ],
+            "op": [
+              "+",
+              "-"
+            ]
+          },
+          {
+            "level": 6,
+            "dp": 2,
+            "a": [
+              0.0,
+              999.99
+            ],
+            "b": [
+              0.0,
+              999.99
+            ],
+            "op": [
+              "+",
+              "-"
+            ]
+          },
+          {
+            "level": 7,
+            "dp": 2,
+            "a": [
+              -99.99,
+              99.99
+            ],
+            "b": [
+              -99.99,
+              99.99
+            ],
+            "op": [
+              "+",
+              "-"
+            ]
+          }
+        ]
+      },
+      "prompt": {
+        "template": "{a} {op} {b} = ?"
+      },
+      "answer": {
+        "type": "number",
+        "compute": "op=='+'? a+b : a-b",
+        "tolerance": 0
+      },
+      "distractors": {
+        "count": 3,
+        "use": [
+          "decimal_point_shift",
+          "near_miss"
+        ]
+      },
+      "constraints": {
+        "avoidNegativeIfNotEnabled": true
+      }
+    },
+    {
+      "id": "nz_alg_repeating_patterns",
+      "strand": "algebra",
+      "topic": "patterns",
+      "years": [
+        2,
+        3
+      ],
+      "difficulty": {
+        "min": 1,
+        "max": 3,
+        "steps": [
+          {
+            "level": 1,
+            "types": [
+              "AB",
+              "AAB"
+            ],
+            "symbols": [
+              "shapes",
+              "colours"
+            ]
+          },
+          {
+            "level": 2,
+            "types": [
+              "ABB",
+              "ABC"
+            ],
+            "symbols": [
+              "shapes",
+              "numbers"
+            ]
+          },
+          {
+            "level": 3,
+            "types": [
+              "growing_additive"
+            ],
+            "numbers": [
+              0,
+              50
+            ]
+          }
+        ]
+      },
+      "prompt": {
+        "template": "What comes next? {pattern}"
+      },
+      "answer": {
+        "type": "string",
+        "compute": "next(pattern)",
+        "tolerance": 0
+      },
+      "distractors": {
+        "count": 3,
+        "use": [
+          "near_miss"
+        ]
+      },
+      "constraints": {
+        "uniqueOptions": true
+      },
+      "assets": {
+        "optional": [
+          "pattern_renderer"
+        ]
+      }
+    },
+    {
+      "id": "nz_alg_input_output",
+      "strand": "algebra",
+      "topic": "functions",
+      "years": [
+        4,
+        5
+      ],
+      "difficulty": {
+        "min": 2,
+        "max": 5,
+        "steps": [
+          {
+            "level": 2,
+            "rules": [
+              "+2",
+              "+5",
+              "-3"
+            ],
+            "x": [
+              0,
+              30
+            ]
+          },
+          {
+            "level": 3,
+            "rules": [
+              "×2",
+              "×3",
+              "+10"
+            ],
+            "x": [
+              0,
+              30
+            ]
+          },
+          {
+            "level": 4,
+            "rules": [
+              "×2+1",
+              "×3-2"
+            ],
+            "x": [
+              0,
+              50
+            ]
+          },
+          {
+            "level": 5,
+            "rules": [
+              "×4-3",
+              "×2+10"
+            ],
+            "x": [
+              0,
+              100
+            ]
+          }
+        ]
+      },
+      "prompt": {
+        "template": "Input {x} → Output ? (Rule: {rule})"
+      },
+      "answer": {
+        "type": "integer",
+        "compute": "applyRule(rule,x)",
+        "tolerance": 0
+      },
+      "distractors": {
+        "count": 3,
+        "use": [
+          "inverse_confusion",
+          "near_miss"
+        ]
+      },
+      "constraints": {
+        "uniqueOptions": true
+      }
+    },
+    {
+      "id": "nz_alg_missing_number",
+      "strand": "algebra",
+      "topic": "equations",
+      "years": [
+        4,
+        5
+      ],
+      "difficulty": {
+        "min": 2,
+        "max": 5,
+        "steps": [
+          {
+            "level": 2,
+            "a": [
+              0,
+              50
+            ],
+            "c": [
+              0,
+              100
+            ],
+            "ensureCgteA": true
+          },
+          {
+            "level": 3,
+            "a": [
+              0,
+              100
+            ],
+            "c": [
+              0,
+              200
+            ],
+            "ensureCgteA": true
+          },
+          {
+            "level": 4,
+            "a": [
+              0,
+              500
+            ],
+            "c": [
+              0,
+              1000
+            ],
+            "ensureCgteA": true
+          },
+          {
+            "level": 5,
+            "a": [
+              0,
+              900
+            ],
+            "c": [
+              0,
+              2000
+            ],
+            "ensureCgteA": true
+          }
+        ]
+      },
+      "prompt": {
+        "template": "Find x: {a} + x = {c}"
+      },
+      "answer": {
+        "type": "integer",
+        "compute": "c-a",
+        "tolerance": 0
+      },
+      "distractors": {
+        "count": 3,
+        "use": [
+          "inverse_confusion",
+          "near_miss"
+        ]
+      },
+      "constraints": {
+        "ensureCgteA": true,
+        "uniqueOptions": true
+      }
+    },
+    {
+      "id": "nz_alg_tables_to_rule",
+      "strand": "algebra",
+      "topic": "linear_patterns",
+      "years": [
+        6,
+        7,
+        8
+      ],
+      "difficulty": {
+        "min": 3,
+        "max": 7,
+        "steps": [
+          {
+            "level": 3,
+            "a": [
+              1,
+              5
+            ],
+            "b": [
+              0,
+              10
+            ]
+          },
+          {
+            "level": 4,
+            "a": [
+              -5,
+              5
+            ],
+            "b": [
+              -20,
+              20
+            ]
+          },
+          {
+            "level": 5,
+            "a": [
+              -10,
+              10
+            ],
+            "b": [
+              -50,
+              50
+            ]
+          },
+          {
+            "level": 6,
+            "a": [
+              -12,
+              12
+            ],
+            "b": [
+              -100,
+              100
+            ]
+          },
+          {
+            "level": 7,
+            "requireJustification": true
+          }
+        ]
+      },
+      "prompt": {
+        "template": "Table: x={x1},{x2},{x3}; y={y1},{y2},{y3}. What is the rule?"
+      },
+      "answer": {
+        "type": "string",
+        "compute": "rule"
+      },
+      "distractors": {
+        "count": 3,
+        "use": [
+          "inverse_confusion"
+        ]
+      },
+      "constraints": {
+        "uniqueOptions": true
+      }
+    },
+    {
+      "id": "nz_alg_solve_one_step",
+      "strand": "algebra",
+      "topic": "equations",
+      "years": [
+        7,
+        8
+      ],
+      "difficulty": {
+        "min": 4,
+        "max": 7,
+        "steps": [
+          {
+            "level": 4,
+            "op": [
+              "+",
+              "-"
+            ],
+            "b": [
+              1,
+              20
+            ],
+            "c": [
+              -50,
+              50
+            ]
+          },
+          {
+            "level": 5,
+            "op": [
+              "+",
+              "-",
+              "×"
+            ],
+            "b": [
+              2,
+              12
+            ],
+            "c": [
+              -100,
+              100
+            ],
+            "ensureInteger": true
+          },
+          {
+            "level": 6,
+            "op": [
+              "+",
+              "-",
+              "×",
+              "÷"
+            ],
+            "b": [
+              2,
+              15
+            ],
+            "c": [
+              -150,
+              150
+            ],
+            "ensureInteger": true
+          },
+          {
+            "level": 7,
+            "twoStep": true,
+            "a": [
+              2,
+              9
+            ],
+            "b": [
+              -20,
+              20
+            ],
+            "c": [
+              -200,
+              200
+            ]
+          }
+        ]
+      },
+      "prompt": {
+        "template": "Solve: x {op} {b} = {c}"
+      },
+      "answer": {
+        "type": "integer",
+        "compute": "solveOneStep(op,b,c)",
+        "tolerance": 0
+      },
+      "distractors": {
+        "count": 3,
+        "use": [
+          "inverse_confusion",
+          "near_miss"
+        ]
+      },
+      "constraints": {
+        "uniqueOptions": true
+      }
+    },
+    {
+      "id": "nz_meas_time_read",
+      "strand": "measurement",
+      "topic": "time",
+      "years": [
+        2,
+        3,
+        4
+      ],
+      "difficulty": {
+        "min": 1,
+        "max": 4,
+        "steps": [
+          {
+            "level": 1,
+            "granularity": "hour"
+          },
+          {
+            "level": 2,
+            "granularity": "half_hour"
+          },
+          {
+            "level": 3,
+            "granularity": "quarter_hour"
+          },
+          {
+            "level": 4,
+            "granularity": "5_min"
+          }
+        ]
+      },
+      "prompt": {
+        "template": "What time is shown?"
+      },
+      "answer": {
+        "type": "time",
+        "compute": "readClock(clock)",
+        "tolerance": 0
+      },
+      "distractors": {
+        "count": 3,
+        "use": [
+          "time_carry_error",
+          "near_miss"
+        ]
+      },
+      "constraints": {
+        "uniqueOptions": true
+      },
+      "assets": {
+        "required": [
+          "analogue_clock_renderer"
+        ]
+      }
+    },
+    {
+      "id": "nz_meas_elapsed_time",
+      "strand": "measurement",
+      "topic": "time",
+      "years": [
+        5,
+        6
+      ],
+      "difficulty": {
+        "min": 3,
+        "max": 6,
+        "steps": [
+          {
+            "level": 3,
+            "m": [
+              5,
+              60
+            ],
+            "increments": [
+              5,
+              10,
+              15
+            ],
+            "crossHour": false
+          },
+          {
+            "level": 4,
+            "m": [
+              15,
+              180
+            ],
+            "crossHour": true
+          },
+          {
+            "level": 5,
+            "m": [
+              30,
+              360
+            ],
+            "crossNoon": true
+          },
+          {
+            "level": 6,
+            "multiStep": true,
+            "timetable": true
+          }
+        ]
+      },
+      "prompt": {
+        "template": "Start {t0}. Elapsed {m} minutes. Finish?"
+      },
+      "answer": {
+        "type": "time",
+        "compute": "addMinutes(t0,m)",
+        "tolerance": 0
+      },
+      "distractors": {
+        "count": 3,
+        "use": [
+          "time_carry_error",
+          "near_miss"
+        ]
+      },
+      "constraints": {
+        "uniqueOptions": true
+      }
+    },
+    {
+      "id": "nz_meas_metric_convert",
+      "strand": "measurement",
+      "topic": "measurement_units",
+      "years": [
+        5,
+        6,
+        7
+      ],
+      "difficulty": {
+        "min": 3,
+        "max": 7,
+        "steps": [
+          {
+            "level": 3,
+            "pairs": [
+              [
+                "cm",
+                "m"
+              ],
+              [
+                "m",
+                "cm"
+              ],
+              [
+                "g",
+                "kg"
+              ],
+              [
+                "kg",
+                "g"
+              ]
+            ],
+            "value": [
+              1,
+              500
+            ]
+          },
+          {
+            "level": 4,
+            "pairs": [
+              [
+                "mm",
+                "cm"
+              ],
+              [
+                "cm",
+                "mm"
+              ],
+              [
+                "mL",
+                "L"
+              ],
+              [
+                "L",
+                "mL"
+              ],
+              [
+                "m",
+                "km"
+              ],
+              [
+                "km",
+                "m"
+              ]
+            ],
+            "value": [
+              1,
+              2000
+            ]
+          },
+          {
+            "level": 5,
+            "pairs": [
+              [
+                "mm",
+                "m"
+              ],
+              [
+                "m",
+                "mm"
+              ],
+              [
+                "g",
+                "kg"
+              ],
+              [
+                "kg",
+                "g"
+              ]
+            ],
+            "value": [
+              1,
+              5000
+            ]
+          },
+          {
+            "level": 6,
+            "includeDecimals": true,
+            "value": [
+              0.1,
+              2000
+            ]
+          },
+          {
+            "level": 7,
+            "multiStep": true
+          }
+        ]
+      },
+      "prompt": {
+        "template": "Convert {value}{fromUnit} to {toUnit}."
+      },
+      "answer": {
+        "type": "number",
+        "compute": "convert(value, fromUnit, toUnit)",
+        "tolerance": 0
+      },
+      "distractors": {
+        "count": 3,
+        "use": [
+          "unit_conversion_error",
+          "near_miss"
+        ]
+      },
+      "constraints": {
+        "uniqueOptions": true
+      }
+    },
+    {
+      "id": "nz_meas_money_change",
+      "strand": "measurement",
+      "topic": "money",
+      "years": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "difficulty": {
+        "min": 2,
+        "max": 6,
+        "steps": [
+          {
+            "level": 2,
+            "cost": [
+              1.0,
+              20.0
+            ],
+            "paid": [
+              5.0,
+              50.0
+            ],
+            "dp": 2
+          },
+          {
+            "level": 3,
+            "cost": [
+              1.0,
+              50.0
+            ],
+            "paid": [
+              10.0,
+              100.0
+            ],
+            "dp": 2
+          },
+          {
+            "level": 4,
+            "multiItem": true,
+            "items": [
+              2,
+              4
+            ],
+            "maxItem": 20.0,
+            "paid": [
+              20.0,
+              100.0
+            ]
+          },
+          {
+            "level": 5,
+            "discountPercent": [
+              10,
+              20,
+              25
+            ],
+            "maxPrice": 200.0
+          },
+          {
+            "level": 6,
+            "multiStep": true
+          }
+        ]
+      },
+      "prompt": {
+        "template": "Cost ${cost}. Paid ${paid}. Change?"
+      },
+      "answer": {
+        "type": "currency",
+        "compute": "paid-cost",
+        "tolerance": 0
+      },
+      "distractors": {
+        "count": 3,
+        "use": [
+          "decimal_point_shift",
+          "near_miss"
+        ]
+      },
+      "constraints": {
+        "paidGteCost": true,
+        "uniqueOptions": true
+      }
+    },
+    {
+      "id": "nz_geo_angle_classify",
+      "strand": "geometry",
+      "topic": "geometry_angles",
+      "years": [
+        4,
+        5,
+        6
+      ],
+      "difficulty": {
+        "min": 2,
+        "max": 6,
+        "steps": [
+          {
+            "level": 2,
+            "angle": [
+              0,
+              180
+            ],
+            "types": [
+              "acute",
+              "right",
+              "obtuse",
+              "straight"
+            ]
+          },
+          {
+            "level": 3,
+            "angle": [
+              0,
+              180
+            ],
+            "includeReflex": false
+          },
+          {
+            "level": 4,
+            "angle": [
+              0,
+              360
+            ],
+            "includeReflex": true
+          },
+          {
+            "level": 5,
+            "estimateFromDiagram": true
+          },
+          {
+            "level": 6,
+            "justify": true
+          }
+        ]
+      },
+      "prompt": {
+        "template": "Classify this angle: {angle}°"
+      },
+      "answer": {
+        "type": "string",
+        "compute": "classifyAngle(angle)",
+        "tolerance": 0
+      },
+      "distractors": {
+        "count": 3,
+        "use": [
+          "angle_rule_misuse"
+        ]
+      },
+      "constraints": {
+        "uniqueOptions": true
+      }
+    },
+    {
+      "id": "nz_geo_missing_angle",
+      "strand": "geometry",
+      "topic": "geometry_angles",
+      "years": [
+        6,
+        7,
+        8
+      ],
+      "difficulty": {
+        "min": 3,
+        "max": 7,
+        "steps": [
+          {
+            "level": 3,
+            "a": [
+              10,
+              170
+            ]
+          },
+          {
+            "level": 4,
+            "a": [
+              1,
+              179
+            ]
+          },
+          {
+            "level": 5,
+            "includeVertical": true
+          },
+          {
+            "level": 6,
+            "includeTriangles": true
+          },
+          {
+            "level": 7,
+            "angleChase": true
+          }
+        ]
+      },
+      "prompt": {
+        "template": "Angles on a straight line sum to 180°. If one angle is {a}°, find the other."
+      },
+      "answer": {
+        "type": "integer",
+        "compute": "180-a",
+        "tolerance": 0
+      },
+      "distractors": {
+        "count": 3,
+        "use": [
+          "angle_rule_misuse",
+          "near_miss"
+        ]
+      },
+      "constraints": {
+        "uniqueOptions": true
+      }
+    },
+    {
+      "id": "nz_geo_translate_points",
+      "strand": "geometry",
+      "topic": "coordinates",
+      "years": [
+        7,
+        8
+      ],
+      "difficulty": {
+        "min": 5,
+        "max": 7,
+        "steps": [
+          {
+            "level": 5,
+            "x": [
+              -10,
+              10
+            ],
+            "y": [
+              -10,
+              10
+            ],
+            "dx": [
+              -5,
+              5
+            ],
+            "dy": [
+              -5,
+              5
+            ]
+          },
+          {
+            "level": 6,
+            "x": [
+              -20,
+              20
+            ],
+            "y": [
+              -20,
+              20
+            ],
+            "dx": [
+              -10,
+              10
+            ],
+            "dy": [
+              -10,
+              10
+            ]
+          },
+          {
+            "level": 7,
+            "includeReflections": true
+          }
+        ]
+      },
+      "prompt": {
+        "template": "After translating by ({dx},{dy}), where does ({x},{y}) move to?"
+      },
+      "answer": {
+        "type": "pair",
+        "compute": "(x+dx, y+dy)",
+        "tolerance": 0
+      },
+      "distractors": {
+        "count": 3,
+        "use": [
+          "near_miss"
+        ]
+      },
+      "constraints": {
+        "uniqueOptions": true
+      },
+      "assets": {
+        "required": [
+          "coordinate_grid_renderer"
+        ]
+      }
+    },
+    {
+      "id": "nz_stats_bar_read",
+      "strand": "statistics",
+      "topic": "statistics_graphs",
+      "years": [
+        3,
+        4,
+        5
+      ],
+      "difficulty": {
+        "min": 1,
+        "max": 5,
+        "steps": [
+          {
+            "level": 1,
+            "categories": 3,
+            "values": [
+              0,
+              10
+            ]
+          },
+          {
+            "level": 2,
+            "categories": 4,
+            "values": [
+              0,
+              20
+            ]
+          },
+          {
+            "level": 3,
+            "categories": 5,
+            "values": [
+              0,
+              50
+            ]
+          },
+          {
+            "level": 4,
+            "twoStep": true
+          },
+          {
+            "level": 5,
+            "compareDifferences": true
+          }
+        ]
+      },
+      "prompt": {
+        "template": "From the bar graph, what is the value for {category}?"
+      },
+      "answer": {
+        "type": "integer",
+        "compute": "value(category)",
+        "tolerance": 0
+      },
+      "distractors": {
+        "count": 3,
+        "use": [
+          "graph_reading_error",
+          "near_miss"
+        ]
+      },
+      "constraints": {
+        "uniqueOptions": true
+      },
+      "assets": {
+        "required": [
+          "bar_chart_dataset_renderer"
+        ]
+      }
+    },
+    {
+      "id": "nz_stats_mean_median",
+      "strand": "statistics",
+      "topic": "statistics_summary",
+      "years": [
+        5,
+        6
+      ],
+      "difficulty": {
+        "min": 3,
+        "max": 6,
+        "steps": [
+          {
+            "level": 3,
+            "len": [
+              5,
+              7
+            ],
+            "values": [
+              0,
+              20
+            ],
+            "stat": [
+              "mean",
+              "median"
+            ]
+          },
+          {
+            "level": 4,
+            "len": [
+              7,
+              9
+            ],
+            "values": [
+              0,
+              50
+            ],
+            "stat": [
+              "mean",
+              "median",
+              "mode"
+            ]
+          },
+          {
+            "level": 5,
+            "len": [
+              9,
+              12
+            ],
+            "values": [
+              0,
+              100
+            ],
+            "stat": [
+              "mean",
+              "median",
+              "mode",
+              "range"
+            ]
+          },
+          {
+            "level": 6,
+            "includeOutliers": true
+          }
+        ]
+      },
+      "prompt": {
+        "template": "Data: {list}. Find the {stat}."
+      },
+      "answer": {
+        "type": "number",
+        "compute": "computeStat(list, stat)",
+        "tolerance": 0
+      },
+      "distractors": {
+        "count": 3,
+        "use": [
+          "near_miss"
+        ]
+      },
+      "constraints": {
+        "uniqueOptions": true
+      }
+    },
+    {
+      "id": "nz_stats_claim",
+      "strand": "statistics",
+      "topic": "statistics_inference",
+      "years": [
+        6,
+        7,
+        8
+      ],
+      "difficulty": {
+        "min": 4,
+        "max": 7,
+        "steps": [
+          {
+            "level": 4,
+            "datasetType": "bar_or_line",
+            "claims": [
+              "max",
+              "trend"
+            ]
+          },
+          {
+            "level": 5,
+            "datasetType": "line",
+            "claims": [
+              "increase_decrease",
+              "compare"
+            ]
+          },
+          {
+            "level": 6,
+            "datasetType": "two_sets",
+            "claims": [
+              "difference",
+              "overlap"
+            ]
+          },
+          {
+            "level": 7,
+            "datasetType": "mixed",
+            "claims": [
+              "conjecture"
+            ]
+          }
+        ]
+      },
+      "prompt": {
+        "template": "A claim says: '{claim}'. Based on the graph, is it supported?"
+      },
+      "answer": {
+        "type": "string",
+        "compute": "evaluateClaim(claim,dataset)",
+        "tolerance": 0
+      },
+      "distractors": {
+        "count": 3,
+        "use": [
+          "graph_reading_error"
+        ]
+      },
+      "constraints": {
+        "uniqueOptions": true
+      },
+      "assets": {
+        "required": [
+          "chart_renderer"
+        ]
+      }
+    },
+    {
+      "id": "nz_prob_likely_language",
+      "strand": "probability",
+      "topic": "probability",
+      "years": [
+        2,
+        3
+      ],
+      "difficulty": {
+        "min": 1,
+        "max": 3,
+        "steps": [
+          {
+            "level": 1,
+            "contexts": [
+              "coin",
+              "simple_spinner"
+            ]
+          },
+          {
+            "level": 2,
+            "contexts": [
+              "bag_two_colours"
+            ]
+          },
+          {
+            "level": 3,
+            "contexts": [
+              "bag_three_colours"
+            ]
+          }
+        ]
+      },
+      "prompt": {
+        "template": "Which outcome is more likely? {scenario}"
+      },
+      "answer": {
+        "type": "string",
+        "compute": "moreLikely(scenario)",
+        "tolerance": 0
+      },
+      "distractors": {
+        "count": 3,
+        "use": [
+          "near_miss"
+        ]
+      },
+      "constraints": {
+        "uniqueOptions": true
+      }
+    },
+    {
+      "id": "nz_prob_simple_fraction",
+      "strand": "probability",
+      "topic": "probability",
+      "years": [
+        4,
+        5,
+        6
+      ],
+      "difficulty": {
+        "min": 2,
+        "max": 6,
+        "steps": [
+          {
+            "level": 2,
+            "total": [
+              4,
+              8
+            ],
+            "fav": [
+              1,
+              7
+            ]
+          },
+          {
+            "level": 3,
+            "total": [
+              6,
+              12
+            ],
+            "fav": [
+              1,
+              11
+            ]
+          },
+          {
+            "level": 4,
+            "total": [
+              8,
+              20
+            ],
+            "fav": [
+              1,
+              19
+            ]
+          },
+          {
+            "level": 5,
+            "twoStep": true
+          },
+          {
+            "level": 6,
+            "linkToData": true
+          }
+        ]
+      },
+      "prompt": {
+        "template": "A spinner has {total} equal sections; {fav} are {colour}. Probability?"
+      },
+      "answer": {
+        "type": "fraction",
+        "compute": "simplify(fav/total)",
+        "tolerance": 0
+      },
+      "distractors": {
+        "count": 3,
+        "use": [
+          "probability_reciprocal",
+          "near_miss"
+        ]
+      },
+      "constraints": {
+        "uniqueOptions": true
+      }
+    }
+  ]
+}
