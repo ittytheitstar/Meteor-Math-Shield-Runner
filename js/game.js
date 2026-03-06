@@ -1036,6 +1036,39 @@ function updateParts(dt) {
 }
 
 // ============================================================
+// EMOJI FLASHES (canvas text popups for answer feedback)
+// ============================================================
+let emojiFlashes = [];
+
+function spawnEmojiFlash(x, y, emoji) {
+  if (prefersReducedMotion) return;
+  emojiFlashes.push({ x, y, emoji, timer: EMOJI_FLASH_DURATION, vy: -90 });
+}
+
+function updateEmojiFlashes(dt) {
+  emojiFlashes = emojiFlashes.filter(e => e.timer > 0);
+  for (const e of emojiFlashes) {
+    e.timer -= dt;
+    e.y += e.vy * dt;
+  }
+}
+
+function drawEmojiFlashes() {
+  for (const e of emojiFlashes) {
+    const lifeRatio = e.timer / EMOJI_FLASH_DURATION;
+    const alpha = lifeRatio > 0.3 ? 1.0 : lifeRatio / 0.3;
+    const size = Math.round(40 + (1 - lifeRatio) * 24);
+    ctx.save();
+    ctx.globalAlpha = clamp(alpha, 0, 1);
+    ctx.font = `900 ${size}px system-ui`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(e.emoji, e.x, e.y);
+    ctx.restore();
+  }
+}
+
+// ============================================================
 // GAME STATE
 // ============================================================
 let gs = {};
@@ -1047,6 +1080,11 @@ let gamePaused = false;
 const RUSH_SPEED = 600;
 // Extra pixels beyond MR within which a tap registers as hitting a meteor
 const METEOR_TAP_TOLERANCE = 12;
+// Seconds after spawning a new question before answers can be triggered.
+// Prevents the ship's current lane from auto-answering immediately (double-answer bug).
+const ANSWER_GRACE_PERIOD = 0.8;
+// Duration in seconds for the emoji flash animations (✅/💥/etc.)
+const EMOJI_FLASH_DURATION = 0.85;
 
 function spawnBullet(lane) {
   gs.bullet = {
@@ -1121,7 +1159,9 @@ function initState() {
     bullet: null,
     rushedLane: -1,
     // lane locked after selecting a meteor; unlocked when next question starts
-    laneLocked: false
+    laneLocked: false,
+    // grace timer: prevents answers from triggering immediately after a new question spawns
+    answerGraceTimer: 0
   });
 
   gs.missionProgress = initMissionProgress(gs.missionId);
@@ -1130,6 +1170,7 @@ function initState() {
     gs.dailyQuestions = generateDailyQuestions(getTodayDateNum(), gs.ageBandId);
   }
   parts = [];
+  emojiFlashes = [];
   starOffY = 0;
   spawnQuestion();
 }
@@ -1147,6 +1188,10 @@ function spawnQuestion() {
   gs.questionStartTime = gs.gameTime;
   gs.laneLocked = false;
   gs.rushedLane = -1;
+  // Grace period: no answer triggers for the first ANSWER_GRACE_PERIOD seconds of each question.
+  // Prevents the ship's current lane position from auto-answering immediately
+  // after a new question spawns (the double-answer bug after closing a hint).
+  gs.answerGraceTimer = ANSWER_GRACE_PERIOD;
   spawnMeteors(gs.currentQ);
   gs.wave++;
   gs.meteorSpeed = Math.min(
@@ -1248,8 +1293,12 @@ function onCorrect(m) {
   sfxCorrect();
   spawnParts(m.x, m.y, gs.fever ? '#ffd600' : '#69f0ae', gs.fever ? 18 : 11);
   spawnRing(m.x, m.y, gs.fever ? '#ffd600' : '#69f0ae');
-  m.flash = 0.6; m.flashCol = '#69f0ae';
   flashScreen('correct');
+  // Emoji flash position is captured at spawn time so the animation displays correctly
+  // even after the meteor is removed. Removing the meteor immediately clears the lane
+  // so the ship can visually "pass through" the destroyed rock.
+  spawnEmojiFlash(m.x, m.y, gs.fever ? '🔥' : '✅');
+  m.alive = false;
 }
 
 function onWrong(m) {
@@ -1257,7 +1306,9 @@ function onWrong(m) {
   if (upgLevel('second_chance') > 0 && gs.secondChanceLeft > 0) {
     gs.secondChanceLeft--;
     spawnParts(m.x, m.y, '#ffd600', 6);
+    spawnRing(m.x, m.y, '#ffd600');
     m.flash = 0.6; m.flashCol = '#ffd600';
+    spawnEmojiFlash(gs.shipX, SHIP_Y - 40, '🛡️');
     gs.questionAnswered = true;
     gs.totalWrong++;
     gs.combo = 0;
@@ -1269,6 +1320,9 @@ function onWrong(m) {
       if (!gs.runStrandStats[t]) gs.runStrandStats[t] = { correct: 0, total: 0 };
       gs.runStrandStats[t].total++;
     }
+    // Briefly highlight the correct answer so the player can learn
+    const correctMeteor = gs.meteors.find(mc => mc.alive && mc.isCorrect);
+    if (correctMeteor) { correctMeteor.flash = 0.9; correctMeteor.flashCol = '#69f0ae'; }
     showTip(gs.currentQ);
     return;
   }
@@ -1294,6 +1348,11 @@ function onWrong(m) {
   spawnRing(m.x, m.y, '#ff1744');
   m.flash = 0.6; m.flashCol = '#ff1744';
   flashScreen('wrong');
+  // Explosion emoji on the ship to show it got hit
+  spawnEmojiFlash(gs.shipX, SHIP_Y - 40, '💥');
+  // Briefly highlight the correct answer in green so the player can learn
+  const correctMeteor = gs.meteors.find(mc => mc.alive && mc.isCorrect);
+  if (correctMeteor) { correctMeteor.flash = 0.9; correctMeteor.flashCol = '#69f0ae'; }
   showTip(gs.currentQ);
 
   if (gs.shield <= 0 && gs.hasFailure) {
@@ -1649,6 +1708,9 @@ function update(dt) {
     }
   }
 
+  // Answer grace timer: counts down after each new question spawns
+  if (gs.answerGraceTimer > 0) gs.answerGraceTimer = Math.max(0, gs.answerGraceTimer - dt);
+
   // Slow time upgrade timer
   if (gs.slowTimeActive) {
     gs.slowTimeTimer -= dt;
@@ -1680,8 +1742,8 @@ function update(dt) {
   // Bullet update — fired by tap-on-meteor
   if (gs.bullet && gs.bullet.active) {
     gs.bullet.y += gs.bullet.vy * dt;
-    // Check collision with target meteor
-    if (!gs.questionAnswered) {
+    // Check collision with target meteor (grace timer also guards bullet hits)
+    if (!gs.questionAnswered && gs.answerGraceTimer <= 0) {
       const bm = gs.meteors.find(m => m.alive && m.lane === gs.bullet.lane);
       if (bm && gs.bullet.y <= bm.y + MR && gs.bullet.y >= bm.y - MR) {
         if (bm.isCorrect) {
@@ -1699,6 +1761,7 @@ function update(dt) {
     }
   }
   updateParts(dt);
+  updateEmojiFlashes(dt);
 }
 
 function updateMeteors(dt) {
@@ -1715,7 +1778,7 @@ function updateMeteors(dt) {
     if (m.flash > 0) m.flash = Math.max(0, m.flash - dt * 2.5);
 
     const hitY = SHIP_Y - SHIP_H / 2 - MR;
-    if (!gs.questionAnswered && m.y >= hitY && m.lane === gs.shipLane) {
+    if (!gs.questionAnswered && gs.answerGraceTimer <= 0 && m.y >= hitY && m.lane === gs.shipLane) {
       m.isCorrect ? onCorrect(m) : onWrong(m);
     }
 
@@ -1742,6 +1805,7 @@ function render() {
   drawBullet();
   drawShip();
   drawParts();
+  drawEmojiFlashes();
   drawHUD();
   if (gs.fever) drawFeverBorder();
 
@@ -2627,7 +2691,8 @@ function handleTap(x, y) {
   const lane = clamp(Math.floor(x / LW), 0, LANES - 1);
 
   // Check if the tap directly hits a meteor (select answer and lock lane)
-  if (!gs.questionAnswered) {
+  // Grace timer prevents firing during the buffer period after a new question spawns
+  if (!gs.questionAnswered && gs.answerGraceTimer <= 0) {
     const hitMeteor = gs.meteors.find(m => {
       if (!m.alive || m.eliminated) return false;
       const dx = x - m.x;
