@@ -11,6 +11,9 @@
 <!-- Flash overlay -->
 <div id="flash"></div>
 
+<!-- Audio toggle (fixed, always visible) -->
+<button id="audio-toggle" aria-label="Toggle audio">🔊</button>
+
 <!-- ============================================================
      SCREEN: Landing
 ============================================================ -->
@@ -76,6 +79,11 @@
       <div class="card-emoji">🌊</div>
       <div class="card-title">Zen Practice</div>
       <div class="card-desc">No timer, no game over. Just practise math calmly!</div>
+    </div>
+    <div class="card" data-mode="daily">
+      <div class="card-emoji">📅</div>
+      <div class="card-title">Daily Challenge</div>
+      <div class="card-desc" id="daily-card-desc">Today's special challenge — same for everyone!</div>
     </div>
   </div>
 </div>
