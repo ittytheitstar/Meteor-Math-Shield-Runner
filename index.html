@@ -23,6 +23,14 @@
     <div class="logo-title">Meteor <span>Math</span></div>
     <div class="logo-sub">Shield Runner</div>
   </div>
+
+  <!-- Profile indicator -->
+  <button id="btn-profile" class="profile-landing-btn" aria-label="Switch profile">
+    <span id="profile-landing-icon">👤</span>
+    <span id="profile-landing-name">Guest</span>
+    <span class="profile-landing-chevron">▼</span>
+  </button>
+
   <div id="landing-info" style="margin-bottom:16px; text-align:center; min-height:32px;"></div>
   <button class="btn btn-primary" id="btn-play" style="max-width:200px; font-size:1.25rem; padding:18px 0;">&#9654;&nbsp; <span data-i18n="Play">Play</span></button>
   <div class="landing-nav">
@@ -199,6 +207,69 @@
     <div class="tip-strategy" id="tip-strategy"></div>
     <ul class="tip-steps" id="tip-steps" style="display:none;"></ul>
     <button class="btn btn-primary btn-sm" id="tip-ok" style="margin-top:12px;">Got it! 👍</button>
+  </div>
+</div>
+
+<!-- ============================================================
+     SCREEN: Profile Selection
+============================================================ -->
+<div id="screen-profiles" class="screen hidden">
+  <button class="btn-back" id="profiles-back">&#8592;</button>
+  <div class="screen-title">👤 Who's Playing?</div>
+  <div class="screen-sub">Select a profile or play as Guest</div>
+  <div id="profiles-list" class="profiles-grid"></div>
+  <button class="btn btn-secondary" id="btn-add-profile" style="max-width:220px; margin-top:16px;">＋ Add Profile</button>
+</div>
+
+<!-- ============================================================
+     OVERLAY: Profile Create / Edit
+============================================================ -->
+<div id="profile-overlay" class="hidden" role="dialog" aria-modal="true" aria-labelledby="profile-modal-title">
+  <div class="profile-modal">
+    <div class="profile-modal-title" id="profile-modal-title">New Profile</div>
+    <div class="profile-icon-preview" id="profile-icon-preview">🦊</div>
+    <div class="profile-icon-grid" id="profile-icon-grid"></div>
+    <input type="text" id="profile-name-input" class="profile-text-input" placeholder="Your name" maxlength="16" autocomplete="off">
+    <label for="profile-pin-input" class="profile-pin-label">4-digit passcode <span style="color:var(--subtext);font-size:0.8em;">(optional)</span></label>
+    <input type="password" inputmode="numeric" maxlength="4" class="profile-pin-input" id="profile-pin-input" placeholder="••••" autocomplete="new-password" aria-describedby="profile-pin-hint">
+    <span id="profile-pin-hint" class="sr-only">Leave empty for no passcode. Enter exactly 4 digits to set one.</span>
+    <div class="profile-modal-actions">
+      <button class="btn btn-primary btn-sm" id="profile-save-btn">Save</button>
+      <button class="btn btn-secondary btn-sm" id="profile-cancel-btn">Cancel</button>
+    </div>
+    <button id="profile-delete-btn" class="profile-delete-btn hidden">🗑 Delete Profile</button>
+  </div>
+</div>
+
+<!-- ============================================================
+     OVERLAY: Passcode Entry
+============================================================ -->
+<div id="passcode-overlay" class="hidden" role="dialog" aria-modal="true" aria-label="Enter passcode">
+  <div class="passcode-modal">
+    <div id="passcode-profile-icon" class="passcode-icon">🦊</div>
+    <div id="passcode-profile-name" class="passcode-name">Profile</div>
+    <div class="passcode-sub">Enter 4-digit passcode</div>
+    <div class="passcode-dots" id="passcode-dots" aria-live="polite">
+      <span class="passcode-dot"></span>
+      <span class="passcode-dot"></span>
+      <span class="passcode-dot"></span>
+      <span class="passcode-dot"></span>
+    </div>
+    <div id="passcode-error" class="passcode-error hidden" aria-live="assertive">Incorrect passcode</div>
+    <div class="passcode-numpad">
+      <button class="passcode-key" data-key="1">1</button>
+      <button class="passcode-key" data-key="2">2</button>
+      <button class="passcode-key" data-key="3">3</button>
+      <button class="passcode-key" data-key="4">4</button>
+      <button class="passcode-key" data-key="5">5</button>
+      <button class="passcode-key" data-key="6">6</button>
+      <button class="passcode-key" data-key="7">7</button>
+      <button class="passcode-key" data-key="8">8</button>
+      <button class="passcode-key" data-key="9">9</button>
+      <button class="passcode-key passcode-key-cancel" id="passcode-cancel-btn">✕</button>
+      <button class="passcode-key" data-key="0">0</button>
+      <button class="passcode-key passcode-key-back" id="passcode-backspace-btn">⌫</button>
+    </div>
   </div>
 </div>
 

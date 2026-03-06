@@ -530,3 +530,198 @@ body.high-contrast .ship-card,
 body.high-contrast .mission-row {
   border-color: rgba(255,255,255,0.3);
 }
+
+/* ============================================================
+   PROFILE SYSTEM
+============================================================ */
+
+/* ---- Profile landing button ---- */
+.profile-landing-btn {
+  display: flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,0.06);
+  border: 2px solid rgba(255,255,255,0.1);
+  border-radius: 20px; padding: 6px 14px;
+  color: var(--text); font-size: 0.9rem; font-weight: 700;
+  cursor: pointer; margin-bottom: 10px;
+  transition: border-color 0.2s, background 0.2s;
+}
+.profile-landing-btn:hover {
+  border-color: rgba(0,229,255,0.45);
+  background: rgba(0,229,255,0.08);
+}
+.profile-landing-btn:active { transform: scale(0.96); }
+#profile-landing-icon { font-size: 1.4rem; }
+#profile-landing-name { max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.profile-landing-chevron { font-size: 0.65rem; color: var(--subtext); margin-left: 2px; }
+
+/* ---- Profile selection screen ---- */
+.profiles-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 10px; width: 100%; max-width: 360px;
+  margin: 12px 0;
+  overflow-y: auto; max-height: calc(100vh - 260px);
+}
+.profile-card {
+  background: var(--panel);
+  border: 2px solid rgba(255,255,255,0.07);
+  border-radius: 16px; padding: 16px 12px;
+  cursor: pointer; text-align: center;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.1s;
+  position: relative;
+}
+.profile-card:hover:not(.profile-card-guest.active) {
+  border-color: rgba(0,229,255,0.4);
+  transform: scale(1.02);
+}
+.profile-card:active { transform: scale(0.97); }
+.profile-card.active {
+  border-color: var(--accent);
+  box-shadow: 0 0 16px rgba(0,229,255,0.3);
+}
+.profile-card-icon { font-size: 2.4rem; line-height: 1; margin-bottom: 6px; }
+.profile-card-name { font-size: 0.9rem; font-weight: 800; }
+.profile-card-sub { font-size: 0.7rem; color: var(--subtext); margin-top: 3px; }
+.profile-card-edit {
+  position: absolute; top: 6px; right: 8px;
+  background: none; border: none;
+  font-size: 0.8rem; color: var(--subtext);
+  cursor: pointer; padding: 2px 4px;
+  border-radius: 6px; opacity: 0.7;
+  transition: opacity 0.15s;
+}
+.profile-card-edit:hover { opacity: 1; color: var(--accent); }
+
+/* ---- Profile create / edit overlay ---- */
+#profile-overlay {
+  position: fixed; inset: 0;
+  background: rgba(2,5,20,0.90);
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px; z-index: 60;
+}
+#profile-overlay.hidden { display: none !important; }
+.profile-modal {
+  background: var(--panel);
+  border: 2px solid rgba(0,229,255,0.18);
+  border-radius: 22px; padding: 28px 22px;
+  max-width: 340px; width: 100%;
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+}
+.profile-modal-title {
+  font-size: 1.2rem; font-weight: 900; color: var(--accent);
+}
+.profile-icon-preview {
+  font-size: 3.5rem; line-height: 1;
+  cursor: default;
+}
+.profile-icon-grid {
+  display: grid; grid-template-columns: repeat(6, 1fr);
+  gap: 6px; width: 100%; max-height: 130px; overflow-y: auto;
+}
+.profile-icon-option {
+  font-size: 1.5rem; text-align: center;
+  cursor: pointer; border-radius: 8px; padding: 4px;
+  border: 2px solid transparent;
+  transition: border-color 0.15s, background 0.15s;
+}
+.profile-icon-option:hover { background: rgba(0,229,255,0.08); }
+.profile-icon-option.selected {
+  border-color: var(--accent);
+  background: rgba(0,229,255,0.12);
+}
+.profile-text-input {
+  width: 100%;
+  background: rgba(255,255,255,0.06);
+  border: 2px solid rgba(255,255,255,0.12);
+  border-radius: 12px; padding: 10px 14px;
+  color: var(--text); font-size: 1rem;
+  outline: none; text-align: center;
+}
+.profile-text-input:focus { border-color: var(--accent); }
+.profile-pin-label {
+  font-size: 0.82rem; color: var(--subtext);
+  align-self: flex-start; padding-left: 2px;
+}
+.profile-pin-input {
+  width: 100%;
+  background: rgba(255,255,255,0.06);
+  border: 2px solid rgba(255,255,255,0.12);
+  border-radius: 12px; padding: 10px 14px;
+  color: var(--text); font-size: 1.3rem;
+  outline: none; text-align: center;
+  letter-spacing: 6px;
+}
+.profile-pin-input:focus { border-color: var(--accent); }
+.profile-modal-actions {
+  display: flex; gap: 8px; width: 100%;
+}
+.profile-modal-actions .btn { flex: 1; }
+.profile-delete-btn {
+  background: none; border: none;
+  color: var(--red); font-size: 0.85rem;
+  cursor: pointer; padding: 6px 12px;
+  border-radius: 10px; opacity: 0.8;
+  transition: opacity 0.15s;
+}
+.profile-delete-btn:hover { opacity: 1; }
+.profile-delete-btn.hidden { display: none !important; }
+
+/* ---- Passcode overlay ---- */
+#passcode-overlay {
+  position: fixed; inset: 0;
+  background: rgba(2,5,20,0.94);
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px; z-index: 70;
+}
+#passcode-overlay.hidden { display: none !important; }
+.passcode-modal {
+  background: var(--panel);
+  border: 2px solid rgba(0,229,255,0.18);
+  border-radius: 22px; padding: 28px 22px;
+  max-width: 300px; width: 100%;
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+}
+.passcode-icon { font-size: 3rem; line-height: 1; }
+.passcode-name { font-size: 1.2rem; font-weight: 900; }
+.passcode-sub  { font-size: 0.82rem; color: var(--subtext); }
+.passcode-dots {
+  display: flex; gap: 14px; margin: 4px 0;
+}
+.passcode-dot {
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.25);
+  background: transparent;
+  transition: background 0.15s, border-color 0.15s;
+}
+.passcode-dot.filled {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.passcode-error {
+  font-size: 0.82rem; color: var(--red);
+  font-weight: 700;
+}
+.passcode-error.hidden { display: none !important; }
+.passcode-numpad {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 8px; width: 100%; margin-top: 6px;
+}
+.passcode-key {
+  background: rgba(255,255,255,0.07);
+  border: 2px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  padding: 14px 0; font-size: 1.3rem; font-weight: 700;
+  color: var(--text); cursor: pointer;
+  transition: background 0.1s, transform 0.08s;
+}
+.passcode-key:hover { background: rgba(0,229,255,0.12); border-color: rgba(0,229,255,0.3); }
+.passcode-key:active { transform: scale(0.92); }
+.passcode-key-cancel { color: var(--subtext); font-size: 1rem; }
+.passcode-key-back  { font-size: 1.1rem; }
+
+/* ---- Screen-reader only utility ---- */
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
