@@ -292,6 +292,7 @@ html, body {
   border: 2px solid rgba(0,229,255,0.2);
   border-radius: 20px; padding: 24px 20px;
   max-width: 340px; width: 100%;
+  max-height: 82vh; overflow-y: auto;
 }
 .tip-card .tip-header { font-size: 1rem; font-weight: 900; margin-bottom: 10px; color: var(--accent); }
 .tip-card .tip-answer { font-size: 1.2rem; font-weight: 900; margin: 8px 0; color: var(--gold); }
@@ -306,6 +307,19 @@ html, body {
   padding: 3px 0;
 }
 .tip-card .tip-steps li::before { content: '→ '; color: var(--accent); }
+.tip-card .tip-visual {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.80rem;
+  color: var(--accent);
+  background: rgba(0,229,255,0.06);
+  border: 1px solid rgba(0,229,255,0.18);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin: 8px 0 0;
+  white-space: pre;
+  line-height: 1.65;
+  overflow-x: auto;
+}
 
 /* ---- Stats screen ---- */
 .strand-row {
