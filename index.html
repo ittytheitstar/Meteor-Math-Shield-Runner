@@ -4,133 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>🚀 Meteor Math Shield Runner</title>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --bg: #050a1a;
-      --panel: #0d1b3e;
-      --accent: #00e5ff;
-      --gold: #ffd600;
-      --green: #69f0ae;
-      --red: #ff1744;
-      --text: #e8f4f8;
-      --subtext: #7ab0c8;
-    }
-
-    html, body {
-      width: 100%; height: 100%;
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      overflow: hidden;
-      touch-action: none;
-    }
-
-    /* ---- Screens ---- */
-    .screen {
-      position: fixed; inset: 0;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      padding: 24px 20px;
-      overflow-y: auto;
-    }
-    .screen.hidden { display: none !important; }
-
-    /* ---- Buttons ---- */
-    .btn {
-      display: block; width: 100%; max-width: 320px;
-      padding: 15px 24px;
-      border: none; border-radius: 16px;
-      font-size: 1.1rem; font-weight: 700;
-      cursor: pointer; text-align: center;
-      margin: 7px 0;
-      transition: transform 0.1s, box-shadow 0.1s;
-      letter-spacing: 0.3px;
-    }
-    .btn:active { transform: scale(0.96); }
-    .btn-primary {
-      background: linear-gradient(135deg, #00e5ff, #0056cc);
-      color: #020b1a;
-      box-shadow: 0 4px 20px rgba(0,229,255,0.35);
-    }
-    .btn-secondary {
-      background: rgba(255,255,255,0.06);
-      color: var(--text);
-      border: 2px solid rgba(255,255,255,0.12);
-    }
-
-    /* ---- Cards ---- */
-    .card-grid {
-      display: grid; grid-template-columns: 1fr;
-      gap: 12px; width: 100%; max-width: 360px;
-      margin: 16px 0;
-    }
-    .card {
-      background: var(--panel);
-      border: 2px solid rgba(255,255,255,0.07);
-      border-radius: 16px; padding: 16px 18px;
-      cursor: pointer;
-      transition: border-color 0.2s, transform 0.1s, box-shadow 0.2s;
-      text-align: left;
-    }
-    .card:hover  { border-color: rgba(0,229,255,0.5); box-shadow: 0 0 18px rgba(0,229,255,0.12); }
-    .card:active { transform: scale(0.97); }
-    .card-emoji  { font-size: 2rem; line-height: 1; }
-    .card-title  { font-size: 1.05rem; font-weight: 800; margin-top: 8px; }
-    .card-desc   { font-size: 0.82rem; color: var(--subtext); margin-top: 4px; line-height: 1.4; }
-
-    /* ---- Back button ---- */
-    .btn-back {
-      position: fixed; top: 16px; left: 16px;
-      background: rgba(255,255,255,0.07); border: none;
-      border-radius: 50%; width: 44px; height: 44px;
-      font-size: 1.1rem; cursor: pointer; color: var(--text);
-      display: flex; align-items: center; justify-content: center;
-      z-index: 10;
-    }
-
-    /* ---- Stat boxes ---- */
-    .stat-row { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin: 16px 0; }
-    .stat {
-      text-align: center; background: var(--panel);
-      border-radius: 12px; padding: 12px 18px; min-width: 80px;
-    }
-    .stat-val   { font-size: 1.5rem; font-weight: 900; color: var(--gold); }
-    .stat-label { font-size: 0.72rem; color: var(--subtext); margin-top: 2px; }
-
-    /* ---- Typography ---- */
-    .screen-title { font-size: 1.6rem; font-weight: 900; margin-bottom: 4px; text-align: center; }
-    .screen-sub   { font-size: 0.88rem; color: var(--subtext); margin-bottom: 8px; text-align: center; }
-
-    /* ---- Landing logo ---- */
-    .logo-icon  { font-size: 5rem; line-height: 1; margin-bottom: 10px; filter: drop-shadow(0 0 20px rgba(0,229,255,0.5)); }
-    .logo-title { font-size: 2.8rem; font-weight: 900; letter-spacing: -1px; line-height: 1; }
-    .logo-title span { color: var(--accent); }
-    .logo-sub   { font-size: 1rem; color: var(--subtext); margin-top: 6px; }
-
-    /* ---- Game canvas wrapper ---- */
-    #game-wrap {
-      position: fixed; inset: 0;
-      display: flex; align-items: center; justify-content: center;
-      background: #050a1a;
-    }
-    #game-wrap.hidden { display: none !important; }
-    canvas { display: block; }
-
-    /* ---- Screen flash overlay (correct / wrong feedback) ---- */
-    #flash {
-      position: fixed; inset: 0;
-      pointer-events: none; opacity: 0;
-      transition: opacity 0.08s;
-      z-index: 20;
-    }
-    #flash.correct { background: rgba(0,230,118,0.22); opacity: 1; }
-    #flash.wrong   { background: rgba(255,23,68,0.25);  opacity: 1; }
-
-    /* ---- New-best banner ---- */
-    #new-best { color: var(--gold); font-weight: 900; font-size: 1.2rem; text-align: center; margin-bottom: 10px; }
-  </style>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
@@ -141,22 +15,20 @@
      SCREEN: Landing
 ============================================================ -->
 <div id="screen-landing" class="screen">
-  <div style="text-align:center; margin-bottom: 32px;">
+  <div style="text-align:center; margin-bottom:24px;">
     <div class="logo-icon">🚀</div>
     <div class="logo-title">Meteor <span>Math</span></div>
     <div class="logo-sub">Shield Runner</div>
   </div>
-
-  <div id="landing-best" style="margin-bottom: 20px; min-height: 24px; text-align:center;"></div>
-
-  <button class="btn btn-primary" id="btn-play" style="max-width:200px; font-size:1.25rem; padding:18px 0;">
-    ▶&nbsp; Play
-  </button>
-
-  <p style="margin-top:28px; color:var(--subtext); font-size:0.78rem; text-align:center; max-width:280px; line-height:1.5;">
-    Steer your ship into the correct answer.<br>
-    Shield the ship &mdash; math wins the day!
-  </p>
+  <div id="landing-info" style="margin-bottom:16px; text-align:center; min-height:32px;"></div>
+  <button class="btn btn-primary" id="btn-play" style="max-width:200px; font-size:1.25rem; padding:18px 0;">&#9654;&nbsp; Play</button>
+  <div class="landing-nav">
+    <button class="landing-nav-btn" id="btn-missions"><span class="lnb-icon">🎯</span>Missions</button>
+    <button class="landing-nav-btn" id="btn-shop"><span class="lnb-icon">🛒</span>Shop</button>
+    <button class="landing-nav-btn" id="btn-cosmetics"><span class="lnb-icon">🎨</span>Ships</button>
+    <button class="landing-nav-btn" id="btn-stats-screen"><span class="lnb-icon">📊</span>Stats</button>
+  </div>
+  <p style="margin-top:20px; color:var(--subtext); font-size:0.78rem; text-align:center; max-width:280px; line-height:1.5;">Steer your ship into the correct answer.<br>Shield the ship &mdash; math wins the day!</p>
 </div>
 
 <!-- ============================================================
@@ -170,18 +42,18 @@
   <div class="card-grid">
     <div class="card" data-age="age6_7">
       <div class="card-emoji">🌱</div>
-      <div class="card-title">Age 6 – 7</div>
-      <div class="card-desc">Year 2–3 · Addition, Subtraction &amp; Patterns</div>
+      <div class="card-title">Age 6 &ndash; 7</div>
+      <div class="card-desc">Year 2&ndash;3 &middot; Addition, Subtraction &amp; Patterns</div>
     </div>
     <div class="card" data-age="age8_9">
       <div class="card-emoji">⭐</div>
-      <div class="card-title">Age 8 – 9</div>
-      <div class="card-desc">Year 4–5 · Times Tables, Division &amp; Fractions</div>
+      <div class="card-title">Age 8 &ndash; 9</div>
+      <div class="card-desc">Year 4&ndash;5 &middot; Times Tables, Division &amp; Fractions</div>
     </div>
     <div class="card" data-age="age10_12">
       <div class="card-emoji">🔥</div>
-      <div class="card-title">Age 10 – 12</div>
-      <div class="card-desc">Year 6–8 · Algebra, Geometry &amp; Harder Fractions</div>
+      <div class="card-title">Age 10 &ndash; 12</div>
+      <div class="card-desc">Year 6&ndash;8 &middot; Algebra, Geometry &amp; Harder Fractions</div>
     </div>
   </div>
 </div>
@@ -227,6 +99,7 @@
     <div class="stat"><div class="stat-val" id="go-score">0</div><div class="stat-label">Score</div></div>
     <div class="stat"><div class="stat-val" id="go-correct">0</div><div class="stat-label">Correct</div></div>
     <div class="stat"><div class="stat-val" id="go-combo">0</div><div class="stat-label">Best Combo</div></div>
+    <div class="stat"><div class="stat-val" id="go-xp">0</div><div class="stat-label">XP Earned</div></div>
   </div>
 
   <button class="btn btn-primary"   id="btn-retry">🔄&nbsp; Play Again</button>
@@ -234,11 +107,13 @@
 </div>
 
 <!-- ============================================================
-     SCREEN: Results (Quick Run finished)
+     SCREEN: Results (Quick Run / Mission finished)
 ============================================================ -->
 <div id="screen-results" class="screen hidden">
   <div style="font-size:3.5rem; margin-bottom:8px;">🎉</div>
   <div class="screen-title">Time's Up!</div>
+
+  <div id="res-mission" class="hidden" style="color:#69f0ae; font-weight:700; text-align:center; margin-bottom:8px; font-size:0.95rem;"></div>
 
   <div class="stat-row">
     <div class="stat"><div class="stat-val" id="res-score">0</div><div class="stat-label">Score</div></div>
@@ -251,1041 +126,68 @@
     <div class="stat"><div class="stat-val" id="res-acc">0%</div><div class="stat-label">Accuracy</div></div>
   </div>
 
-  <div id="new-best" class="hidden">⭐ New Best Score!</div>
+  <div id="new-best" class="hidden" style="color:#ffd600; font-weight:900; font-size:1.2rem; text-align:center; margin-bottom:10px;">⭐ New Best Score!</div>
 
   <button class="btn btn-primary"   id="btn-retry2">🔄&nbsp; Play Again</button>
   <button class="btn btn-secondary" id="btn-home2">🏠&nbsp; Home</button>
 </div>
 
 <!-- ============================================================
-     GAME SCRIPT
+     SCREEN: Missions
 ============================================================ -->
-<script>
-"use strict";
-
-// ============================================================
-// CONSTANTS — canvas geometry
-// ============================================================
-const GW = 480;   // game world width
-const GH = 800;   // game world height
-const LANES = 3;
-const LW = GW / LANES;   // lane width = 160
-const SHIP_Y = GH - 110; // ship centre Y
-const SHIP_W = 58;
-const SHIP_H = 76;
-const MR = 52;    // meteor radius
-
-// ============================================================
-// INLINE CONFIG  (mirrors data/config.json)
-// ============================================================
-const CFG = {
-  shield: {
-    max: 100, initial: 100,
-    drainPerSec: 2.8,
-    rechargeOnCorrect: 18,
-    penaltyOnWrong: 22,
-    feverDrainMult: 0.5,
-    criticalPct: 0.25
-  },
-  scoring: {
-    xpPerCorrect: 10,
-    xpComboStep: 0.5,
-    xpMaxMult: 4,
-    coinsPerCorrect: 5,
-    coinsFeverMult: 2
-  },
-  combo: {
-    feverThresholds: [5, 10, 15],
-    feverDuration: 8,
-    decayDelay: 5,
-    decayRate: 1
-  },
-  adaptive: {
-    window: 10,
-    targetAcc: 0.78,
-    upIfAbove: 0.85,
-    downIfBelow: 0.65,
-    diffMin: 1,
-    diffMax: 7
-  },
-  meteor: {
-    baseSpeed: 120,
-    speedPerWave: 2.5,
-    maxSpeed: 420
-  },
-  levelThresholds: [0, 80, 180, 320, 500, 720, 990, 1320, 1710, 2170],
-  ageBands: {
-    age6_7: {
-      label: 'Age 6–7', emoji: '🌱', diffStart: 1, diffMax: 3,
-      speed: 90,
-      weights: { add: 0.35, sub: 0.30, algebra: 0.15, pattern: 0.12, geometry: 0.08 }
-    },
-    age8_9: {
-      label: 'Age 8–9', emoji: '⭐', diffStart: 2, diffMax: 5,
-      speed: 110,
-      weights: { add: 0.18, sub: 0.14, mul: 0.24, div: 0.16, algebra: 0.14, fraction: 0.08, pattern: 0.06 }
-    },
-    age10_12: {
-      label: 'Age 10–12', emoji: '🔥', diffStart: 3, diffMax: 7,
-      speed: 130,
-      weights: { mul: 0.18, div: 0.14, fraction: 0.20, algebra: 0.20, geometry: 0.14, pattern: 0.08, sub: 0.06 }
-    }
-  },
-  modes: {
-    quickRun: { label: 'Quick Run', durationSec: 150, hasFailure: true, shieldDrain: true, speedMult: 1.0 },
-    zen:      { label: 'Zen',       durationSec: Infinity, hasFailure: false, shieldDrain: false, speedMult: 0.55 }
-  }
-};
-
-// ============================================================
-// UTILITY
-// ============================================================
-const rnd  = (a, b) => Math.floor(Math.random() * (b - a + 1)) + a;
-const rndF = (a, b) => Math.random() * (b - a) + a;
-const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
-
-function shuffle(arr) {
-  const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
-
-function weightedPick(weights) {
-  const keys = Object.keys(weights);
-  let r = Math.random() * keys.reduce((s, k) => s + weights[k], 0);
-  for (const k of keys) { r -= weights[k]; if (r <= 0) return k; }
-  return keys[keys.length - 1];
-}
-
-// near-miss distractor: offset by delta, clamp ≥ 0
-function nearMiss(n, deltas = [1, 2, 10]) {
-  const d = deltas[rnd(0, deltas.length - 1)];
-  const v = Math.random() < 0.5 ? n + d : n - d;
-  return Math.max(0, Math.round(v));
-}
-
-// Build a question object; ensure 3 unique string options
-function makeQ(prompt, answer, d1, d2, type) {
-  const ans = String(answer);
-  const opts = new Set([ans]);
-  for (const d of [d1, d2, String(nearMiss(Number(ans)||0,[1,3,7])), String(Math.abs(Number(ans)||0)+1)]) {
-    if (String(d) !== ans) opts.add(String(d));
-    if (opts.size === 3) break;
-  }
-  return { prompt, answer: ans, options: shuffle([...opts]), type };
-}
-
-// ============================================================
-// QUESTION GENERATORS
-// ============================================================
-function generateQuestion(ageBandId, difficulty) {
-  const ab = CFG.ageBands[ageBandId];
-  const type = weightedPick(ab.weights);
-  return genByType(type, difficulty);
-}
-
-function genByType(type, d) {
-  switch (type) {
-    case 'add':      return genAdd(d);
-    case 'sub':      return genSub(d);
-    case 'mul':      return genMul(d);
-    case 'div':      return genDiv(d);
-    case 'fraction': return genFraction(d);
-    case 'algebra':  return genAlgebra(d);
-    case 'geometry': return genGeometry(d);
-    case 'pattern':  return genPattern(d);
-    default:         return genAdd(d);
-  }
-}
-
-function genAdd(d) {
-  const ranges = [[0,10],[0,20],[10,50],[10,99],[50,500]];
-  const [lo, hi] = ranges[clamp(d-1, 0, 4)];
-  const a = rnd(lo, hi), b = rnd(lo, hi);
-  const ans = a + b;
-  return makeQ(`${a} + ${b} = ?`, ans, nearMiss(ans,[1,2,10]), Math.abs(a-b), 'add');
-}
-
-function genSub(d) {
-  const ranges = [[0,10],[5,20],[10,99],[20,99],[100,999]];
-  const [lo, hi] = ranges[clamp(d-1, 0, 4)];
-  const a = rnd(lo, hi);
-  const b = rnd(Math.max(1, lo), a);
-  const ans = a - b;
-  return makeQ(`${a} \u2212 ${b} = ?`, ans, nearMiss(ans,[1,2,10]), b, 'sub');
-}
-
-function genMul(d) {
-  const specs = [[2,10,2,10],[2,12,2,12],[7,12,7,12],[11,20,2,9],[10,50,10,50]];
-  const [la,ha,lb,hb] = specs[clamp(d-1, 0, 4)];
-  const a = rnd(la, ha), b = rnd(lb, hb);
-  const ans = a * b;
-  return makeQ(`${a} \u00d7 ${b} = ?`, ans, a + b, nearMiss(ans,[a,b]), 'mul');
-}
-
-function genDiv(d) {
-  const tableGroups = [[2,5,10],[2,5,10],[3,4,6],[7,8,9],[2,12]];
-  const group = tableGroups[clamp(d-1, 0, 4)];
-  const b = group[rnd(0, group.length-1)];
-  const q = rnd(2, d <= 2 ? 10 : 12);
-  const a = b * q;
-  return makeQ(`${a} \u00f7 ${b} = ?`, q, a + b, nearMiss(q,[1,2]), 'div');
-}
-
-function genFraction(d) {
-  const pool = [
-    {s:'1/2',n:1,dn:2},{s:'1/4',n:1,dn:4},{s:'3/4',n:3,dn:4},
-    {s:'1/3',n:1,dn:3},{s:'2/3',n:2,dn:3},{s:'1/5',n:1,dn:5},{s:'2/5',n:2,dn:5}
-  ];
-  const f = pool[clamp(d-3, 0, pool.length-1)];
-  const mult = rnd(1, 5) * f.dn;
-  const ans = (mult / f.dn) * f.n;
-  return makeQ(`Find ${f.s} of ${mult}`, ans, mult / f.dn, nearMiss(ans,[1,2,5]), 'fraction');
-}
-
-function genAlgebra(d) {
-  if (d <= 1) {
-    const b = rnd(1,9), ans = rnd(1,10), c = ans + b;
-    return makeQ(`\u25a1 + ${b} = ${c}`, ans, c+b, nearMiss(ans,[1,2]), 'algebra');
-  } else if (d <= 2) {
-    const ans = rnd(2,12), b = rnd(1,9), c = ans + b;
-    return makeQ(`${c} \u2212 \u25a1 = ${b}`, ans, c+b, nearMiss(ans,[1,2]), 'algebra');
-  } else if (d <= 3) {
-    const tables = [2,3,4,5,10];
-    const b = tables[rnd(0,4)], ans = rnd(2,12), c = b * ans;
-    return makeQ(`\u25a1 \u00d7 ${b} = ${c}`, ans, c+b, nearMiss(ans,[1,2]), 'algebra');
-  } else if (d <= 4) {
-    const b = rnd(2,9), ans = rnd(2,12), a = b * ans;
-    return makeQ(`${a} \u00f7 \u25a1 = ${ans}`, b, ans, nearMiss(b,[1,2]), 'algebra');
-  } else {
-    const ans = rnd(1,15), b = rnd(1,10), c = 2*ans + b;
-    return makeQ(`2 \u00d7 \u25a1 + ${b} = ${c}`, ans, c-b, nearMiss(ans,[1,2]), 'algebra');
-  }
-}
-
-function genGeometry(d) {
-  if (d <= 3) {
-    const w = rnd(1,20), h = rnd(1,20);
-    const ans = 2*(w+h);
-    return makeQ(`Perimeter of ${w}cm \u00d7 ${h}cm rect?`, ans, w*h, nearMiss(ans,[2,4]), 'geometry');
-  } else {
-    const w = rnd(2,20), h = rnd(2,20);
-    const ans = w*h;
-    return makeQ(`Area of ${w}cm \u00d7 ${h}cm rect?`, ans, 2*(w+h), nearMiss(ans,[w,h]), 'geometry');
-  }
-}
-
-function genPattern(d) {
-  let seq, step, ans;
-  if (d <= 1) {
-    step = rnd(1,2); const s = rnd(1,5);
-    seq = [s, s+step, s+2*step, s+3*step]; ans = s+4*step;
-  } else if (d <= 2) {
-    step = [2,3,5][rnd(0,2)]; const s = rnd(2,10);
-    seq = [s, s+step, s+2*step, s+3*step, s+4*step]; ans = s+5*step;
-  } else if (d <= 3) {
-    step = [10,20,25][rnd(0,2)]; const s = rnd(10,50);
-    seq = [s, s+step, s+2*step, s+3*step]; ans = s+4*step;
-  } else if (d <= 4) {
-    step = [1,2,5][rnd(0,2)]; const s = rnd(20,50);
-    seq = [s, s-step, s-2*step, s-3*step]; ans = Math.max(0, s-4*step);
-  } else {
-    const s = rnd(1,4);
-    seq = [s, s*2, s*4, s*8]; ans = s*16;
-    step = s;
-  }
-  const show = seq.slice(-4).join(', ');
-  return makeQ(`${show}, ?`, ans, nearMiss(ans,[step||1,1]), nearMiss(ans,[2,step||2]), 'pattern');
-}
-
-// ============================================================
-// STAR FIELD
-// ============================================================
-const STARS = Array.from({ length: 130 }, () => ({
-  x: Math.random(), y: Math.random(),
-  r: rndF(0.4, 1.8),
-  bright: rndF(0.3, 0.9),
-  spd: rndF(0.04, 0.18)
-}));
-let starOffY = 0;
-
-// ============================================================
-// PARTICLES
-// ============================================================
-let parts = [];
-
-function spawnParts(x, y, color, count) {
-  for (let i = 0; i < count; i++) {
-    const a = (Math.PI * 2 * i / count) + rndF(-0.4, 0.4);
-    const spd = rndF(70, 240);
-    parts.push({ x, y, vx: Math.cos(a)*spd, vy: Math.sin(a)*spd,
-      color, alpha: 1, r: rndF(3,8), life: rndF(0.4,0.9) });
-  }
-}
-
-function updateParts(dt) {
-  parts = parts.filter(p => p.alpha > 0.02);
-  for (const p of parts) {
-    p.x += p.vx * dt; p.y += p.vy * dt;
-    p.vy += 70 * dt;
-    p.alpha -= dt / p.life;
-  }
-}
-
-// ============================================================
-// GAME STATE
-// ============================================================
-let gs = {};   // filled by initState()
-
-function laneX(lane) { return LW * lane + LW / 2; }
-
-function initState() {
-  const ab   = CFG.ageBands[gs.ageBandId];
-  const mode = CFG.modes[gs.modeId];
-  Object.assign(gs, {
-    // shield
-    shield: CFG.shield.initial,
-    // score
-    score: 0, xp: 0, coins: 0,
-    // combo / fever
-    combo: 0, bestCombo: 0,
-    fever: false, feverTimer: 0, feverFlash: 0,
-    comboDecayTimer: 0,
-    // difficulty / adaptive
-    difficulty: ab.diffStart, diffMax: ab.diffMax,
-    recentAnswers: [],
-    // ship
-    shipLane: 1, shipX: laneX(1), shipTargetX: laneX(1),
-    // meteors
-    meteors: [],
-    questionAnswered: false,
-    wave: 0,
-    // timing
-    running: true, ended: false,
-    gameTime: 0,
-    timeLimitSec: mode.durationSec,
-    hasFailure: mode.hasFailure,
-    shieldDrain: mode.shieldDrain,
-    meteorSpeed: ab.speed * mode.speedMult,
-    // stats
-    totalCorrect: 0, totalWrong: 0,
-    levelXP: 0, level: 1,
-    // FX
-    shakeTimer: 0, shakeX: 0, shakeY: 0
-  });
-  parts = [];
-  starOffY = 0;
-  spawnQuestion();
-}
-
-// ============================================================
-// QUESTION FLOW
-// ============================================================
-function spawnQuestion() {
-  gs.currentQ = generateQuestion(gs.ageBandId, gs.difficulty);
-  gs.questionAnswered = false;
-  spawnMeteors(gs.currentQ);
-  gs.wave++;
-  // Gradually increase speed
-  gs.meteorSpeed = Math.min(
-    CFG.meteor.maxSpeed,
-    CFG.ageBands[gs.ageBandId].speed * CFG.modes[gs.modeId].speedMult + gs.wave * CFG.meteor.speedPerWave
-  );
-}
-
-function spawnMeteors(q) {
-  gs.meteors = [0, 1, 2].map(lane => ({
-    lane,
-    x: laneX(lane),
-    y: -(MR * 2),
-    answer: q.options[lane],
-    isCorrect: q.options[lane] === q.answer,
-    speed: gs.meteorSpeed,
-    alive: true,
-    flash: 0, flashCol: null,
-    wobble: rndF(0, Math.PI * 2)
-  }));
-}
-
-// ============================================================
-// ANSWER HANDLING
-// ============================================================
-function onCorrect(m) {
-  gs.questionAnswered = true;
-  gs.totalCorrect++;
-  gs.combo = Math.floor(gs.combo) + 1;
-  if (gs.combo > gs.bestCombo) gs.bestCombo = gs.combo;
-  gs.comboDecayTimer = 0;
-
-  // Fever?
-  const ft = CFG.combo.feverThresholds;
-  if (ft.includes(gs.combo) || (gs.combo > ft[ft.length-1])) {
-    gs.fever = true; gs.feverTimer = CFG.combo.feverDuration;
-  }
-
-  // Shield up
-  gs.shield = Math.min(CFG.shield.max, gs.shield + CFG.shield.rechargeOnCorrect);
-
-  // Score & XP
-  const fm = gs.fever ? 2 : 1;
-  const cm = Math.min(CFG.scoring.xpMaxMult, 1 + (gs.combo - 1) * CFG.scoring.xpComboStep);
-  gs.score  += Math.round(10 * fm * cm);
-  gs.xp     += Math.round(CFG.scoring.xpPerCorrect * cm);
-  gs.coins  += Math.round(CFG.scoring.coinsPerCorrect * fm);
-
-  checkLevelUp();
-  adaptDifficulty(1);
-  spawnParts(m.x, m.y, gs.fever ? '#ffd600' : '#69f0ae', gs.fever ? 18 : 11);
-  m.flash = 0.6; m.flashCol = '#69f0ae';
-  flashScreen('correct');
-}
-
-function onWrong(m) {
-  gs.questionAnswered = true;
-  gs.totalWrong++;
-  gs.combo = 0;
-  gs.fever = false; gs.feverTimer = 0;
-
-  gs.shield = Math.max(0, gs.shield - CFG.shield.penaltyOnWrong);
-  adaptDifficulty(0);
-  gs.shakeTimer = 0.45;
-
-  spawnParts(m.x, m.y, '#ff1744', 8);
-  m.flash = 0.6; m.flashCol = '#ff1744';
-  flashScreen('wrong');
-
-  if (gs.shield <= 0 && gs.hasFailure) {
-    setTimeout(() => endGame(false), GAME_OVER_DELAY_MS);
-  }
-}
-
-function checkLevelUp() {
-  const t = CFG.levelThresholds;
-  while (gs.level < t.length - 1 && gs.xp >= t[gs.level]) gs.level++;
-}
-
-function adaptDifficulty(correct) {
-  gs.recentAnswers.push(correct);
-  const w = CFG.adaptive.window;
-  if (gs.recentAnswers.length < w) return;
-  const slice = gs.recentAnswers.slice(-w);
-  const acc = slice.reduce((s, v) => s + v, 0) / w;
-  if (acc >= CFG.adaptive.upIfAbove) {
-    gs.difficulty = Math.min(gs.diffMax, gs.difficulty + 1);
-  } else if (acc <= CFG.adaptive.downIfBelow) {
-    gs.difficulty = Math.max(CFG.adaptive.diffMin, gs.difficulty - 1);
-  }
-}
-
-// ============================================================
-// FLASH OVERLAY
-// ============================================================
-function flashScreen(type) {
-  const el = document.getElementById('flash');
-  el.className = type;
-  setTimeout(() => { if (el.className === type) el.className = ''; }, 180);
-}
-
-// ============================================================
-// GAME LOOP
-// ============================================================
-let canvas, ctx, afId, lastTS;
-
-function startLoop() {
-  lastTS = null;
-  afId = requestAnimationFrame(loop);
-}
-
-function loop(ts) {
-  if (!lastTS) lastTS = ts;
-  const dt = Math.min((ts - lastTS) / 1000, 0.05);
-  lastTS = ts;
-  update(dt);
-  render();
-  afId = requestAnimationFrame(loop);
-}
-
-function update(dt) {
-  if (!gs.running || gs.ended) return;
-
-  gs.gameTime += dt;
-
-  // Time limit
-  if (gs.timeLimitSec < Infinity && gs.gameTime >= gs.timeLimitSec) {
-    endGame(true); return;
-  }
-
-  // Screen shake
-  if (gs.shakeTimer > 0) {
-    gs.shakeTimer -= dt;
-    const mag = gs.shakeTimer * 12;
-    gs.shakeX = rndF(-mag, mag);
-    gs.shakeY = rndF(-mag, mag);
-  } else { gs.shakeX = 0; gs.shakeY = 0; }
-
-  // Fever
-  if (gs.fever) {
-    gs.feverTimer -= dt;
-    if (gs.feverTimer <= 0) { gs.fever = false; }
-    gs.feverFlash = (gs.feverFlash + dt * 3.5) % (Math.PI * 2);
-  }
-
-  // Shield drain
-  if (gs.shieldDrain) {
-    const drain = CFG.shield.drainPerSec * (gs.fever ? CFG.shield.feverDrainMult : 1) * dt;
-    gs.shield = Math.max(0, gs.shield - drain);
-    if (gs.shield <= 0 && gs.hasFailure) { endGame(false); return; }
-  }
-
-  // Combo decay
-  if (gs.combo > 0) {
-    gs.comboDecayTimer += dt;
-    if (gs.comboDecayTimer > CFG.combo.decayDelay) {
-      gs.combo = Math.max(0, gs.combo - CFG.combo.decayRate * dt);
-    }
-  }
-
-  // Ship movement lerp
-  const shipSpd = 900;
-  const diff = gs.shipTargetX - gs.shipX;
-  gs.shipX += Math.sign(diff) * Math.min(Math.abs(diff), shipSpd * dt);
-  if (Math.abs(diff) < 1) gs.shipX = gs.shipTargetX;
-
-  // Star scroll
-  starOffY = (starOffY + 60 * dt) % 1;
-
-  // Meteors
-  updateMeteors(dt);
-  updateParts(dt);
-}
-
-function updateMeteors(dt) {
-  let anyAlive = false;
-
-  for (const m of gs.meteors) {
-    if (!m.alive) continue;
-    anyAlive = true;
-    m.y += m.speed * dt;
-    m.wobble += dt * 1.6;
-    if (m.flash > 0) m.flash = Math.max(0, m.flash - dt * 2.5);
-
-    // Collision zone: when meteor's bottom edge reaches top of ship
-    const hitY = SHIP_Y - SHIP_H / 2 - MR;
-    if (!gs.questionAnswered && m.y >= hitY && m.lane === gs.shipLane) {
-      m.isCorrect ? onCorrect(m) : onWrong(m);
-    }
-
-    // Exit screen
-    if (m.y > GH + MR + 10) m.alive = false;
-  }
-
-  // All meteors gone → spawn next
-  if (!anyAlive && !gs.ended) {
-    // If unanswered (player didn't move to any lane), small combo reset
-    if (!gs.questionAnswered) { gs.combo = 0; }
-    spawnQuestion();
-  }
-}
-
-// ============================================================
-// RENDERING
-// ============================================================
-function render() {
-  if (!ctx) return;
-  ctx.save();
-  ctx.translate(gs.shakeX || 0, gs.shakeY || 0);
-
-  drawBg();
-  drawLanes();
-  drawMeteors();
-  drawShip();
-  drawParts();
-  drawHUD();
-  if (gs.fever) drawFeverBorder();
-
-  ctx.restore();
-}
-
-function drawBg() {
-  ctx.fillStyle = '#050a1a';
-  ctx.fillRect(0, 0, GW, GH);
-  for (const s of STARS) {
-    const y = ((s.y + starOffY * s.spd) % 1) * GH;
-    ctx.beginPath();
-    ctx.arc(s.x * GW, y, s.r, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(255,255,255,${s.bright})`;
-    ctx.fill();
-  }
-}
-
-function drawLanes() {
-  ctx.strokeStyle = 'rgba(0,229,255,0.09)';
-  ctx.lineWidth = 1;
-  ctx.setLineDash([8, 18]);
-  for (let i = 1; i < LANES; i++) {
-    ctx.beginPath();
-    ctx.moveTo(i * LW, 0);
-    ctx.lineTo(i * LW, GH);
-    ctx.stroke();
-  }
-  ctx.setLineDash([]);
-
-  // Tap zone hints at bottom
-  for (let i = 0; i < LANES; i++) {
-    const cx = laneX(i);
-    const active = i === gs.shipLane;
-    ctx.fillStyle = active ? 'rgba(0,229,255,0.06)' : 'rgba(255,255,255,0.02)';
-    ctx.fillRect(i * LW + 2, GH - 55, LW - 4, 52);
-    ctx.strokeStyle = active ? 'rgba(0,229,255,0.25)' : 'rgba(255,255,255,0.06)';
-    ctx.lineWidth = 1;
-    ctx.strokeRect(i * LW + 2, GH - 55, LW - 4, 52);
-    // Lane number
-    ctx.fillStyle = active ? 'rgba(0,229,255,0.7)' : 'rgba(255,255,255,0.18)';
-    ctx.font = '700 13px system-ui';
-    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-    ctx.fillText(['←', '↓', '→'][i], cx, GH - 29);
-  }
-}
-
-function drawMeteors() {
-  for (const m of gs.meteors) {
-    if (!m.alive) continue;
-
-    ctx.save();
-    ctx.translate(m.x, m.y);
-    ctx.rotate(Math.sin(m.wobble) * 0.05);
-
-    // Body gradient
-    const grad = ctx.createRadialGradient(-MR*0.3, -MR*0.3, 2, 0, 0, MR);
-    if (m.flash > 0 && m.flashCol) {
-      const a = Math.round(m.flash * 255).toString(16).padStart(2,'0');
-      grad.addColorStop(0, m.flashCol);
-      grad.addColorStop(1, m.flashCol + a);
-    } else {
-      grad.addColorStop(0, '#4a3a28');
-      grad.addColorStop(0.55, '#2c1e10');
-      grad.addColorStop(1, '#160d06');
-    }
-    ctx.beginPath();
-    ctx.arc(0, 0, MR, 0, Math.PI * 2);
-    ctx.fillStyle = grad;
-    ctx.fill();
-
-    // Outer glow ring
-    ctx.beginPath();
-    ctx.arc(0, 0, MR + 5, 0, Math.PI * 2);
-    ctx.strokeStyle = m.isCorrect ? 'rgba(0,229,255,0.18)' : 'rgba(255,80,40,0.14)';
-    ctx.lineWidth = 3;
-    ctx.stroke();
-
-    // Answer text
-    const text = String(m.answer);
-    const fs = text.length > 6 ? 16 : text.length > 4 ? 20 : text.length > 2 ? 24 : 28;
-    ctx.fillStyle = '#ffffff';
-    ctx.font = `900 ${fs}px 'Segoe UI', system-ui, sans-serif`;
-    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-    // Shadow for legibility
-    ctx.shadowColor = 'rgba(0,0,0,0.8)'; ctx.shadowBlur = 4;
-    ctx.fillText(text, 0, 0);
-    ctx.shadowBlur = 0;
-
-    ctx.restore();
-  }
-}
-
-function drawShip() {
-  const x = gs.shipX;
-  const y = SHIP_Y;
-  const w = SHIP_W;
-  const h = SHIP_H;
-
-  ctx.save();
-  ctx.translate(x, y);
-
-  // Engine flame
-  const flameH = 18 + Math.sin(gs.gameTime * 12) * 7;
-  const fg = ctx.createLinearGradient(0, h*0.22, 0, h*0.22 + flameH + 10);
-  fg.addColorStop(0, '#ffffff');
-  fg.addColorStop(0.3, gs.fever ? '#ffd600' : '#00e5ff');
-  fg.addColorStop(1, 'transparent');
-  ctx.fillStyle = fg;
-  ctx.beginPath();
-  ctx.ellipse(0, h*0.22 + flameH*0.5, w*0.18, flameH*0.55, 0, 0, Math.PI*2);
-  ctx.fill();
-
-  // Engine trail
-  const tg = ctx.createLinearGradient(0, h*0.18, 0, h*0.9);
-  tg.addColorStop(0, gs.fever ? 'rgba(255,214,0,0.6)' : 'rgba(0,229,255,0.5)');
-  tg.addColorStop(1, 'transparent');
-  ctx.fillStyle = tg;
-  ctx.beginPath();
-  ctx.moveTo(-w*0.15, h*0.22);
-  ctx.lineTo(w*0.15, h*0.22);
-  ctx.lineTo(0, h*0.85);
-  ctx.closePath();
-  ctx.fill();
-
-  // Ship body
-  ctx.fillStyle = gs.fever ? '#ffd600' : '#00e5ff';
-  ctx.shadowColor = gs.fever ? 'rgba(255,214,0,0.6)' : 'rgba(0,229,255,0.5)';
-  ctx.shadowBlur = 12;
-  ctx.beginPath();
-  ctx.moveTo(0, -h*0.5);                          // nose
-  ctx.bezierCurveTo(w*0.28, -h*0.08, w*0.45, h*0.18, w*0.38, h*0.28);
-  ctx.lineTo(w*0.5, h*0.45);
-  ctx.lineTo(w*0.32, h*0.3);
-  ctx.lineTo(w*0.18, h*0.48);
-  ctx.lineTo(-w*0.18, h*0.48);
-  ctx.lineTo(-w*0.32, h*0.3);
-  ctx.lineTo(-w*0.5, h*0.45);
-  ctx.lineTo(-w*0.38, h*0.28);
-  ctx.bezierCurveTo(-w*0.45, h*0.18, -w*0.28, -h*0.08, 0, -h*0.5);
-  ctx.closePath();
-  ctx.fill();
-  ctx.shadowBlur = 0;
-
-  // Cockpit
-  ctx.fillStyle = '#020d20';
-  ctx.beginPath();
-  ctx.ellipse(0, -h*0.1, w*0.14, h*0.18, 0, 0, Math.PI*2);
-  ctx.fill();
-  ctx.fillStyle = 'rgba(0,229,255,0.3)';
-  ctx.beginPath();
-  ctx.ellipse(-w*0.04, -h*0.13, w*0.08, h*0.11, -0.3, 0, Math.PI*2);
-  ctx.fill();
-
-  ctx.restore();
-}
-
-function drawParts() {
-  for (const p of parts) {
-    ctx.save();
-    ctx.globalAlpha = clamp(p.alpha, 0, 1);
-    ctx.fillStyle = p.color;
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
-    ctx.fill();
-    ctx.restore();
-  }
-}
-
-function drawHUD() {
-  // ── Shield bar ────────────────────────────────────────────
-  const bx = 16, by = 14, bw = GW - 32, bh = 14;
-  const pct = gs.shield / CFG.shield.max;
-  const shCol = pct > 0.5 ? '#69f0ae' : pct > CFG.shield.criticalPct ? '#ffd600' : '#ff1744';
-
-  // BG track
-  ctx.fillStyle = 'rgba(0,0,0,0.45)';
-  rrect(bx, by, bw, bh, 7);
-  ctx.fill();
-
-  // Fill
-  if (pct > 0) {
-    const fg = ctx.createLinearGradient(bx, 0, bx + bw * pct, 0);
-    fg.addColorStop(0, shCol);
-    fg.addColorStop(1, shCol + '99');
-    ctx.fillStyle = fg;
-    rrect(bx, by, Math.max(bh, bw * pct), bh, 7);
-    ctx.fill();
-  }
-
-  // Shield label (left)
-  ctx.fillStyle = '#fff';
-  ctx.font = '600 12px system-ui';
-  ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
-  ctx.fillText('🛡 ' + Math.ceil(gs.shield), bx, by - 8);
-
-  // Critical pulse warning
-  if (pct <= CFG.shield.criticalPct) {
-    const alpha = 0.5 + 0.5 * Math.sin(gs.gameTime * 9);
-    ctx.fillStyle = `rgba(255,23,68,${alpha})`;
-    ctx.font = '700 11px system-ui';
-    ctx.textAlign = 'right';
-    ctx.fillText('⚠ LOW', GW - 16, by - 8);
-  }
-
-  // ── Score (right) ─────────────────────────────────────────
-  ctx.fillStyle = '#ffd600';
-  ctx.font = '900 24px system-ui';
-  ctx.textAlign = 'right'; ctx.textBaseline = 'top';
-  ctx.fillText(gs.score.toLocaleString(), GW - 14, 34);
-
-  // ── Level (left) ─────────────────────────────────────────
-  ctx.fillStyle = '#7ab0c8';
-  ctx.font = '600 12px system-ui';
-  ctx.textAlign = 'left'; ctx.textBaseline = 'top';
-  ctx.fillText('LVL ' + gs.level, 16, 34);
-
-  // ── Combo ─────────────────────────────────────────────────
-  if (gs.combo >= 2) {
-    ctx.fillStyle = gs.fever ? '#ffd600' : '#00e5ff';
-    ctx.font = `700 13px system-ui`;
-    ctx.textAlign = 'right'; ctx.textBaseline = 'top';
-    ctx.fillText('x' + Math.floor(gs.combo) + ' COMBO', GW - 14, 62);
-  }
-
-  // ── Coins ─────────────────────────────────────────────────
-  ctx.fillStyle = '#ffd600';
-  ctx.font = '600 12px system-ui';
-  ctx.textAlign = 'left'; ctx.textBaseline = 'top';
-  ctx.fillText('🪙 ' + gs.coins, 16, 52);
-
-  // ── Timer (Quick Run) ─────────────────────────────────────
-  if (gs.timeLimitSec < Infinity) {
-    const rem = Math.max(0, gs.timeLimitSec - gs.gameTime);
-    const mm = Math.floor(rem / 60);
-    const ss = String(Math.floor(rem % 60)).padStart(2, '0');
-    const urgent = rem < 30;
-    ctx.fillStyle = urgent ? '#ff1744' : '#ffffff';
-    ctx.font = `700 ${urgent ? 18 : 15}px system-ui`;
-    ctx.textAlign = 'center'; ctx.textBaseline = 'top';
-    ctx.fillText(`${mm}:${ss}`, GW / 2, 34);
-  }
-
-  // ── Question prompt ───────────────────────────────────────
-  if (gs.currentQ) {
-    const text = gs.currentQ.prompt;
-    const px = 18, py = 82, pw = GW - 36, pht = 50;
-
-    ctx.fillStyle = 'rgba(10,22,56,0.88)';
-    rrect(px, py, pw, pht, 12);
-    ctx.fill();
-    ctx.strokeStyle = 'rgba(0,229,255,0.28)';
-    ctx.lineWidth = 1.5;
-    rrect(px, py, pw, pht, 12);
-    ctx.stroke();
-
-    const fs = text.length > 22 ? 16 : text.length > 12 ? 20 : 24;
-    ctx.fillStyle = '#ffffff';
-    ctx.font = `900 ${fs}px 'Segoe UI', system-ui, sans-serif`;
-    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-    ctx.shadowColor = 'rgba(0,0,0,0.5)'; ctx.shadowBlur = 3;
-    ctx.fillText(text, GW / 2, py + pht / 2);
-    ctx.shadowBlur = 0;
-  }
-
-  // ── Fever banner ──────────────────────────────────────────
-  if (gs.fever) {
-    const a = 0.18 + 0.1 * Math.sin(gs.feverFlash);
-    ctx.fillStyle = `rgba(255,214,0,${a})`;
-    ctx.fillRect(0, 0, GW, GH);
-    ctx.fillStyle = '#ffd600';
-    ctx.font = '900 19px system-ui';
-    ctx.textAlign = 'center'; ctx.textBaseline = 'top';
-    ctx.fillText('🔥 FEVER MODE! 🔥', GW/2, 62);
-  }
-}
-
-function drawFeverBorder() {
-  for (let i = 0; i < 3; i++) {
-    const hue = (gs.gameTime * 130 + i * 120) % 360;
-    ctx.strokeStyle = `hsla(${hue},100%,65%,0.3)`;
-    ctx.lineWidth = 4;
-    ctx.strokeRect(i*3, i*3, GW - i*6, GH - i*6);
-  }
-}
-
-// canvas rounded-rect helper (path only, caller strokes/fills)
-function rrect(x, y, w, h, r) {
-  ctx.beginPath();
-  ctx.moveTo(x+r, y);
-  ctx.lineTo(x+w-r, y); ctx.quadraticCurveTo(x+w, y, x+w, y+r);
-  ctx.lineTo(x+w, y+h-r); ctx.quadraticCurveTo(x+w, y+h, x+w-r, y+h);
-  ctx.lineTo(x+r, y+h); ctx.quadraticCurveTo(x, y+h, x, y+h-r);
-  ctx.lineTo(x, y+r); ctx.quadraticCurveTo(x, y, x+r, y);
-  ctx.closePath();
-}
-
-// ============================================================
-// END GAME
-// ============================================================
-const GAME_OVER_DELAY_MS = 550;  // allow shake/particle FX to complete
-const END_SCREEN_DELAY_MS = 420; // transition pause after game ends
-
-let endScheduled = false;
-
-function endGame(completed) {
-  if (endScheduled || gs.ended) return;
-  endScheduled = true;
-  gs.ended = true;
-  cancelAnimationFrame(afId);
-
-  // Persist stats
-  const saved = loadStats();
-  if (gs.score > (saved.bestScore || 0)) saved.bestScore = gs.score;
-  saved.totalCorrect = (saved.totalCorrect || 0) + gs.totalCorrect;
-  saveStats(saved);
-
-    setTimeout(() => completed ? showResults() : showGameOver(), END_SCREEN_DELAY_MS);
-}
-
-// ============================================================
-// PERSISTENCE
-// ============================================================
-function loadStats() {
-  try { return JSON.parse(localStorage.getItem('mmsr_stats') || '{}'); }
-  catch { return {}; }
-}
-function saveStats(s) {
-  try { localStorage.setItem('mmsr_stats', JSON.stringify(s)); } catch { }
-}
-
-// ============================================================
-// INPUT
-// ============================================================
-function setLane(lane) {
-  if (!gs.running || gs.ended) return;
-  gs.shipLane = clamp(lane, 0, LANES - 1);
-  gs.shipTargetX = laneX(gs.shipLane);
-}
-
-function setupInput() {
-  const c = document.getElementById('canvas');
-
-  c.addEventListener('touchstart', e => {
-    e.preventDefault();
-    const t = e.changedTouches[0];
-    const rect = c.getBoundingClientRect();
-    const x = (t.clientX - rect.left) / scale;
-    setLane(x < LW ? 0 : x < LW*2 ? 1 : 2);
-  }, { passive: false });
-
-  c.addEventListener('click', e => {
-    const rect = c.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / scale;
-    setLane(x < LW ? 0 : x < LW*2 ? 1 : 2);
-  });
-
-  document.addEventListener('keydown', e => {
-    if (!gs.running) return;
-    if (e.key === 'ArrowLeft'  || e.key === 'a' || e.key === 'A') setLane(gs.shipLane - 1);
-    if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') setLane(gs.shipLane + 1);
-    if (e.key === '1') setLane(0);
-    if (e.key === '2') setLane(1);
-    if (e.key === '3') setLane(2);
-  });
-}
-
-// ============================================================
-// CANVAS SETUP & SCALING
-// ============================================================
-let scale = 1;
-
-function setupCanvas() {
-  canvas = document.getElementById('canvas');
-  ctx = canvas.getContext('2d');
-  resizeCanvas();
-  window.addEventListener('resize', resizeCanvas);
-}
-
-function resizeCanvas() {
-  const maxW = window.innerWidth;
-  const maxH = window.innerHeight;
-  const ratio = GW / GH;
-  let w, h;
-  if (maxW / maxH < ratio) { w = maxW; h = maxW / ratio; }
-  else { h = maxH; w = maxH * ratio; }
-  scale = w / GW;
-  canvas.width  = GW;
-  canvas.height = GH;
-  canvas.style.width  = w + 'px';
-  canvas.style.height = h + 'px';
-}
-
-// ============================================================
-// SCREEN MANAGEMENT
-// ============================================================
-const ALL_SCREENS = ['screen-landing','screen-age','screen-mode','screen-gameover','screen-results'];
-
-function showScreen(id) {
-  ALL_SCREENS.forEach(s => document.getElementById(s).classList.add('hidden'));
-  document.getElementById('game-wrap').classList.add('hidden');
-  if (id === 'game') {
-    document.getElementById('game-wrap').classList.remove('hidden');
-  } else {
-    document.getElementById(id).classList.remove('hidden');
-  }
-}
-
-function showGameOver() {
-  document.getElementById('go-score').textContent   = gs.score.toLocaleString();
-  document.getElementById('go-correct').textContent = gs.totalCorrect;
-  document.getElementById('go-combo').textContent   = gs.bestCombo;
-  document.getElementById('go-reason').textContent  = 'Your shield ran out!';
-  showScreen('screen-gameover');
-}
-
-function showResults() {
-  const tot = gs.totalCorrect + gs.totalWrong;
-  const acc = tot > 0 ? Math.round(gs.totalCorrect / tot * 100) : 0;
-  document.getElementById('res-score').textContent   = gs.score.toLocaleString();
-  document.getElementById('res-xp').textContent      = gs.xp;
-  document.getElementById('res-coins').textContent   = gs.coins;
-  document.getElementById('res-correct').textContent = gs.totalCorrect;
-  document.getElementById('res-combo').textContent   = gs.bestCombo;
-  document.getElementById('res-acc').textContent     = acc + '%';
-
-  const saved = loadStats();
-  const nb = document.getElementById('new-best');
-  nb.classList.toggle('hidden', gs.score < (saved.bestScore || 0));
-  showScreen('screen-results');
-}
-
-function updateLanding() {
-  const saved = loadStats();
-  const el = document.getElementById('landing-best');
-  el.innerHTML = saved.bestScore
-    ? `<span style="color:#ffd600;font-weight:700;">Best: ${saved.bestScore.toLocaleString()}</span>`
-    : '';
-}
-
-// ============================================================
-// BUTTON WIRING
-// ============================================================
-function wireButtons() {
-  document.getElementById('btn-play').addEventListener('click', () => showScreen('screen-age'));
-  document.getElementById('age-back').addEventListener('click', () => showScreen('screen-landing'));
-  document.getElementById('mode-back').addEventListener('click', () => showScreen('screen-age'));
-
-  document.querySelectorAll('[data-age]').forEach(c => {
-    c.addEventListener('click', () => {
-      gs.ageBandId = c.dataset.age;
-      showScreen('screen-mode');
-    });
-  });
-
-  document.querySelectorAll('[data-mode]').forEach(c => {
-    c.addEventListener('click', () => {
-      gs.modeId = c.dataset.mode;
-      startGame();
-    });
-  });
-
-  document.getElementById('btn-retry').addEventListener('click',  () => startGame());
-  document.getElementById('btn-retry2').addEventListener('click', () => startGame());
-  document.getElementById('btn-home').addEventListener('click',   () => { showScreen('screen-landing'); updateLanding(); });
-  document.getElementById('btn-home2').addEventListener('click',  () => { showScreen('screen-landing'); updateLanding(); });
-}
-
-function startGame() {
-  endScheduled = false;
-  initState();
-  showScreen('game');
-  startLoop();
-}
-
-// ============================================================
-// BOOT
-// ============================================================
-setupCanvas();
-setupInput();
-wireButtons();
-updateLanding();
-showScreen('screen-landing');
-</script>
+<div id="screen-missions" class="screen hidden">
+  <button class="btn-back" id="missions-back">&#8592;</button>
+  <div class="screen-title">🎯 Missions</div>
+  <div class="screen-sub" id="missions-coins-display"></div>
+  <div class="scroll-list" id="missions-list"></div>
+</div>
+
+<!-- ============================================================
+     SCREEN: Upgrade Shop
+============================================================ -->
+<div id="screen-upgrades" class="screen hidden">
+  <button class="btn-back" id="upgrades-back">&#8592;</button>
+  <div class="screen-title">🛒 Upgrade Shop</div>
+  <div class="coins-bar" id="shop-coins-display" style="justify-content:center;"></div>
+  <div class="cat-tabs" id="upgrade-tabs"></div>
+  <div class="scroll-list" id="upgrades-list"></div>
+</div>
+
+<!-- ============================================================
+     SCREEN: Cosmetics / Ships
+============================================================ -->
+<div id="screen-cosmetics" class="screen hidden">
+  <button class="btn-back" id="cosmetics-back">&#8592;</button>
+  <div class="screen-title">🎨 Ships</div>
+  <div class="screen-sub">Select your ship</div>
+  <div class="ship-grid" id="ships-grid"></div>
+</div>
+
+<!-- ============================================================
+     SCREEN: Stats
+============================================================ -->
+<div id="screen-stats" class="screen hidden">
+  <button class="btn-back" id="stats-back">&#8592;</button>
+  <div class="screen-title">📊 Stats</div>
+  <div class="stat-row" id="stats-main"></div>
+  <div class="level-bar-wrap" id="stats-level-bar"></div>
+  <div id="stats-strands" style="width:100%; max-width:340px;"></div>
+</div>
+
+<!-- ============================================================
+     OVERLAY: Teaching Tip
+============================================================ -->
+<div id="tip-overlay" class="hidden">
+  <div class="tip-card">
+    <div class="tip-header">💡 Here's a tip!</div>
+    <div id="tip-question" style="font-size:0.9rem; color:var(--subtext); margin-bottom:6px;"></div>
+    <div class="tip-answer" id="tip-answer"></div>
+    <div class="tip-strategy" id="tip-strategy"></div>
+    <ul class="tip-steps" id="tip-steps" style="display:none;"></ul>
+    <button class="btn btn-primary btn-sm" id="tip-ok" style="margin-top:12px;">Got it! 👍</button>
+  </div>
+</div>
+
+<script src="js/game.js"></script>
 </body>
 </html>
