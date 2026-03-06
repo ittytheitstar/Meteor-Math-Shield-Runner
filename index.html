@@ -24,14 +24,18 @@
     <div class="logo-sub">Shield Runner</div>
   </div>
   <div id="landing-info" style="margin-bottom:16px; text-align:center; min-height:32px;"></div>
-  <button class="btn btn-primary" id="btn-play" style="max-width:200px; font-size:1.25rem; padding:18px 0;">&#9654;&nbsp; Play</button>
+  <button class="btn btn-primary" id="btn-play" style="max-width:200px; font-size:1.25rem; padding:18px 0;">&#9654;&nbsp; <span data-i18n="Play">Play</span></button>
   <div class="landing-nav">
-    <button class="landing-nav-btn" id="btn-missions"><span class="lnb-icon">🎯</span>Missions</button>
-    <button class="landing-nav-btn" id="btn-shop"><span class="lnb-icon">🛒</span>Shop</button>
-    <button class="landing-nav-btn" id="btn-cosmetics"><span class="lnb-icon">🎨</span>Ships</button>
-    <button class="landing-nav-btn" id="btn-stats-screen"><span class="lnb-icon">📊</span>Stats</button>
+    <button class="landing-nav-btn" id="btn-missions"><span class="lnb-icon">🎯</span><span data-i18n="Missions">Missions</span></button>
+    <button class="landing-nav-btn" id="btn-shop"><span class="lnb-icon">🛒</span><span data-i18n="Shop">Shop</span></button>
+    <button class="landing-nav-btn" id="btn-cosmetics"><span class="lnb-icon">🎨</span><span data-i18n="Ships">Ships</span></button>
+    <button class="landing-nav-btn" id="btn-stats-screen"><span class="lnb-icon">📊</span><span data-i18n="Stats">Stats</span></button>
   </div>
   <p style="margin-top:20px; color:var(--subtext); font-size:0.78rem; text-align:center; max-width:280px; line-height:1.5;">Steer your ship into the correct answer.<br>Shield the ship &mdash; math wins the day!</p>
+  <div class="a11y-row">
+    <button class="a11y-btn" id="contrast-toggle" aria-label="Toggle high contrast">🌓</button>
+    <button class="a11y-btn" id="maori-toggle" aria-label="Toggle Te Reo Māori">🌿 Māori</button>
+  </div>
 </div>
 
 <!-- ============================================================
@@ -39,8 +43,8 @@
 ============================================================ -->
 <div id="screen-age" class="screen hidden">
   <button class="btn-back" id="age-back">&#8592;</button>
-  <div class="screen-title">Who's playing?</div>
-  <div class="screen-sub">Pick your age group</div>
+  <div class="screen-title" data-i18n="Who's playing?">Who's playing?</div>
+  <div class="screen-sub" data-i18n="Pick your age group">Pick your age group</div>
 
   <div class="card-grid">
     <div class="card" data-age="age6_7">
@@ -66,8 +70,8 @@
 ============================================================ -->
 <div id="screen-mode" class="screen hidden">
   <button class="btn-back" id="mode-back">&#8592;</button>
-  <div class="screen-title">Choose Mode</div>
-  <div class="screen-sub">How do you want to play?</div>
+  <div class="screen-title" data-i18n="Choose Mode">Choose Mode</div>
+  <div class="screen-sub" data-i18n="How do you want to play?">How do you want to play?</div>
 
   <div class="card-grid">
     <div class="card" data-mode="quickRun">
@@ -110,8 +114,9 @@
     <div class="stat"><div class="stat-val" id="go-xp">0</div><div class="stat-label">XP Earned</div></div>
   </div>
 
-  <button class="btn btn-primary"   id="btn-retry">🔄&nbsp; Play Again</button>
-  <button class="btn btn-secondary" id="btn-home">🏠&nbsp; Home</button>
+  <button class="btn btn-primary"   id="btn-retry">🔄&nbsp; <span data-i18n="Play Again">Play Again</span></button>
+  <button class="btn btn-secondary" id="btn-share-go">📤&nbsp; Share</button>
+  <button class="btn btn-secondary" id="btn-home">🏠&nbsp; <span data-i18n="Home">Home</span></button>
 </div>
 
 <!-- ============================================================
@@ -136,8 +141,9 @@
 
   <div id="new-best" class="hidden" style="color:#ffd600; font-weight:900; font-size:1.2rem; text-align:center; margin-bottom:10px;">⭐ New Best Score!</div>
 
-  <button class="btn btn-primary"   id="btn-retry2">🔄&nbsp; Play Again</button>
-  <button class="btn btn-secondary" id="btn-home2">🏠&nbsp; Home</button>
+  <button class="btn btn-primary"   id="btn-retry2">🔄&nbsp; <span data-i18n="Play Again">Play Again</span></button>
+  <button class="btn btn-secondary" id="btn-share">📤&nbsp; Share</button>
+  <button class="btn btn-secondary" id="btn-home2">🏠&nbsp; <span data-i18n="Home">Home</span></button>
 </div>
 
 <!-- ============================================================

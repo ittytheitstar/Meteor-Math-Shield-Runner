@@ -3,7 +3,11 @@
   "description": "NZ curriculum-aligned HTML5 canvas math game for ages 6-12. Ship dodges/catches falling meteors labelled with math answers. Correct answer recharges shield; wrong depletes it.",
   "gameLoop": {
     "summary": "3-lane canvas game. One question shown at top. 3 meteors fall (one per lane) labelled with answer choices. Player taps/swipes a lane to move ship. Ship collides with the meteor in its lane when meteors reach ship level — correct = shield/score up, wrong = shield down.",
-    "canvasSize": { "w": 480, "h": 800, "scaledToViewport": true },
+    "canvasSize": {
+      "w": 480,
+      "h": 800,
+      "scaledToViewport": true
+    },
     "lanes": 3,
     "laneWidth": 160,
     "shipY": 700,
@@ -28,7 +32,11 @@
       "id": "phase1",
       "title": "Core Playable Game",
       "status": "complete",
-      "files": ["index.html", "css/style.css", "js/game.js"],
+      "files": [
+        "index.html",
+        "css/style.css",
+        "js/game.js"
+      ],
       "features": [
         "HTML shell: landing, age-select, mode-select, game-canvas, gameover, results screens",
         "Canvas game engine: requestAnimationFrame loop, scaling, touch/keyboard input",
@@ -55,7 +63,11 @@
       "id": "phase2",
       "title": "Missions, Upgrades & Cosmetics",
       "status": "complete",
-      "files": ["index.html", "css/style.css", "js/game.js"],
+      "files": [
+        "index.html",
+        "css/style.css",
+        "js/game.js"
+      ],
       "features": [
         "Mission select screen: 13 missions from MISSIONS constant, progress shown, goal tracking",
         "Mission mode gameplay: goal-specific win condition (streak, correct count, fever, reach level, shield above, type correct, coins in run)",
@@ -76,7 +88,11 @@
       "id": "phase3",
       "title": "Audio, Polish & Advanced Features",
       "status": "complete",
-      "files": ["index.html", "css/style.css", "js/game.js"],
+      "files": [
+        "index.html",
+        "css/style.css",
+        "js/game.js"
+      ],
       "features": [
         "Web Audio API: procedural SFX for correct (chime), wrong (thud), fever (swell), level-up (fanfare), game-over (descend)",
         "Background ambient space music (oscillator-based procedural with LFO modulation, starts on game start, fades out on game end)",
@@ -90,8 +106,8 @@
     {
       "id": "phase4",
       "title": "Full Content & NZ Curriculum Coverage",
-      "status": "pending",
-      "plannedFeatures": [
+      "status": "complete",
+      "features": [
         "Place value highlight upgrade visual effect (colour-code tens/ones on meteor text)",
         "Eliminate-one upgrade: dims eliminated meteor with X overlay",
         "Timetable/schedule question type",
@@ -130,6 +146,6 @@
     "rendering": "drawBg() → drawLanes() → drawMeteors() → drawShip() → drawParts() → drawHUD() → drawFeverBorder()",
     "upgradeEffects": "Upgrades applied at runtime: getShieldMax(), getDrainMult(), upgLevel(id). Second chance stored in gs.secondChanceLeft. Slow time in gs.slowTimeActive + gs.slowTimeTimer.",
     "missionFlow": "missions screen → startMission(id) → age-select (if ageBandId not set) → startGame(). Mission mode sets gs.modeId='mission', gs.missionId. updateMission() called on correct/wrong/fever/level events.",
-    "agentSessionNote": "Parts 1 and 2 completed in separate sessions (Feb/Mar 2026). Phase 2 completed in third session (Mar 6 2026). Phase 3 completed in fourth session (Mar 6 2026). Future agents start from Phase 4."
+    "agentSessionNote": "Parts 1 and 2 completed in separate sessions (Feb/Mar 2026). Phase 2 completed in third session (Mar 6 2026). Phase 3 completed in fourth session (Mar 6 2026). Phase 4 completed in fifth session (Mar 6 2026)."
   }
 }
