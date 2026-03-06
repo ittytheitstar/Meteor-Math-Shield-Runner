@@ -1045,6 +1045,8 @@ let gamePaused = false;
 
 // Rush speed (px/s) applied to a meteor the player tapped
 const RUSH_SPEED = 600;
+// Extra pixels beyond MR within which a tap registers as hitting a meteor
+const METEOR_TAP_TOLERANCE = 12;
 
 function spawnBullet(lane) {
   gs.bullet = {
@@ -1117,7 +1119,9 @@ function initState() {
     dailyQuestions: null,
     // tap-on-meteor: active bullet and rushed lane
     bullet: null,
-    rushedLane: -1
+    rushedLane: -1,
+    // lane locked after selecting a meteor; unlocked when next question starts
+    laneLocked: false
   });
 
   gs.missionProgress = initMissionProgress(gs.missionId);
@@ -1141,6 +1145,8 @@ function spawnQuestion() {
   }
   gs.questionAnswered = false;
   gs.questionStartTime = gs.gameTime;
+  gs.laneLocked = false;
+  gs.rushedLane = -1;
   spawnMeteors(gs.currentQ);
   gs.wave++;
   gs.meteorSpeed = Math.min(
@@ -1698,11 +1704,13 @@ function update(dt) {
 function updateMeteors(dt) {
   let anyAlive = false;
   const slowMult = gs.slowTimeActive ? UPGRADES.find(u => u.id === 'slow_time').effect.speedMultiplier : 1;
+  // If a meteor has been selected (lane locked), all meteors speed up together
+  const anyRushed = gs.laneLocked;
 
   for (const m of gs.meteors) {
     if (!m.alive) continue;
     anyAlive = true;
-    m.y += (m.rushed ? Math.max(m.speed, RUSH_SPEED) : m.speed) * slowMult * dt;
+    m.y += (anyRushed ? Math.max(m.speed, RUSH_SPEED) : m.speed) * slowMult * dt;
     m.wobble += dt * 1.6;
     if (m.flash > 0) m.flash = Math.max(0, m.flash - dt * 2.5);
 
@@ -2614,24 +2622,36 @@ function setLane(lane) {
   gs.shipTargetX = laneX(gs.shipLane);
 }
 
-function handleTap(x) {
+function handleTap(x, y) {
   if (!gs.running || gs.ended) return;
   const lane = clamp(Math.floor(x / LW), 0, LANES - 1);
-  setLane(lane);
 
-  // Rush the meteor in the tapped lane and fire a bullet
+  // Check if the tap directly hits a meteor (select answer and lock lane)
   if (!gs.questionAnswered) {
-    // Clear any previous rush and bullet
-    for (const m of gs.meteors) { if (m.alive) m.rushed = false; }
-    gs.bullet = null;
-    gs.rushedLane = -1;
+    const hitMeteor = gs.meteors.find(m => {
+      if (!m.alive || m.eliminated) return false;
+      const dx = x - m.x;
+      const dy = y - m.y;
+      return dx * dx + dy * dy <= (MR + METEOR_TAP_TOLERANCE) * (MR + METEOR_TAP_TOLERANCE);
+    });
 
-    const target = gs.meteors.find(m => m.alive && m.lane === lane);
-    if (target) {
-      target.rushed = true;
-      gs.rushedLane = lane;
-      spawnBullet(lane);
+    if (hitMeteor) {
+      // Tapping directly on a meteor: lock the selection, rush ALL meteors
+      if (!gs.laneLocked) {
+        setLane(hitMeteor.lane);
+        gs.laneLocked = true;
+        gs.rushedLane = hitMeteor.lane;
+        for (const m of gs.meteors) { if (m.alive) m.rushed = false; }
+        hitMeteor.rushed = true;
+        spawnBullet(hitMeteor.lane);
+      }
+      return;
     }
+  }
+
+  // Tapping the lane (not on a meteor): only move the ship if no answer is locked
+  if (!gs.laneLocked) {
+    setLane(lane);
   }
 }
 
@@ -2643,13 +2663,15 @@ function setupInput() {
     const t = e.changedTouches[0];
     const rect = c.getBoundingClientRect();
     const x = (t.clientX - rect.left) / scale;
-    handleTap(x);
+    const y = (t.clientY - rect.top) / scale;
+    handleTap(x, y);
   }, { passive: false });
 
   c.addEventListener('click', e => {
     const rect = c.getBoundingClientRect();
     const x = (e.clientX - rect.left) / scale;
-    handleTap(x);
+    const y = (e.clientY - rect.top) / scale;
+    handleTap(x, y);
   });
 
   document.addEventListener('keydown', e => {
