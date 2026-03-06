@@ -75,15 +75,16 @@
     {
       "id": "phase3",
       "title": "Audio, Polish & Advanced Features",
-      "status": "pending",
-      "plannedFeatures": [
+      "status": "complete",
+      "files": ["index.html", "css/style.css", "js/game.js"],
+      "features": [
         "Web Audio API: procedural SFX for correct (chime), wrong (thud), fever (swell), level-up (fanfare), game-over (descend)",
-        "Background ambient space music (oscillator-based procedural)",
-        "Enhanced particle system: trail particles behind ship, explosion rings, star burst on fever",
-        "Advanced number patterns: square numbers, doubling sequences",
-        "Daily challenge mode with deterministic LCG seed from date (YYYYMMDD)",
-        "Improved meteor visuals: glow pulse intensity based on distance to ship",
-        "Audio mute toggle button"
+        "Background ambient space music (oscillator-based procedural with LFO modulation, starts on game start, fades out on game end)",
+        "Audio mute toggle button (#audio-toggle, fixed top-right, muted state persisted in localStorage)",
+        "Enhanced particle system: trail particles behind ship every 40ms (fever=3x density), explosion rings on correct/wrong (expand and fade), star burst on fever trigger (24 hue-rotated particles + ring)",
+        "Advanced number patterns: square numbers (n², (n+1)², ...) added to genPattern for difficulty ≥ 5 alongside doubling sequences (50/50 random)",
+        "Daily challenge mode: deterministic LCG seed from YYYYMMDD date, 50 pre-generated questions per day per age band, result saved to localStorage (mmsr_daily_YYYYMMDD), status shown on landing and mode screen",
+        "Improved meteor visuals: glow pulse intensity and radius based on distance to ship (proximity-based alpha + lineWidth animation)"
       ]
     },
     {
@@ -129,6 +130,6 @@
     "rendering": "drawBg() → drawLanes() → drawMeteors() → drawShip() → drawParts() → drawHUD() → drawFeverBorder()",
     "upgradeEffects": "Upgrades applied at runtime: getShieldMax(), getDrainMult(), upgLevel(id). Second chance stored in gs.secondChanceLeft. Slow time in gs.slowTimeActive + gs.slowTimeTimer.",
     "missionFlow": "missions screen → startMission(id) → age-select (if ageBandId not set) → startGame(). Mission mode sets gs.modeId='mission', gs.missionId. updateMission() called on correct/wrong/fever/level events.",
-    "agentSessionNote": "Parts 1 and 2 completed in separate sessions (Feb/Mar 2026). Phase 2 completed in third session (Mar 6 2026). Future agents start from Phase 3."
+    "agentSessionNote": "Parts 1 and 2 completed in separate sessions (Feb/Mar 2026). Phase 2 completed in third session (Mar 6 2026). Phase 3 completed in fourth session (Mar 6 2026). Future agents start from Phase 4."
   }
 }

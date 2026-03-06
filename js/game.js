@@ -65,9 +65,10 @@ const CFG = {
     }
   },
   modes: {
-    quickRun: { label: 'Quick Run',    durationSec: 150,      hasFailure: true,  shieldDrain: true,  speedMult: 1.0  },
-    mission:  { label: 'Mission',      durationSec: Infinity, hasFailure: true,  shieldDrain: true,  speedMult: 1.0  },
-    zen:      { label: 'Zen Practice', durationSec: Infinity, hasFailure: false, shieldDrain: false, speedMult: 0.55 }
+    quickRun: { label: 'Quick Run',        durationSec: 150,      hasFailure: true,  shieldDrain: true,  speedMult: 1.0  },
+    mission:  { label: 'Mission',          durationSec: Infinity, hasFailure: true,  shieldDrain: true,  speedMult: 1.0  },
+    zen:      { label: 'Zen Practice',     durationSec: Infinity, hasFailure: false, shieldDrain: false, speedMult: 0.55 },
+    daily:    { label: 'Daily Challenge',  durationSec: 150,      hasFailure: true,  shieldDrain: true,  speedMult: 1.0  }
   }
 };
 
@@ -139,6 +140,147 @@ const TIPS = {
   probability: { strategy: 'P = favourable ÷ total outcomes.',                  example: '3 red, 5 blue → P(red) = 3/8' },
   decimal:     { strategy: 'Line up decimal points when adding/subtracting.',   example: '2.3 + 1.45 = 3.75' }
 };
+
+// ============================================================
+// AUDIO ENGINE
+// ============================================================
+let audioCtx = null;
+let audioMuted = false;
+let ambientOscillators = [];
+let ambientGainNode = null;
+
+function getAudioCtx() {
+  if (!audioCtx) {
+    try {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    } catch(e) { return null; }
+  }
+  if (audioCtx.state === 'suspended') {
+    audioCtx.resume().catch(() => {});
+  }
+  return audioCtx;
+}
+
+function sfxCorrect() {
+  const ac = getAudioCtx();
+  if (!ac || audioMuted) return;
+  [520, 780].forEach((freq, i) => {
+    const osc = ac.createOscillator();
+    const gain = ac.createGain();
+    osc.connect(gain); gain.connect(ac.destination);
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(freq, ac.currentTime + i * 0.08);
+    gain.gain.setValueAtTime(0.13, ac.currentTime + i * 0.08);
+    gain.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + i * 0.08 + 0.25);
+    osc.start(ac.currentTime + i * 0.08);
+    osc.stop(ac.currentTime + i * 0.08 + 0.28);
+  });
+}
+
+function sfxWrong() {
+  const ac = getAudioCtx();
+  if (!ac || audioMuted) return;
+  const osc = ac.createOscillator();
+  const gain = ac.createGain();
+  osc.connect(gain); gain.connect(ac.destination);
+  osc.type = 'sawtooth';
+  osc.frequency.setValueAtTime(200, ac.currentTime);
+  osc.frequency.exponentialRampToValueAtTime(80, ac.currentTime + 0.3);
+  gain.gain.setValueAtTime(0.10, ac.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.32);
+  osc.start(ac.currentTime);
+  osc.stop(ac.currentTime + 0.35);
+}
+
+function sfxFever() {
+  const ac = getAudioCtx();
+  if (!ac || audioMuted) return;
+  [440, 550, 660].forEach((freq, i) => {
+    const osc = ac.createOscillator();
+    const gain = ac.createGain();
+    osc.connect(gain); gain.connect(ac.destination);
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(freq, ac.currentTime);
+    gain.gain.setValueAtTime(0.001, ac.currentTime);
+    gain.gain.linearRampToValueAtTime(0.07, ac.currentTime + 0.25);
+    gain.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 1.0);
+    osc.start(ac.currentTime);
+    osc.stop(ac.currentTime + 1.1);
+  });
+}
+
+function sfxLevelUp() {
+  const ac = getAudioCtx();
+  if (!ac || audioMuted) return;
+  [523, 659, 784, 1047].forEach((freq, i) => {
+    const osc = ac.createOscillator();
+    const gain = ac.createGain();
+    osc.connect(gain); gain.connect(ac.destination);
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(freq, ac.currentTime + i * 0.13);
+    gain.gain.setValueAtTime(0.11, ac.currentTime + i * 0.13);
+    gain.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + i * 0.13 + 0.28);
+    osc.start(ac.currentTime + i * 0.13);
+    osc.stop(ac.currentTime + i * 0.13 + 0.32);
+  });
+}
+
+function sfxGameOver() {
+  const ac = getAudioCtx();
+  if (!ac || audioMuted) return;
+  [392, 330, 262, 196].forEach((freq, i) => {
+    const osc = ac.createOscillator();
+    const gain = ac.createGain();
+    osc.connect(gain); gain.connect(ac.destination);
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(freq, ac.currentTime + i * 0.2);
+    gain.gain.setValueAtTime(0.10, ac.currentTime + i * 0.2);
+    gain.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + i * 0.2 + 0.35);
+    osc.start(ac.currentTime + i * 0.2);
+    osc.stop(ac.currentTime + i * 0.2 + 0.4);
+  });
+}
+
+function startAmbient() {
+  const ac = getAudioCtx();
+  if (!ac || audioMuted) return;
+  stopAmbient();
+  ambientGainNode = ac.createGain();
+  ambientGainNode.gain.setValueAtTime(0, ac.currentTime);
+  ambientGainNode.gain.linearRampToValueAtTime(0.032, ac.currentTime + 2.5);
+  ambientGainNode.connect(ac.destination);
+  [55, 55.3, 82.5].forEach((freq, i) => {
+    const osc = ac.createOscillator();
+    const lfo = ac.createOscillator();
+    const lfoGain = ac.createGain();
+    lfo.type = 'sine';
+    lfo.frequency.value = 0.11 + i * 0.05;
+    lfoGain.gain.value = 2.5;
+    lfo.connect(lfoGain);
+    lfoGain.connect(osc.frequency);
+    osc.type = 'sine';
+    osc.frequency.value = freq;
+    osc.connect(ambientGainNode);
+    osc.start(); lfo.start();
+    ambientOscillators.push(osc, lfo);
+  });
+}
+
+function stopAmbient() {
+  if (ambientGainNode) {
+    const ac = getAudioCtx();
+    if (ac) {
+      try {
+        ambientGainNode.gain.setValueAtTime(ambientGainNode.gain.value, ac.currentTime);
+        ambientGainNode.gain.linearRampToValueAtTime(0.001, ac.currentTime + 0.5);
+      } catch(e) {}
+    }
+    const nodes = ambientOscillators.slice();
+    ambientOscillators = [];
+    ambientGainNode = null;
+    setTimeout(() => { nodes.forEach(n => { try { n.stop(); } catch(e) {} }); }, 600);
+  }
+}
 
 // ============================================================
 // UTILITY
@@ -299,9 +441,18 @@ function genPattern(d) {
     step = [1, 2, 5][rnd(0, 2)]; const s = rnd(20, 50);
     seq = [s, s - step, s - 2 * step, s - 3 * step]; ans = Math.max(0, s - 4 * step);
   } else {
-    const s = rnd(1, 4);
-    seq = [s, s * 2, s * 4, s * 8]; ans = s * 16;
-    step = s;
+    if (Math.random() < 0.5) {
+      // doubling sequence
+      const s = rnd(1, 4);
+      seq = [s, s * 2, s * 4, s * 8]; ans = s * 16;
+      step = s;
+    } else {
+      // square numbers: n², (n+1)², (n+2)², (n+3)², next?
+      const start = rnd(1, 5);
+      seq = [start * start, (start + 1) * (start + 1), (start + 2) * (start + 2), (start + 3) * (start + 3)];
+      ans = (start + 4) * (start + 4);
+      step = start;
+    }
   }
   const show = seq.slice(-4).join(', ');
   return makeQ(`${show}, ?`, ans, nearMiss(ans, [step || 1, 1]), nearMiss(ans, [2, step || 2]), 'pattern');
@@ -398,12 +549,60 @@ function spawnParts(x, y, color, count) {
   }
 }
 
+function spawnTrail(x, y, color) {
+  const count = gs.fever ? 3 : 1;
+  for (let i = 0; i < count; i++) {
+    parts.push({
+      x: x + rndF(-8, 8),
+      y: y + SHIP_H * 0.25 + rndF(-4, 4),
+      vx: rndF(-18, 18),
+      vy: rndF(55, 110),
+      color,
+      alpha: gs.fever ? 0.85 : 0.50,
+      r: rndF(2, gs.fever ? 6 : 4),
+      life: rndF(0.18, 0.38)
+    });
+  }
+}
+
+function spawnRing(x, y, color) {
+  parts.push({
+    x, y,
+    r: MR * 0.4,
+    growSpeed: MR * 4.5,
+    color,
+    alpha: 0.85,
+    life: 0.42,
+    isRing: true
+  });
+}
+
+function spawnFeverBurst(x, y) {
+  spawnRing(x, y, '#ffd600');
+  for (let i = 0; i < 24; i++) {
+    const a = (Math.PI * 2 * i / 24);
+    const spd = rndF(140, 360);
+    parts.push({
+      x, y,
+      vx: Math.cos(a) * spd, vy: Math.sin(a) * spd,
+      color: `hsl(${Math.floor(Math.random() * 60)}, 100%, 68%)`,
+      alpha: 1, r: rndF(3, 7), life: rndF(0.5, 0.9)
+    });
+  }
+}
+
+
 function updateParts(dt) {
   parts = parts.filter(p => p.alpha > 0.02);
   for (const p of parts) {
-    p.x += p.vx * dt; p.y += p.vy * dt;
-    p.vy += 70 * dt;
-    p.alpha -= dt / p.life;
+    if (p.isRing) {
+      p.r += p.growSpeed * dt;
+      p.alpha -= dt / p.life;
+    } else {
+      p.x += p.vx * dt; p.y += p.vy * dt;
+      p.vy += 70 * dt;
+      p.alpha -= dt / p.life;
+    }
   }
 }
 
@@ -466,10 +665,18 @@ function initState() {
     missionCompleted: false,
     missionProgress: null,
     // strand stats for this run
-    runStrandStats: {}
+    runStrandStats: {},
+    // ship trail timer
+    trailTimer: 0,
+    // daily challenge pre-generated questions
+    dailyQuestions: null
   });
 
   gs.missionProgress = initMissionProgress(gs.missionId);
+  // Pre-generate deterministic questions for daily challenge
+  if (gs.modeId === 'daily') {
+    gs.dailyQuestions = generateDailyQuestions(getTodayDateNum(), gs.ageBandId);
+  }
   parts = [];
   starOffY = 0;
   spawnQuestion();
@@ -479,7 +686,11 @@ function initState() {
 // QUESTION FLOW
 // ============================================================
 function spawnQuestion() {
-  gs.currentQ = generateQuestion(gs.ageBandId, gs.difficulty);
+  if (gs.dailyQuestions && gs.dailyQuestions.length > 0) {
+    gs.currentQ = gs.dailyQuestions.shift();
+  } else {
+    gs.currentQ = generateQuestion(gs.ageBandId, gs.difficulty);
+  }
   gs.questionAnswered = false;
   gs.questionStartTime = gs.gameTime;
   spawnMeteors(gs.currentQ);
@@ -529,10 +740,13 @@ function onCorrect(m) {
 
   // Fever?
   const ft = CFG.combo.feverThresholds;
-  if (ft.includes(gs.combo) || (gs.combo > ft[ft.length - 1])) {
+  const feverJustTriggered = ft.includes(gs.combo) || (gs.combo > ft[ft.length - 1]);
+  if (feverJustTriggered) {
     if (!gs.fever) {
       gs.feverTotal++;
       updateMission('fever', null);
+      sfxFever();
+      spawnFeverBurst(m.x, m.y);
     }
     gs.fever = true;
     gs.feverTimer = CFG.combo.feverDuration;
@@ -576,7 +790,9 @@ function onCorrect(m) {
     gs.runStrandStats[t].total++;
   }
 
+  sfxCorrect();
   spawnParts(m.x, m.y, gs.fever ? '#ffd600' : '#69f0ae', gs.fever ? 18 : 11);
+  spawnRing(m.x, m.y, gs.fever ? '#ffd600' : '#69f0ae');
   m.flash = 0.6; m.flashCol = '#69f0ae';
   flashScreen('correct');
 }
@@ -618,7 +834,9 @@ function onWrong(m) {
     gs.runStrandStats[t].total++;
   }
 
+  sfxWrong();
   spawnParts(m.x, m.y, '#ff1744', 8);
+  spawnRing(m.x, m.y, '#ff1744');
   m.flash = 0.6; m.flashCol = '#ff1744';
   flashScreen('wrong');
   showTip(gs.currentQ);
@@ -634,6 +852,7 @@ function checkLevelUp() {
   while (gs.level < t.length - 1 && gs.xp >= t[gs.level]) gs.level++;
   if (gs.level > prevLevel) {
     gs.levelUpAnim = 2.0;
+    sfxLevelUp();
     updateMission('level', null);
   }
 }
@@ -767,6 +986,65 @@ function saveStats(s) {
   try { localStorage.setItem('mmsr_stats', JSON.stringify(s)); } catch { }
 }
 
+// ============================================================
+// DAILY CHALLENGE HELPERS
+// ============================================================
+function getTodayDateNum() {
+  const d = new Date();
+  return d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate();
+}
+
+function getDailyKey() {
+  return 'mmsr_daily_' + getTodayDateNum();
+}
+
+function getDailyResult() {
+  try { return JSON.parse(localStorage.getItem(getDailyKey()) || 'null'); }
+  catch { return null; }
+}
+
+function saveDailyResult(score, correct) {
+  try {
+    const existing = getDailyResult();
+    if (!existing || score > (existing.score || 0)) {
+      localStorage.setItem(getDailyKey(), JSON.stringify({ score, correct }));
+    }
+  } catch {}
+}
+
+function makeLCG(seed) {
+  let s = (seed >>> 0);
+  return function() {
+    s = (Math.imul(s, 1664525) + 1013904223) >>> 0;
+    return s / 4294967296;
+  };
+}
+
+function generateDailyQuestions(seed, ageBandId) {
+  const orig = Math.random;
+  Math.random = makeLCG(seed);
+  const ab = CFG.ageBands[ageBandId];
+  const questions = [];
+  let diff = ab.diffStart;
+  for (let i = 0; i < 50; i++) {
+    questions.push(generateQuestion(ageBandId, diff));
+    if (i > 0 && i % 5 === 0 && diff < ab.diffMax) diff++;
+  }
+  Math.random = orig;
+  return questions;
+}
+
+function updateDailyCard() {
+  const el = document.getElementById('daily-card-desc');
+  if (!el) return;
+  const result = getDailyResult();
+  if (result) {
+    el.textContent = `✅ Done today! Score: ${result.score} · ${result.correct} correct`;
+  } else {
+    el.textContent = "Today's special challenge — same for everyone!";
+  }
+}
+
 function checkShipUnlocks() {
   const saved = loadStats();
   saved.unlockedShips = saved.unlockedShips || ['scout'];
@@ -887,6 +1165,14 @@ function update(dt) {
   gs.shipX += Math.sign(diff) * Math.min(Math.abs(diff), shipSpd * dt);
   if (Math.abs(diff) < 1) gs.shipX = gs.shipTargetX;
 
+  // Ship trail particles
+  gs.trailTimer += dt;
+  if (gs.trailTimer >= 0.04) {
+    gs.trailTimer = 0;
+    const { trailColor } = getShipColor();
+    spawnTrail(gs.shipX, SHIP_Y, gs.fever ? '#ffd600' : trailColor);
+  }
+
   // Star scroll
   starOffY = (starOffY + 60 * dt) % 1;
 
@@ -1005,10 +1291,15 @@ function drawMeteors() {
     ctx.fillStyle = grad;
     ctx.fill();
 
+    // Glow pulse based on proximity to ship
+    const distToShip = Math.abs(m.y - SHIP_Y);
+    const proximity = clamp(1 - distToShip / (GH * 0.62), 0, 1);
+    const glowAlpha = 0.09 + proximity * (0.22 + 0.08 * Math.sin(gs.gameTime * 4 + m.lane * 2));
+    const glowWidth = 3 + proximity * 5;
     ctx.beginPath();
-    ctx.arc(0, 0, MR + 5, 0, Math.PI * 2);
-    ctx.strokeStyle = m.isCorrect ? 'rgba(0,229,255,0.18)' : 'rgba(255,80,40,0.14)';
-    ctx.lineWidth = 3;
+    ctx.arc(0, 0, MR + 5 + proximity * 8, 0, Math.PI * 2);
+    ctx.strokeStyle = m.isCorrect ? `rgba(0,229,255,${glowAlpha})` : `rgba(255,80,40,${glowAlpha})`;
+    ctx.lineWidth = glowWidth;
     ctx.stroke();
 
     const text = String(m.answer);
@@ -1100,10 +1391,18 @@ function drawParts() {
   for (const p of parts) {
     ctx.save();
     ctx.globalAlpha = clamp(p.alpha, 0, 1);
-    ctx.fillStyle = p.color;
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-    ctx.fill();
+    if (p.isRing) {
+      ctx.strokeStyle = p.color;
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, Math.max(0, p.r), 0, Math.PI * 2);
+      ctx.stroke();
+    } else {
+      ctx.fillStyle = p.color;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
     ctx.restore();
   }
 }
@@ -1288,6 +1587,10 @@ function endGame(completed) {
   endScheduled = true;
   gs.ended = true;
   cancelAnimationFrame(afId);
+  stopAmbient();
+
+  // Play game-over SFX if shield depleted
+  if (!completed) sfxGameOver();
 
   // Persist stats
   const saved = loadStats();
@@ -1309,6 +1612,11 @@ function endGame(completed) {
     saved.strandStats[type].correct += d.correct;
     saved.strandStats[type].total   += d.total;
   });
+
+  // Save daily challenge result
+  if (gs.modeId === 'daily') {
+    saveDailyResult(gs.score, gs.totalCorrect);
+  }
 
   checkShipUnlocks();
   saveStats(saved);
@@ -1420,7 +1728,13 @@ function updateLanding() {
   if (saved.bestScore) parts.push(`<span style="color:#ffd600;font-weight:700;">Best: ${saved.bestScore.toLocaleString()}</span>`);
   if (saved.level)     parts.push(`<span style="color:#00e5ff;">LVL ${saved.level}</span>`);
   if (saved.coins)     parts.push(`<span style="color:#ffd600;">🪙 ${saved.coins}</span>`);
-  el.innerHTML = parts.join('  ·  ');
+  const daily = getDailyResult();
+  if (daily) {
+    parts.push(`<span class="daily-badge">📅 Daily ✅</span>`);
+  } else {
+    parts.push(`<span class="daily-badge">📅 Daily available!</span>`);
+  }
+  el.innerHTML = parts.join('  &middot;  ');
 }
 
 // ============================================================
@@ -1808,6 +2122,7 @@ function wireButtons() {
         startGame();
       } else {
         gs.missionId = null;
+        updateDailyCard();
         showScreen('screen-mode');
       }
     });
@@ -1837,6 +2152,29 @@ function wireButtons() {
   // Tip overlay OK button
   const tipOk = document.getElementById('tip-ok');
   if (tipOk) tipOk.addEventListener('click', () => hideTip());
+
+  // Audio toggle button
+  const audioToggle = document.getElementById('audio-toggle');
+  if (audioToggle) {
+    const saved = loadStats();
+    audioMuted = !!(saved.audioMuted);
+    audioToggle.textContent = audioMuted ? '🔇' : '🔊';
+    audioToggle.classList.toggle('muted', audioMuted);
+    audioToggle.addEventListener('click', () => {
+      audioMuted = !audioMuted;
+      const s = loadStats();
+      s.audioMuted = audioMuted;
+      saveStats(s);
+      audioToggle.textContent = audioMuted ? '🔇' : '🔊';
+      audioToggle.classList.toggle('muted', audioMuted);
+      if (audioMuted) {
+        stopAmbient();
+      } else if (gs.running && !gs.ended) {
+        startAmbient();
+      }
+      getAudioCtx(); // ensure context is resumed
+    });
+  }
 }
 
 function startGame() {
@@ -1844,6 +2182,8 @@ function startGame() {
   hideTip();
   initState();
   showScreen('game');
+  getAudioCtx(); // resume suspended AudioContext on user gesture
+  startAmbient();
   startLoop();
 }
 
