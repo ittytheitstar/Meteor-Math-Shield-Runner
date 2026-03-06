@@ -56,12 +56,12 @@ const CFG = {
     age8_9: {
       label: 'Age 8–9', emoji: '⭐', diffStart: 2, diffMax: 5,
       speed: 110,
-      weights: { add: 0.14, sub: 0.10, mul: 0.20, div: 0.12, algebra: 0.12, fraction: 0.08, money: 0.10, time: 0.08, statistics: 0.06 }
+      weights: { add: 0.11, sub: 0.10, mul: 0.18, div: 0.12, algebra: 0.12, fraction: 0.08, money: 0.10, time: 0.06, statistics: 0.03, timetable: 0.05, fraction_eq: 0.05 }
     },
     age10_12: {
       label: 'Age 10–12', emoji: '🔥', diffStart: 3, diffMax: 7,
       speed: 130,
-      weights: { mul: 0.12, div: 0.10, fraction: 0.15, decimal: 0.08, algebra: 0.18, money: 0.07, time: 0.07, geometry: 0.10, statistics: 0.07, probability: 0.06 }
+      weights: { mul: 0.10, div: 0.10, fraction: 0.11, decimal: 0.08, algebra: 0.14, money: 0.07, time: 0.05, geometry: 0.07, statistics: 0.05, probability: 0.06, timetable: 0.04, fraction_eq: 0.05, composite_area: 0.05, compound_prob: 0.03 }
     }
   },
   modes: {
@@ -135,10 +135,14 @@ const TIPS = {
   geometry:    { strategy: 'Perimeter = 2×(l+w). Area = l×w',                  example: '4cm×3cm: Perimeter=14, Area=12' },
   pattern:     { strategy: 'Find the rule: what do you add/subtract each time?', example: '2,5,8,11 → +3 each time → 14' },
   money:       { strategy: 'Count up from price to amount paid.',               example: 'Pay $5 for $3.50: +50¢→$4, +$1→$5 = $1.50 change' },
-  time:        { strategy: 'Add hours and minutes separately (60 min = 1 hr).',  example: '2:45 + 30min = 3:15' },
-  statistics:  { strategy: 'For mean: add all values, divide by count.',         example: 'Mean of 4,6,8,6: sum=24, ÷4=6' },
-  probability: { strategy: 'P = favourable ÷ total outcomes.',                  example: '3 red, 5 blue → P(red) = 3/8' },
-  decimal:     { strategy: 'Line up decimal points when adding/subtracting.',   example: '2.3 + 1.45 = 3.75' }
+  time:           { strategy: 'Add hours and minutes separately (60 min = 1 hr).',  example: '2:45 + 30min = 3:15' },
+  statistics:     { strategy: 'For mean: add all values, divide by count.',         example: 'Mean of 4,6,8,6: sum=24, ÷4=6' },
+  probability:    { strategy: 'P = favourable ÷ total outcomes.',                   example: '3 red, 5 blue → P(red) = 3/8' },
+  decimal:        { strategy: 'Line up decimal points when adding/subtracting.',    example: '2.3 + 1.45 = 3.75' },
+  timetable:      { strategy: 'Add hours first, then minutes. Carry 60 min to hr.', example: 'Bus at 9:15, 55 min journey: 9:15+55min = 10:10' },
+  fraction_eq:    { strategy: 'Multiply top and bottom by the same number.',        example: '2/3 = ?/9: multiply by 3 → 6/9' },
+  composite_area: { strategy: 'Split the L-shape into two rectangles. Add areas.',  example: '6×4 minus 2×2 corner: 24−4 = 20 sq units' },
+  compound_prob:  { strategy: 'P(A or B) = P(A) + P(B) for mutually exclusive events.', example: '2 red + 3 blue out of 10: P(R or B) = 5/10' }
 };
 
 // ============================================================
@@ -332,20 +336,24 @@ function generateQuestion(ageBandId, difficulty) {
 
 function genByType(type, d) {
   switch (type) {
-    case 'add':         return genAdd(d);
-    case 'sub':         return genSub(d);
-    case 'mul':         return genMul(d);
-    case 'div':         return genDiv(d);
-    case 'fraction':    return genFraction(d);
-    case 'algebra':     return genAlgebra(d);
-    case 'geometry':    return genGeometry(d);
-    case 'pattern':     return genPattern(d);
-    case 'money':       return genMoney(d);
-    case 'time':        return genTime(d);
-    case 'statistics':  return genStatistics(d);
-    case 'probability': return genProbability(d);
-    case 'decimal':     return genDecimal(d);
-    default:            return genAdd(d);
+    case 'add':            return genAdd(d);
+    case 'sub':            return genSub(d);
+    case 'mul':            return genMul(d);
+    case 'div':            return genDiv(d);
+    case 'fraction':       return genFraction(d);
+    case 'algebra':        return genAlgebra(d);
+    case 'geometry':       return genGeometry(d);
+    case 'pattern':        return genPattern(d);
+    case 'money':          return genMoney(d);
+    case 'time':           return genTime(d);
+    case 'statistics':     return genStatistics(d);
+    case 'probability':    return genProbability(d);
+    case 'decimal':        return genDecimal(d);
+    case 'timetable':      return genTimetable(d);
+    case 'fraction_eq':    return genFractionEq(d);
+    case 'composite_area': return genCompositeArea(d);
+    case 'compound_prob':  return genCompoundProb(d);
+    default:               return genAdd(d);
   }
 }
 
@@ -524,6 +532,218 @@ function genDecimal(d) {
   return makeQ(`${a.toFixed(1)} + ${b.toFixed(1)} = ?`, ans, Math.round((a + b + 0.1) * 10) / 10, Math.round((a + b - 0.1) * 10) / 10, 'decimal');
 }
 
+function genTimetable(d) {
+  // Schedule/timetable: event start time + journey duration → arrival time
+  const startHours = [8, 9, 10, 11, 12, 13, 14, 15];
+  const startH = startHours[rnd(0, startHours.length - 1)];
+  const startM = [0, 15, 30, 45][rnd(0, 3)];
+  const durationOptions = [30, 45, 60, 90, 120, 150];
+  const dur = durationOptions[clamp(d - 1, 0, durationOptions.length - 1)];
+  const totalMin = startH * 60 + startM + dur;
+  const endH = Math.floor(totalMin / 60);
+  const endM = totalMin % 60;
+  const fmt = n => String(n).padStart(2, '0');
+  const ans = `${endH}:${fmt(endM)}`;
+  const w1M = (endM + 15) % 60;
+  const w1H = (endM + 15 >= 60) ? endH + 1 : endH;
+  const w1 = `${w1H}:${fmt(w1M)}`;
+  const w2 = `${endH + 1}:${fmt(endM)}`;
+  return makeQ(
+    `Bus at ${startH}:${fmt(startM)}, journey ${dur} min. Arrives?`,
+    ans, w1, w2, 'timetable'
+  );
+}
+
+function genFractionEq(d) {
+  // Fraction equivalence: a/b = ?/c — find the missing numerator
+  const pairs = [
+    [1, 2], [1, 3], [2, 3], [1, 4], [3, 4], [2, 5], [3, 5]
+  ];
+  const [n, dn] = pairs[clamp(d - 2, 0, pairs.length - 1)];
+  const mult = rnd(2, 5);
+  const newDn = dn * mult;
+  const newN = n * mult;
+  const wrong1 = newN + 1;
+  const wrong2 = newN - 1 >= 1 ? newN - 1 : newN + 2;
+  return makeQ(`${n}/${dn} = ?/${newDn}`, newN, wrong1, wrong2, 'fraction_eq');
+}
+
+function genCompositeArea(d) {
+  // L-shape: area of big rectangle minus a small corner cut-out
+  const bw = rnd(4, 10), bh = rnd(4, 10);
+  const sw = rnd(1, bw - 2), sh = rnd(1, bh - 2);
+  const ans = bw * bh - sw * sh;
+  const wrong1 = bw * bh;
+  const wrong2 = nearMiss(ans, [sw, sh, 2]);
+  return makeQ(
+    `L-shape: ${bw}×${bh} minus ${sw}×${sh} corner. Area?`,
+    ans, wrong1, wrong2, 'composite_area'
+  );
+}
+
+function genCompoundProb(d) {
+  // Compound probability: P(A or B) = P(A) + P(B) for mutually exclusive events
+  const total = rnd(8, 12);
+  const r = rnd(2, Math.floor(total / 3));
+  const b = rnd(2, Math.floor(total / 3));
+  const combined = r + b;
+  const ans = `${combined}/${total}`;
+  const wrong1 = `${r}/${total}`;
+  const wrong2 = `${combined}/${total + 1}`;
+  return makeQ(
+    `${r} red, ${b} blue, ${total - combined} green. P(red or blue)?`,
+    ans, wrong1, wrong2, 'compound_prob'
+  );
+}
+
+// ============================================================
+// ACCESSIBILITY & i18n
+// ============================================================
+let prefersReducedMotion = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+
+const MAORI = {
+  'Play':                       'Tākaro',
+  'Missions':                   'Kaupeka',
+  'Shop':                       'Toa',
+  'Ships':                      'Waka',
+  'Stats':                      'Tatauranga',
+  "Who's playing?":             'Ko wai e tākaro ana?',
+  'Pick your age group':        'Kōwhiri tō rōpū tau',
+  'Choose Mode':                'Kōwhiri Āhua Tākaro',
+  "How do you want to play?":   'Me pēhea tāu tākaro?',
+  'Quick Run':                  'Oma Tere',
+  'Zen Practice':               'Mahi Mārie',
+  'Daily Challenge':            'Wero ā-rā',
+  'GAME OVER':                  'KUA OTI',
+  "Time's Up!":                 'Kua Pau te Wā!',
+  'Play Again':                 'Tākaro Anō',
+  'Home':                       'Kāinga',
+  '🎯 Missions':                '🎯 Kaupeka',
+  '🛒 Upgrade Shop':            '🛒 Toa Whakarei',
+  '🎨 Ships':                   '🎨 Waka',
+  '📊 Stats':                   '📊 Tatauranga',
+  'Select your ship':           'Tīpakohia tō waka'
+};
+
+let maoriMode = false;
+
+function applyMaori() {
+  const dict = maoriMode ? MAORI : null;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    el.textContent = dict ? (dict[key] || key) : key;
+  });
+  const btn = document.getElementById('maori-toggle');
+  if (btn) btn.textContent = maoriMode ? '🌿 English' : '🌿 Māori';
+}
+
+function initMaoriToggle() {
+  const saved = loadStats();
+  maoriMode = !!(saved.maoriMode);
+  applyMaori();
+  const btn = document.getElementById('maori-toggle');
+  if (btn) {
+    btn.addEventListener('click', () => {
+      maoriMode = !maoriMode;
+      const s = loadStats();
+      s.maoriMode = maoriMode;
+      saveStats(s);
+      applyMaori();
+    });
+  }
+}
+
+function initHighContrast() {
+  const saved = loadStats();
+  if (saved.highContrast) document.body.classList.add('high-contrast');
+  const btn = document.getElementById('contrast-toggle');
+  if (btn) {
+    btn.textContent = saved.highContrast ? '🌕' : '🌓';
+    btn.addEventListener('click', () => {
+      const s = loadStats();
+      s.highContrast = !s.highContrast;
+      saveStats(s);
+      document.body.classList.toggle('high-contrast', s.highContrast);
+      btn.textContent = s.highContrast ? '🌕' : '🌓';
+    });
+  }
+}
+
+// ============================================================
+// SHARE SCORE CARD
+// ============================================================
+function shareScore() {
+  const sc = document.createElement('canvas');
+  sc.width = 480; sc.height = 300;
+  const sctx = sc.getContext('2d');
+
+  sctx.fillStyle = '#050a1a';
+  sctx.fillRect(0, 0, 480, 300);
+
+  sctx.strokeStyle = '#00e5ff';
+  sctx.lineWidth = 3;
+  sctx.strokeRect(4, 4, 472, 292);
+
+  sctx.fillStyle = '#00e5ff';
+  sctx.font = '900 20px system-ui';
+  sctx.textAlign = 'center';
+  sctx.fillText('🚀 Meteor Math Shield Runner', 240, 42);
+
+  sctx.fillStyle = '#ffd600';
+  sctx.font = '900 52px system-ui';
+  sctx.textAlign = 'center';
+  sctx.fillText(gs.score.toLocaleString(), 240, 112);
+
+  sctx.fillStyle = '#7ab0c8';
+  sctx.font = '600 15px system-ui';
+  sctx.fillText('SCORE', 240, 133);
+
+  const tot = gs.totalCorrect + gs.totalWrong;
+  const acc = tot > 0 ? Math.round(gs.totalCorrect / tot * 100) : 0;
+  const stats = [
+    { v: String(gs.totalCorrect), l: 'Correct' },
+    { v: gs.bestCombo + 'x',      l: 'Best Combo' },
+    { v: acc + '%',               l: 'Accuracy' }
+  ];
+  stats.forEach((s, i) => {
+    const x = 80 + i * 160;
+    sctx.fillStyle = '#ffffff';
+    sctx.font = '900 26px system-ui';
+    sctx.textAlign = 'center';
+    sctx.fillText(s.v, x, 182);
+    sctx.fillStyle = '#7ab0c8';
+    sctx.font = '600 13px system-ui';
+    sctx.fillText(s.l, x, 200);
+  });
+
+  const ageBand = gs.ageBandId ? (CFG.ageBands[gs.ageBandId].label || '') : '';
+  sctx.fillStyle = '#4a6580';
+  sctx.font = '500 12px system-ui';
+  sctx.textAlign = 'center';
+  sctx.fillText('meteor-math-shield-runner · ' + ageBand, 240, 270);
+
+  const url = sc.toDataURL('image/png');
+  if (navigator.share && navigator.canShare) {
+    sc.toBlob(blob => {
+      const file = new File([blob], 'meteor-math-score.png', { type: 'image/png' });
+      if (navigator.canShare({ files: [file] })) {
+        navigator.share({ title: 'My Meteor Math Score!', files: [file] }).catch(() => downloadDataURL(url));
+        return;
+      }
+      downloadDataURL(url);
+    });
+  } else {
+    downloadDataURL(url);
+  }
+}
+
+function downloadDataURL(url) {
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'meteor-math-score.png';
+  a.click();
+}
+
 // ============================================================
 // STAR FIELD
 // ============================================================
@@ -541,6 +761,7 @@ let starOffY = 0;
 let parts = [];
 
 function spawnParts(x, y, color, count) {
+  if (prefersReducedMotion) return;
   for (let i = 0; i < count; i++) {
     const a = (Math.PI * 2 * i / count) + rndF(-0.4, 0.4);
     const spd = rndF(70, 240);
@@ -550,6 +771,7 @@ function spawnParts(x, y, color, count) {
 }
 
 function spawnTrail(x, y, color) {
+  if (prefersReducedMotion) return;
   const count = gs.fever ? 3 : 1;
   for (let i = 0; i < count; i++) {
     parts.push({
@@ -566,6 +788,7 @@ function spawnTrail(x, y, color) {
 }
 
 function spawnRing(x, y, color) {
+  if (prefersReducedMotion) return;
   parts.push({
     x, y,
     r: MR * 0.4,
@@ -578,6 +801,7 @@ function spawnRing(x, y, color) {
 }
 
 function spawnFeverBurst(x, y) {
+  if (prefersReducedMotion) return;
   spawnRing(x, y, '#ffd600');
   for (let i = 0; i < 24; i++) {
     const a = (Math.PI * 2 * i / 24);
@@ -1304,11 +1528,33 @@ function drawMeteors() {
 
     const text = String(m.answer);
     const fs = text.length > 6 ? 16 : text.length > 4 ? 20 : text.length > 2 ? 24 : 28;
-    ctx.fillStyle = '#ffffff';
     ctx.font = `900 ${fs}px 'Segoe UI', system-ui, sans-serif`;
-    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.textBaseline = 'middle';
     ctx.shadowColor = 'rgba(0,0,0,0.8)'; ctx.shadowBlur = 4;
-    ctx.fillText(text, 0, 0);
+
+    const pvLens = upgLevel('place_value_hint') > 0;
+    const numVal = parseInt(m.answer, 10);
+    const isInt2 = !isNaN(numVal) && String(numVal) === m.answer && numVal >= 10 && numVal <= 99;
+
+    if (pvLens && isInt2) {
+      // Colour-code: tens digit in gold, ones digit in cyan
+      const str = text;
+      const totalW = ctx.measureText(str).width;
+      let curX = -totalW / 2;
+      const pvColors = ['#ffd600', '#00e5ff'];
+      ctx.textAlign = 'left';
+      for (let ci = 0; ci < str.length; ci++) {
+        const ch = str[ci];
+        ctx.fillStyle = pvColors[Math.min(ci, pvColors.length - 1)];
+        ctx.fillText(ch, curX, 0);
+        curX += ctx.measureText(ch).width;
+      }
+      ctx.textAlign = 'center';
+    } else {
+      ctx.fillStyle = '#ffffff';
+      ctx.textAlign = 'center';
+      ctx.fillText(text, 0, 0);
+    }
     ctx.shadowBlur = 0;
 
     // Draw X over eliminated meteors
@@ -1985,7 +2231,9 @@ function renderStats() {
       add: 'Addition', sub: 'Subtraction', mul: 'Multiplication', div: 'Division',
       fraction: 'Fractions', algebra: 'Algebra', geometry: 'Geometry',
       pattern: 'Patterns', money: 'Money', time: 'Time', statistics: 'Statistics',
-      probability: 'Probability', decimal: 'Decimals'
+      probability: 'Probability', decimal: 'Decimals',
+      timetable: 'Timetables', fraction_eq: 'Frac. Equivalence',
+      composite_area: 'Composite Area', compound_prob: 'Compound Prob.'
     };
     let html = '<div style="font-weight:700;margin-bottom:8px;color:#e8f4f8;">Strand Accuracy</div>';
     const keys = Object.keys(ss);
@@ -2175,6 +2423,13 @@ function wireButtons() {
       getAudioCtx(); // ensure context is resumed
     });
   }
+
+  // Share score card buttons (gameover + results screens)
+  const btnShareGo = document.getElementById('btn-share-go');
+  if (btnShareGo) btnShareGo.addEventListener('click', () => shareScore());
+
+  const btnShare = document.getElementById('btn-share');
+  if (btnShare) btnShare.addEventListener('click', () => shareScore());
 }
 
 function startGame() {
@@ -2193,6 +2448,8 @@ function startGame() {
 setupCanvas();
 setupInput();
 wireButtons();
+initHighContrast();
+initMaoriToggle();
 checkShipUnlocks();
 updateLanding();
 showScreen('screen-landing');
