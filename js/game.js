@@ -3,7 +3,7 @@
 // ============================================================
 // CONSTANTS — canvas geometry
 // ============================================================
-const GW = 480, GH = 800, LANES = 3, LW = GW / LANES;
+const GW = 480, GH = 800, LANES = 5, LW = GW / LANES;
 const SHIP_Y = GH - 110;
 const SHIP_W = 58, SHIP_H = 76, MR = 52;
 
@@ -126,23 +126,178 @@ const MISSIONS = [
 // TEACHING TIPS
 // ============================================================
 const TIPS = {
-  add:         { strategy: 'Make a 10 first! e.g. 8+7 → 8+2=10, then +5=15',   example: '8 + 7 = 15' },
-  sub:         { strategy: 'Count up from the smaller to the bigger number.',    example: '13 − 8: count 8→13 = 5' },
-  mul:         { strategy: 'Times tables are skip-counting!',                    example: '6×7: try 6×6=36 then +6=42' },
-  div:         { strategy: 'Ask: what × divisor = dividend?',                   example: '56÷7: 7×8=56, answer 8' },
-  fraction:    { strategy: 'Divide first, then multiply.',                       example: '3/4 of 20: 20÷4=5, ×3=15' },
-  algebra:     { strategy: 'Use inverse operations to find the missing number.', example: '☐+5=12 → 12−5=7' },
-  geometry:    { strategy: 'Perimeter = 2×(l+w). Area = l×w',                  example: '4cm×3cm: Perimeter=14, Area=12' },
-  pattern:     { strategy: 'Find the rule: what do you add/subtract each time?', example: '2,5,8,11 → +3 each time → 14' },
-  money:       { strategy: 'Count up from price to amount paid.',               example: 'Pay $5 for $3.50: +50¢→$4, +$1→$5 = $1.50 change' },
-  time:           { strategy: 'Add hours and minutes separately (60 min = 1 hr).',  example: '2:45 + 30min = 3:15' },
-  statistics:     { strategy: 'For mean: add all values, divide by count.',         example: 'Mean of 4,6,8,6: sum=24, ÷4=6' },
-  probability:    { strategy: 'P = favourable ÷ total outcomes.',                   example: '3 red, 5 blue → P(red) = 3/8' },
-  decimal:        { strategy: 'Line up decimal points when adding/subtracting.',    example: '2.3 + 1.45 = 3.75' },
-  timetable:      { strategy: 'Add hours first, then minutes. Carry 60 min to hr.', example: 'Bus at 9:15, 55 min journey: 9:15+55min = 10:10' },
-  fraction_eq:    { strategy: 'Multiply top and bottom by the same number.',        example: '2/3 = ?/9: multiply by 3 → 6/9' },
-  composite_area: { strategy: 'Split the L-shape into two rectangles. Add areas.',  example: '6×4 minus 2×2 corner: 24−4 = 20 sq units' },
-  compound_prob:  { strategy: 'P(A or B) = P(A) + P(B) for mutually exclusive events.', example: '2 red + 3 blue out of 10: P(R or B) = 5/10' }
+  add: {
+    strategy: 'Make a 10 first! Break one number to reach 10, then add the rest.',
+    steps: [
+      'Find what the smaller number needs to reach 10',
+      'Split the other number: one part fills to 10, rest stays',
+      'Add upward from 10 — it\'s easy from there!',
+      'Example: 8 + 7 → 8 + 2 = 10, then 10 + 5 = 15 ✅'
+    ],
+    visual: '  8 + 7\n= 8 + (2 + 5)\n= (8+2) + 5\n= 10 + 5\n= 15 ✅'
+  },
+  sub: {
+    strategy: 'Count UP from the smaller number to the larger — the gap is your answer.',
+    steps: [
+      'Start at the smaller number',
+      'Count up in easy jumps to the larger number',
+      'Add your jumps together — that total is the answer',
+      'Example: 13 − 8 → 8→10 is +2, then 10→13 is +3, so 2+3 = 5 ✅'
+    ],
+    visual: '13 − 8\n8 ──+2──▶ 10 ──+3──▶ 13\nAnswer = 2 + 3 = 5 ✅'
+  },
+  mul: {
+    strategy: 'Use a nearby fact you already know, then adjust by adding or removing one group.',
+    steps: [
+      'Recall the nearest times table fact you know',
+      'Add one group if you need one more, subtract one if you need one less',
+      'Example: 6×7 → know 6×6=36, add one more 6 → 36+6 = 42',
+      'Example: 7×8 → 7×10=70, minus 7×2=14 → 70−14 = 56 ✅'
+    ],
+    visual: '6 × 7\n= 6 × 6 + 6\n= 36  + 6\n= 42 ✅'
+  },
+  div: {
+    strategy: 'Think multiplication backwards: what number × divisor = dividend?',
+    steps: [
+      'Rewrite as a missing factor: ? × divisor = dividend',
+      'Use your times tables to find that missing number',
+      'Check by multiplying your answer by the divisor',
+      'Example: 56 ÷ 7 → ? × 7 = 56 → 8 × 7 = 56, answer is 8 ✅'
+    ],
+    visual: '56 ÷ 7\n? × 7 = 56\n8 × 7 = 56  ✓\nAnswer: 8 ✅'
+  },
+  fraction: {
+    strategy: 'Divide first to find one part, then multiply for the right number of parts.',
+    steps: [
+      'Divide the whole number by the denominator (bottom) → finds 1 part',
+      'Multiply that result by the numerator (top) → finds the fraction you need',
+      'Think of it as: ÷ bottom, then × top',
+      'Example: 3/4 of 20 → 20 ÷ 4 = 5 (one quarter), then 5 × 3 = 15 ✅'
+    ],
+    visual: '3/4 of 20\nStep 1: 20 ÷ 4 = 5   (one quarter)\nStep 2:  5 × 3 = 15  (three quarters)\nAnswer: 15 ✅'
+  },
+  algebra: {
+    strategy: 'Use the opposite (inverse) operation to "undo" what was done to the unknown.',
+    steps: [
+      'Identify the unknown (□ or letter)',
+      'Look at what operation surrounds it (+, −, ×, ÷)',
+      'Apply the opposite to both sides to isolate the unknown',
+      'Example: □ + 5 = 12 → □ = 12 − 5 = 7 ✅'
+    ],
+    visual: '□ + 5 = 12\n        − 5    − 5\n□     =  7 ✅'
+  },
+  geometry: {
+    strategy: 'Perimeter = distance around the outside. Area = space inside (length × width).',
+    steps: [
+      'Perimeter: add the length of every side',
+      'For a rectangle: P = 2 × (length + width)',
+      'Area: multiply length × width (count the square units inside)',
+      'Example 4cm × 3cm: P = 2×(4+3) = 14 cm,  A = 4×3 = 12 cm² ✅'
+    ],
+    visual: ' ┌────4 cm────┐\n3│            │3\n └────4 cm────┘\nP = 4+3+4+3 = 14 cm\nA = 4 × 3   = 12 cm²'
+  },
+  pattern: {
+    strategy: 'Find the rule by looking at the gap (difference) between each term.',
+    steps: [
+      'Subtract each term from the next: is the gap always the same?',
+      'If yes → arithmetic pattern; add that gap to find the next term',
+      'If each term doubles/halves → it\'s a geometric pattern',
+      'Example: 2, 5, 8, 11 → gap of +3 → next = 11 + 3 = 14 ✅'
+    ],
+    visual: '2 → 5 → 8 → 11 → ?\n  +3   +3   +3   +3\nNext = 11 + 3 = 14 ✅'
+  },
+  money: {
+    strategy: 'Count UP from the price to the amount paid — the jumps you take are the change.',
+    steps: [
+      'Start at the price',
+      'Jump to the nearest round amount (e.g. next 10c, then next $1)',
+      'Keep jumping until you reach the amount paid',
+      'Add all your jumps together',
+      'Example: pay $5 for $3.50 → +50c=$4.00, +$1.00=$5.00 → change=$1.50 ✅'
+    ],
+    visual: '$3.50 ──+50c──▶ $4.00 ──+$1──▶ $5.00\nChange = 50c + $1.00 = $1.50 ✅'
+  },
+  time: {
+    strategy: 'Add hours and minutes separately. If minutes reach 60 or more, carry 1 hour.',
+    steps: [
+      'Add the minutes to the start minutes',
+      'If the result is ≥ 60: subtract 60 from minutes and add 1 to hours',
+      'Then add any remaining hours',
+      'Example: 2:45 + 30 min → 2:75 → 75≥60 → carry 1 hr → 3:15 ✅'
+    ],
+    visual: '  2:45\n+ 0:30\n------\n  2:75 → 75≥60\n= 3:15 ✅'
+  },
+  statistics: {
+    strategy: 'Mean = sum of all values ÷ how many values there are.',
+    steps: [
+      'Add all the numbers together to get the sum',
+      'Count how many numbers there are',
+      'Divide the sum by the count',
+      'Example: 4, 6, 8, 6 → sum = 24, count = 4 → mean = 24 ÷ 4 = 6 ✅'
+    ],
+    visual: 'Data: 4, 6, 8, 6\nSum  = 4+6+8+6 = 24\nCount = 4\nMean = 24 ÷ 4 = 6 ✅'
+  },
+  probability: {
+    strategy: 'Probability = number of favourable outcomes ÷ total number of outcomes.',
+    steps: [
+      'Count the outcomes you WANT (favourable)',
+      'Count ALL possible outcomes (the total)',
+      'Write as a fraction: favourable / total',
+      'Example: 3 red out of 8 total → P(red) = 3/8 ✅'
+    ],
+    visual: '🔴🔴🔴 🔵🔵🔵🔵🔵\nFavourable (red) = 3\nTotal = 8\nP(red) = 3/8 ✅'
+  },
+  decimal: {
+    strategy: 'Line up the decimal points, then add digit by digit from right to left.',
+    steps: [
+      'Write the numbers so decimal points are directly above each other',
+      'Pad with zeros so both have the same number of decimal places',
+      'Add normally, carrying when needed — decimal point stays in place',
+      'Example: 2.3 + 1.45 → 2.30 + 1.45 = 3.75 ✅'
+    ],
+    visual: '  2.30\n+ 1.45\n------\n  3.75 ✅'
+  },
+  timetable: {
+    strategy: 'Add journey minutes to start time. Carry 60 minutes into an hour if needed.',
+    steps: [
+      'Take the start time and add the journey duration in minutes',
+      'If total minutes ≥ 60: subtract 60 from minutes, add 1 to hours',
+      'Repeat if needed for longer journeys',
+      'Example: 9:15 + 55 min → 9:70 → 70≥60 → 10:10 ✅'
+    ],
+    visual: 'Start:    9:15\n+ journey:  55 min\n= 9:70\n70 ≥ 60 → carry 1 hr\nArrival: 10:10 ✅'
+  },
+  fraction_eq: {
+    strategy: 'Equivalent fractions: multiply (or divide) the top AND bottom by the SAME number.',
+    steps: [
+      'Look at the two denominators (bottom numbers)',
+      'Find what number the denominator was multiplied by to get the new one',
+      'Multiply the numerator (top) by that SAME number',
+      'Example: 2/3 = ?/9 → bottom ×3, so top: 2×3=6 → answer is 6 ✅'
+    ],
+    visual: '2     ?        ×3\n─  =  ──   →  2×3 = 6\n3     9        ×3\nAnswer: 6/9 ✅'
+  },
+  composite_area: {
+    strategy: 'Split the L-shape into two simpler rectangles, find each area, then add (or subtract).',
+    steps: [
+      'Draw a line to divide the L-shape into two rectangles',
+      'Calculate area of each rectangle: length × width',
+      'Or: area of large rectangle MINUS the cut-out corner',
+      'Example: 6×4 big minus 2×2 corner → 24 − 4 = 20 sq units ✅'
+    ],
+    visual: '┌──6──┐\n│     │ 4\n│  ┌──┘\n│  │ 2\n└──┘ 2\nArea = 6×4 − 2×2\n     = 24  −  4\n     = 20 ✅'
+  },
+  compound_prob: {
+    strategy: 'For mutually exclusive events (can\'t both happen), P(A or B) = P(A) + P(B).',
+    steps: [
+      'Count favourable outcomes for event A',
+      'Count favourable outcomes for event B',
+      'Add A and B together (they can\'t both happen at once)',
+      'Divide by total outcomes',
+      'Example: 2 red + 3 blue out of 10 → P(R or B) = (2+3)/10 = 5/10 ✅'
+    ],
+    visual: '🔴🔴 🔵🔵🔵 🟢🟢🟢🟢🟢\nP(red)  = 2/10\nP(blue) = 3/10\nP(R or B) = 5/10 ✅'
+  }
 };
 
 // ============================================================
@@ -315,13 +470,46 @@ function nearMiss(n, deltas = [1, 2, 10]) {
   return Math.max(0, Math.round(v));
 }
 
-function makeQ(prompt, answer, d1, d2, type) {
+function makeQ(prompt, answer, d1, d2, type, d3, d4) {
   const ans = String(answer);
   const opts = new Set([ans]);
-  for (const d of [d1, d2, String(nearMiss(Number(ans) || 0, [1, 3, 7])), String(Math.abs(Number(ans) || 0) + 1)]) {
-    if (String(d) !== ans) opts.add(String(d));
-    if (opts.size === 3) break;
+  const isNumeric = /^-?\d+(\.\d+)?$/.test(ans);
+  const ansNum = parseFloat(ans);
+
+  // Add explicitly provided distractors first
+  for (const d of [d1, d2, d3, d4]) {
+    if (d !== undefined && d !== null) {
+      const ds = String(d);
+      if (ds !== ans) opts.add(ds);
+    }
+    if (opts.size === LANES) break;
   }
+
+  // For numeric answers auto-generate additional distractors
+  if (isNumeric && opts.size < LANES) {
+    const extra = [
+      nearMiss(ansNum, [1, 3, 7]),
+      Math.abs(ansNum) + 1,
+      nearMiss(ansNum, [2, 5]),
+      Math.abs(ansNum) + 2,
+      nearMiss(ansNum, [4, 6]),
+      nearMiss(ansNum, [3, 8]),
+    ];
+    for (const d of extra) {
+      const ds = String(d);
+      if (ds !== ans && !opts.has(ds)) opts.add(ds);
+      if (opts.size === LANES) break;
+    }
+    // Sequential fallback for very small answer spaces
+    let delta = 1;
+    while (opts.size < LANES) {
+      const v = String(Math.max(0, Math.round(ansNum + delta)));
+      if (!opts.has(v)) opts.add(v);
+      delta++;
+      if (delta > 100) break;
+    }
+  }
+
   return { prompt, answer: ans, options: shuffle([...opts]), type };
 }
 
@@ -492,12 +680,20 @@ function genTime(d) {
   const endM = totalMin % 60;
   const fmt = m => String(m).padStart(2, '0');
   const ans = `${endH}:${fmt(endM)}`;
+  const adjTime = (h, m, dm) => {
+    const tot = h * 60 + m + dm;
+    const nh = Math.floor(tot / 60) % 12 || 12;
+    const nm = ((tot % 60) + 60) % 60;
+    return `${nh}:${fmt(nm)}`;
+  };
   return makeQ(
     `${stHour}:${fmt(stMin)} + ${addMin} min = ?`,
     ans,
-    `${endH}:${fmt((endM + 15) % 60)}`,
-    `${endH}:${fmt((endM + 60 - 15) % 60)}`,
-    'time'
+    adjTime(endH, endM, 15),
+    adjTime(endH, endM, -15),
+    'time',
+    adjTime(endH, endM, 30),
+    adjTime(endH, endM, 60)
   );
 }
 
@@ -520,9 +716,11 @@ function genProbability(d) {
   const total = rnd(6, 10);
   const favourable = rnd(1, total - 1);
   const ans = `${favourable}/${total}`;
-  const wrong1 = `${favourable + 1}/${total}`;
-  const wrong2 = `${favourable}/${total + 1}`;
-  return makeQ(`${favourable} red, ${total - favourable} blue. P(red)?`, ans, wrong1, wrong2, 'probability');
+  const w1 = `${favourable + 1}/${total}`;
+  const w2 = `${favourable}/${total + 1}`;
+  const w3 = favourable > 1 ? `${favourable - 1}/${total}` : `${favourable + 2}/${total}`;
+  const w4 = `${favourable + 1}/${total + 1}`;
+  return makeQ(`${favourable} red, ${total - favourable} blue. P(red)?`, ans, w1, w2, 'probability', w3, w4);
 }
 
 function genDecimal(d) {
@@ -544,13 +742,18 @@ function genTimetable(d) {
   const endM = totalMin % 60;
   const fmt = n => String(n).padStart(2, '0');
   const ans = `${endH}:${fmt(endM)}`;
-  const w1M = (endM + 15) % 60;
-  const w1H = (endM + 15 >= 60) ? endH + 1 : endH;
-  const w1 = `${w1H}:${fmt(w1M)}`;
-  const w2 = `${endH + 1}:${fmt(endM)}`;
+  const adjT = (h, m, dm) => {
+    const tot = h * 60 + m + dm;
+    return `${Math.floor(tot / 60)}:${fmt(((tot % 60) + 60) % 60)}`;
+  };
   return makeQ(
     `Bus at ${startH}:${fmt(startM)}, journey ${dur} min. Arrives?`,
-    ans, w1, w2, 'timetable'
+    ans,
+    adjT(endH, endM, 15),
+    adjT(endH, endM, -15),
+    'timetable',
+    adjT(endH, endM, 30),
+    adjT(endH, endM, 60)
   );
 }
 
@@ -588,11 +791,13 @@ function genCompoundProb(d) {
   const b = rnd(2, Math.floor(total / 3));
   const combined = r + b;
   const ans = `${combined}/${total}`;
-  const wrong1 = `${r}/${total}`;
-  const wrong2 = `${combined}/${total + 1}`;
+  const w1 = `${r}/${total}`;
+  const w2 = `${combined}/${total + 1}`;
+  const w3 = combined > 1 ? `${combined - 1}/${total}` : `${combined + 2}/${total}`;
+  const w4 = (r !== b) ? `${b}/${total}` : `${combined + 1}/${total}`;
   return makeQ(
     `${r} red, ${b} blue, ${total - combined} green. P(red or blue)?`,
-    ans, wrong1, wrong2, 'compound_prob'
+    ans, w1, w2, 'compound_prob', w3, w4
   );
 }
 
@@ -835,6 +1040,22 @@ function updateParts(dt) {
 // ============================================================
 let gs = {};
 
+// Pauses game update loop while a teaching hint is shown
+let gamePaused = false;
+
+// Rush speed (px/s) applied to a meteor the player tapped
+const RUSH_SPEED = 600;
+
+function spawnBullet(lane) {
+  gs.bullet = {
+    x: laneX(lane),
+    y: SHIP_Y - SHIP_H * 0.5,
+    vy: -900,
+    lane,
+    active: true
+  };
+}
+
 function laneX(lane) { return LW * lane + LW / 2; }
 
 function initState() {
@@ -859,7 +1080,7 @@ function initState() {
     difficulty: ab.diffStart, diffMax: ab.diffMax,
     recentAnswers: [],
     // ship
-    shipLane: 1, shipX: laneX(1), shipTargetX: laneX(1),
+    shipLane: Math.floor(LANES / 2), shipX: laneX(Math.floor(LANES / 2)), shipTargetX: laneX(Math.floor(LANES / 2)),
     // meteors
     meteors: [],
     questionAnswered: false,
@@ -893,7 +1114,10 @@ function initState() {
     // ship trail timer
     trailTimer: 0,
     // daily challenge pre-generated questions
-    dailyQuestions: null
+    dailyQuestions: null,
+    // tap-on-meteor: active bullet and rushed lane
+    bullet: null,
+    rushedLane: -1
   });
 
   gs.missionProgress = initMissionProgress(gs.missionId);
@@ -938,7 +1162,7 @@ function spawnQuestion() {
 }
 
 function spawnMeteors(q) {
-  gs.meteors = [0, 1, 2].map(lane => ({
+  gs.meteors = Array.from({ length: LANES }, (_, lane) => ({
     lane,
     x: laneX(lane),
     y: -(MR * 2),
@@ -948,7 +1172,8 @@ function spawnMeteors(q) {
     alive: true,
     flash: 0, flashCol: null,
     wobble: rndF(0, Math.PI * 2),
-    eliminated: false
+    eliminated: false,
+    rushed: false
   }));
 }
 
@@ -1378,7 +1603,7 @@ function loop(ts) {
 }
 
 function update(dt) {
-  if (!gs.running || gs.ended) return;
+  if (!gs.running || gs.ended || gamePaused) return;
 
   gs.gameTime += dt;
 
@@ -1445,6 +1670,28 @@ function update(dt) {
   starOffY = (starOffY + 60 * dt) % 1;
 
   updateMeteors(dt);
+
+  // Bullet update — fired by tap-on-meteor
+  if (gs.bullet && gs.bullet.active) {
+    gs.bullet.y += gs.bullet.vy * dt;
+    // Check collision with target meteor
+    if (!gs.questionAnswered) {
+      const bm = gs.meteors.find(m => m.alive && m.lane === gs.bullet.lane);
+      if (bm && gs.bullet.y <= bm.y + MR && gs.bullet.y >= bm.y - MR) {
+        if (bm.isCorrect) {
+          onCorrect(bm);
+          gs.bullet.active = false;   // absorbed by explosion
+        } else {
+          onWrong(bm);
+          // bullet keeps flying (flies away) — active stays true
+        }
+      }
+    }
+    // Clean up bullet once off-screen or deactivated
+    if (gs.bullet && (!gs.bullet.active || gs.bullet.y < -60)) {
+      gs.bullet = null;
+    }
+  }
   updateParts(dt);
 }
 
@@ -1455,7 +1702,7 @@ function updateMeteors(dt) {
   for (const m of gs.meteors) {
     if (!m.alive) continue;
     anyAlive = true;
-    m.y += m.speed * slowMult * dt;
+    m.y += (m.rushed ? Math.max(m.speed, RUSH_SPEED) : m.speed) * slowMult * dt;
     m.wobble += dt * 1.6;
     if (m.flash > 0) m.flash = Math.max(0, m.flash - dt * 2.5);
 
@@ -1484,6 +1731,7 @@ function render() {
   drawBg();
   drawLanes();
   drawMeteors();
+  drawBullet();
   drawShip();
   drawParts();
   drawHUD();
@@ -1517,17 +1765,12 @@ function drawLanes() {
   ctx.setLineDash([]);
 
   for (let i = 0; i < LANES; i++) {
-    const cx = laneX(i);
     const active = i === gs.shipLane;
     ctx.fillStyle = active ? 'rgba(0,229,255,0.06)' : 'rgba(255,255,255,0.02)';
     ctx.fillRect(i * LW + 2, GH - 55, LW - 4, 52);
     ctx.strokeStyle = active ? 'rgba(0,229,255,0.25)' : 'rgba(255,255,255,0.06)';
     ctx.lineWidth = 1;
     ctx.strokeRect(i * LW + 2, GH - 55, LW - 4, 52);
-    ctx.fillStyle = active ? 'rgba(0,229,255,0.7)' : 'rgba(255,255,255,0.18)';
-    ctx.font = '700 13px system-ui';
-    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-    ctx.fillText(['←', '↓', '→'][i], cx, GH - 29);
   }
 }
 
@@ -1566,9 +1809,24 @@ function drawMeteors() {
     const glowWidth = 3 + proximity * 5;
     ctx.beginPath();
     ctx.arc(0, 0, MR + 5 + proximity * 8, 0, Math.PI * 2);
-    ctx.strokeStyle = m.isCorrect ? `rgba(0,229,255,${glowAlpha})` : `rgba(255,80,40,${glowAlpha})`;
+    // Only reveal correct/wrong colour after the question has been answered; neutral while travelling
+    const glowColor = gs.questionAnswered
+      ? (m.isCorrect ? `rgba(0,229,255,${glowAlpha})` : `rgba(255,80,40,${glowAlpha})`)
+      : `rgba(160,160,200,${glowAlpha})`;
+    ctx.strokeStyle = glowColor;
     ctx.lineWidth = glowWidth;
     ctx.stroke();
+
+    // Targeting ring for the rushed (player-selected) meteor
+    if (m.rushed && !gs.questionAnswered) {
+      ctx.strokeStyle = `rgba(255,220,0,0.7)`;
+      ctx.lineWidth = 2.5;
+      ctx.setLineDash([6, 6]);
+      ctx.beginPath();
+      ctx.arc(0, 0, MR + 14, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
 
     const text = String(m.answer);
     const fs = text.length > 6 ? 16 : text.length > 4 ? 20 : text.length > 2 ? 24 : 28;
@@ -1616,7 +1874,29 @@ function drawMeteors() {
   }
 }
 
-function drawShip() {
+function drawBullet() {
+  const b = gs.bullet;
+  if (!b || !b.active) return;
+  ctx.save();
+  ctx.shadowColor = '#00e5ff';
+  ctx.shadowBlur = 14;
+  // Capsule body
+  ctx.fillStyle = '#ffffff';
+  ctx.beginPath();
+  ctx.ellipse(b.x, b.y, 4, 11, 0, 0, Math.PI * 2);
+  ctx.fill();
+  // Trailing glow streak
+  ctx.strokeStyle = 'rgba(0,229,255,0.55)';
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.moveTo(b.x, b.y + 12);
+  ctx.lineTo(b.x, b.y + 38);
+  ctx.stroke();
+  ctx.shadowBlur = 0;
+  ctx.restore();
+}
+
+
   const x = gs.shipX;
   const y = SHIP_Y;
   const w = SHIP_W;
@@ -1878,6 +2158,7 @@ function endGame(completed) {
   gs.ended = true;
   cancelAnimationFrame(afId);
   stopAmbient();
+  hideTip(); // ensure tip overlay doesn't persist over the end screen
 
   // Play game-over SFX if shield depleted
   if (!completed) sfxGameOver();
@@ -1919,6 +2200,9 @@ function endGame(completed) {
 // ============================================================
 function showTip(question) {
   if (!question) return;
+  // Pause the game while the hint is displayed
+  if (gs.running && !gs.ended) gamePaused = true;
+
   const tip = TIPS[question.type];
   const overlay = document.getElementById('tip-overlay');
   if (!overlay) return;
@@ -1927,17 +2211,27 @@ function showTip(question) {
   const ansEl = document.getElementById('tip-answer');
   const stratEl = document.getElementById('tip-strategy');
 
-  if (qEl) qEl.textContent = question.prompt;
+  if (qEl) qEl.textContent = `Question: ${question.prompt}`;
   if (ansEl) ansEl.textContent = `Answer: ${question.answer}`;
   if (stratEl) stratEl.textContent = tip ? tip.strategy : '';
 
   const stepsEl = document.getElementById('tip-steps');
   if (stepsEl) {
-    if (tip && tip.example) {
+    if (tip && tip.steps && tip.steps.length > 0) {
       stepsEl.style.display = 'block';
-      stepsEl.innerHTML = `<li>${tip.example}</li>`;
+      stepsEl.innerHTML = tip.steps.map(s => `<li>${s}</li>`).join('');
     } else {
       stepsEl.style.display = 'none';
+    }
+  }
+
+  const visualEl = document.getElementById('tip-visual');
+  if (visualEl) {
+    if (tip && tip.visual) {
+      visualEl.style.display = 'block';
+      visualEl.textContent = tip.visual;
+    } else {
+      visualEl.style.display = 'none';
     }
   }
 
@@ -1947,6 +2241,7 @@ function showTip(question) {
 function hideTip() {
   const overlay = document.getElementById('tip-overlay');
   if (overlay) overlay.classList.add('hidden');
+  gamePaused = false;
 }
 
 // ============================================================
@@ -2319,6 +2614,27 @@ function setLane(lane) {
   gs.shipTargetX = laneX(gs.shipLane);
 }
 
+function handleTap(x) {
+  if (!gs.running || gs.ended) return;
+  const lane = clamp(Math.floor(x / LW), 0, LANES - 1);
+  setLane(lane);
+
+  // Rush the meteor in the tapped lane and fire a bullet
+  if (!gs.questionAnswered) {
+    // Clear any previous rush and bullet
+    for (const m of gs.meteors) { if (m.alive) m.rushed = false; }
+    gs.bullet = null;
+    gs.rushedLane = -1;
+
+    const target = gs.meteors.find(m => m.alive && m.lane === lane);
+    if (target) {
+      target.rushed = true;
+      gs.rushedLane = lane;
+      spawnBullet(lane);
+    }
+  }
+}
+
 function setupInput() {
   const c = document.getElementById('canvas');
 
@@ -2327,13 +2643,13 @@ function setupInput() {
     const t = e.changedTouches[0];
     const rect = c.getBoundingClientRect();
     const x = (t.clientX - rect.left) / scale;
-    setLane(x < LW ? 0 : x < LW * 2 ? 1 : 2);
+    handleTap(x);
   }, { passive: false });
 
   c.addEventListener('click', e => {
     const rect = c.getBoundingClientRect();
     const x = (e.clientX - rect.left) / scale;
-    setLane(x < LW ? 0 : x < LW * 2 ? 1 : 2);
+    handleTap(x);
   });
 
   document.addEventListener('keydown', e => {
@@ -2343,6 +2659,8 @@ function setupInput() {
     if (e.key === '1') setLane(0);
     if (e.key === '2') setLane(1);
     if (e.key === '3') setLane(2);
+    if (e.key === '4') setLane(3);
+    if (e.key === '5') setLane(4);
   });
 }
 
