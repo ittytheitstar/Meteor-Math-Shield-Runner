@@ -1,0 +1,129 @@
+{
+  "project": "Meteor Math Shield Runner",
+  "description": "NZ curriculum-aligned HTML5 canvas math game for ages 6-12. Ship dodges/catches falling meteors labelled with math answers. Correct answer recharges shield; wrong depletes it.",
+  "gameLoop": {
+    "summary": "3-lane canvas game. One question shown at top. 3 meteors fall (one per lane) labelled with answer choices. Player taps/swipes a lane to move ship. Ship collides with the meteor in its lane when meteors reach ship level — correct = shield/score up, wrong = shield down.",
+    "canvasSize": { "w": 480, "h": 800, "scaledToViewport": true },
+    "lanes": 3,
+    "laneWidth": 160,
+    "shipY": 700,
+    "meteorRadius": 52
+  },
+  "screenFlow": [
+    "landing  → age-select → mode-select → game → (gameover | results) → landing",
+    "Phase 2: landing → (missions | shop | cosmetics) accessible from landing"
+  ],
+  "phases": [
+    {
+      "id": "phase1",
+      "title": "Core Playable Game",
+      "status": "complete",
+      "file": "index.html",
+      "features": [
+        "HTML shell: landing, age-select, mode-select, game-canvas, gameover, results screens",
+        "Canvas game engine: requestAnimationFrame loop, scaling, touch/keyboard input",
+        "3-lane ship movement with smooth lerp animation",
+        "Meteor wave spawning and falling with configurable speed",
+        "Collision detection: meteor reaches ship Y → evaluate ship lane",
+        "Question types: addition, subtraction, multiplication, division, algebra (missing number), number patterns, geometry (perimeter/area), fractions of amounts",
+        "Distractor generation: near-miss, common misconceptions, unique guarantees",
+        "Shield system: drain per second, recharge on correct, penalty on wrong",
+        "Scoring: score, XP, coins with combo multiplier",
+        "Combo + Fever mode (triggered at 5/10/15 combo)",
+        "Adaptive difficulty: adjusts up/down based on last-10-answer accuracy",
+        "Game modes: Quick Run (2.5 min, hasFailure), Zen (no drain, no fail)",
+        "Age bands: age6_7 (diff 1-3), age8_9 (diff 2-5), age10_12 (diff 3-7) with strand weights",
+        "Particle burst on correct/wrong",
+        "Screen-shake on wrong answer",
+        "Fever rainbow border + golden glow overlay",
+        "LocalStorage persistence: best score, total correct answered",
+        "Responsive canvas scaling (mobile portrait and desktop)",
+        "Star-field scrolling background"
+      ],
+      "knownLimitations": [
+        "No audio (Phase 3)",
+        "No upgrades/cosmetics applied to gameplay (Phase 2)",
+        "No mission mode gameplay (Phase 2)",
+        "Question types: money, time, statistics, probability not yet included (Phase 2)",
+        "No teaching tips / hint overlay after wrong answer (Phase 3)",
+        "Ship always rendered as default scout color (Phase 2)"
+      ]
+    },
+    {
+      "id": "phase2",
+      "title": "Missions, Upgrades & Cosmetics",
+      "status": "pending",
+      "plannedFeatures": [
+        "Mission select screen: load from data/missions.json, show progress, goal tracking",
+        "Mission mode gameplay: goal-specific win condition (streak, correct count, fever, etc.)",
+        "Upgrades screen: purchase with coins, 3 categories (survival, speed_score, math_helper), apply effects in-game",
+        "Cosmetics screen: ships (colors), trails, pets — unlock based on conditions",
+        "Apply upgrade effects: shield_max, shield_recharge, drain_multiplier, combo_decay_multiplier, xp_multiplier, bonus_coins, tap_cooldown, eliminate_one, slow_on_streak, place_value_highlight",
+        "Per-question timing bonus XP (speedBonusXP from config)",
+        "Question types: money (NZD), time (clock arithmetic), statistics (read graph values)",
+        "Teaching tip card shown after wrong answer: loads from data/teaching.json",
+        "Persistent game progress: level, coins, upgrades, cosmetics, missions in localStorage",
+        "XP level-up animation in HUD"
+      ]
+    },
+    {
+      "id": "phase3",
+      "title": "Audio, Polish & Advanced Features",
+      "status": "pending",
+      "plannedFeatures": [
+        "Web Audio API: procedural SFX for correct (chime), wrong (thud), fever (swell), level-up (fanfare), game-over (descend)",
+        "Background ambient space music (oscillator-based procedural)",
+        "Enhanced particle system: trail particles behind ship, explosion rings, star burst on fever",
+        "Probability question type (fraction answers)",
+        "Number pattern advanced: square numbers, doubling sequences",
+        "Statistics: mean/mode questions with simple inline bar chart",
+        "Daily challenge mode with fixed seed",
+        "Stats screen: accuracy by strand, total XP, level progress bar",
+        "Improved meteor visuals: crater texture, glow pulse based on closeness to ship"
+      ]
+    },
+    {
+      "id": "phase4",
+      "title": "Full Content & NZ Curriculum Coverage",
+      "status": "pending",
+      "plannedFeatures": [
+        "All question types from data/questions.json fully implemented",
+        "Place value highlight upgrade visual effect",
+        "Eliminate-one upgrade: dims a wrong option on meteor",
+        "Second chance upgrade: shield protection visual",
+        "Timetable/schedule question type",
+        "Composite area (L-shape) geometry questions",
+        "Fraction equivalence questions",
+        "Two-step algebra (balance equations)",
+        "Compound probability",
+        "Share game result (score card image)",
+        "Accessibility: high contrast mode, reduced motion",
+        "i18n hook for Te Reo Māori labels (ka rawe, tino pai)"
+      ]
+    }
+  ],
+  "dataFiles": {
+    "data/config.json": "Master config: canvas size, shield values, scoring, combo, adaptive, modes, ageBands, audio, particles",
+    "data/questions.json": "Question type specs: rangeA/B per difficulty, templates, distractor rules for all 10 question types",
+    "data/upgrades.json": "11 upgrades across 3 categories with effect specs",
+    "data/cosmetics.json": "8 ships, 5 trails, 5 pets, 5 stickers with unlock conditions",
+    "data/missions.json": "13 missions with goals, rewards, and unlock ship references",
+    "data/teaching.json": "Teaching tips per question type with strategy, visual type, step-by-step examples; correctFeedback strings in Te Reo Māori and English"
+  },
+  "techStack": {
+    "runtime": "Pure HTML5 + Vanilla JS + Canvas 2D — no build tools, no frameworks",
+    "hosting": "GitHub Pages (static)",
+    "entryPoint": "index.html",
+    "dataLoading": "Game config and question rules are inlined in index.html JS constants for offline/file:// compatibility. Data JSON files are source-of-truth reference.",
+    "persistence": "localStorage key: mmsr_stats (bestScore, totalCorrect, level, coins, unlockedShips, unlockedTrails, upgrades, completedMissions)"
+  },
+  "codingNotes": {
+    "canvasCoords": "Origin top-left. SHIP_Y = 700 (fixed). Meteors start at y = -(METEOR_R*2), fall downward.",
+    "laneAssignment": "lane 0 = left (x 0-160), lane 1 = center (x 160-320), lane 2 = right (x 320-480). laneCenter(n) = n*160 + 80.",
+    "collisionModel": "Each meteor checked individually. When m.y >= SHIP_Y - SHIP_H/2 - METEOR_R AND m.lane === shipLane → hit.",
+    "questionFlow": "spawnQuestion() → generateQuestion() → spawnMeteors(). On any hit (correct or wrong) gs.questionAnswered=true. When all meteors exit canvas → spawnQuestion() again.",
+    "adaptiveDifficulty": "Uses last-10 answer window. Accuracy >0.85 → difficulty++. Accuracy <0.65 → difficulty--. Clamped to ageBand diffMax.",
+    "feverMode": "Triggered at combo thresholds [5,10,15]. Lasts 8s. Doubles coins, halves shield drain, enables rainbow border.",
+    "rendering": "drawBackground() → drawLanes() → drawMeteors() → drawShip() → drawParticles() → drawHUD() → drawFeverEffect()"
+  }
+}
