@@ -418,7 +418,9 @@ function initState() {
   const ab   = CFG.ageBands[gs.ageBandId];
   const mode = CFG.modes[gs.modeId];
   const saved = loadStats();
-  const scMax = getShieldMax();
+  // Cache upgrade levels so we don't hit localStorage every frame
+  const cachedUpgrades = saved.upgrades || {};
+  const scMax = getShieldMax(cachedUpgrades);
 
   Object.assign(gs, {
     // shield
@@ -453,14 +455,18 @@ function initState() {
     // FX
     shakeTimer: 0, shakeX: 0, shakeY: 0,
     levelUpAnim: 0,
+    // cached upgrade levels (avoid repeated localStorage reads during gameplay)
+    upgrades: cachedUpgrades,
     // second chance upgrade
-    secondChanceLeft: upgLevel('second_chance'),
+    secondChanceLeft: (cachedUpgrades['second_chance'] || 0),
     // slow time upgrade
     slowTimeActive: false, slowTimeTimer: 0,
     // mission tracking
     missionId: gs.missionId || null,
     missionCompleted: false,
-    missionProgress: null
+    missionProgress: null,
+    // strand stats for this run
+    runStrandStats: {}
   });
 
   gs.missionProgress = initMissionProgress(gs.missionId);
@@ -523,10 +529,10 @@ function onCorrect(m) {
 
   // Fever?
   const ft = CFG.combo.feverThresholds;
-  const wasFever = gs.fever;
   if (ft.includes(gs.combo) || (gs.combo > ft[ft.length - 1])) {
     if (!gs.fever) {
       gs.feverTotal++;
+      updateMission('fever', null);
     }
     gs.fever = true;
     gs.feverTimer = CFG.combo.feverDuration;
@@ -562,6 +568,14 @@ function onCorrect(m) {
   adaptDifficulty(1);
   updateMission('correct', m);
 
+  // Track strand stats
+  if (gs.currentQ) {
+    const t = gs.currentQ.type;
+    if (!gs.runStrandStats[t]) gs.runStrandStats[t] = { correct: 0, total: 0 };
+    gs.runStrandStats[t].correct++;
+    gs.runStrandStats[t].total++;
+  }
+
   spawnParts(m.x, m.y, gs.fever ? '#ffd600' : '#69f0ae', gs.fever ? 18 : 11);
   m.flash = 0.6; m.flashCol = '#69f0ae';
   flashScreen('correct');
@@ -578,6 +592,12 @@ function onWrong(m) {
     gs.combo = 0;
     gs.fever = false; gs.feverTimer = 0;
     adaptDifficulty(0);
+    // Track strand stats
+    if (gs.currentQ) {
+      const t = gs.currentQ.type;
+      if (!gs.runStrandStats[t]) gs.runStrandStats[t] = { correct: 0, total: 0 };
+      gs.runStrandStats[t].total++;
+    }
     showTip(gs.currentQ);
     return;
   }
@@ -590,6 +610,13 @@ function onWrong(m) {
   gs.shield = Math.max(0, gs.shield - CFG.shield.penaltyOnWrong);
   adaptDifficulty(0);
   gs.shakeTimer = 0.45;
+
+  // Track strand stats (wrong)
+  if (gs.currentQ) {
+    const t = gs.currentQ.type;
+    if (!gs.runStrandStats[t]) gs.runStrandStats[t] = { correct: 0, total: 0 };
+    gs.runStrandStats[t].total++;
+  }
 
   spawnParts(m.x, m.y, '#ff1744', 8);
   m.flash = 0.6; m.flashCol = '#ff1744';
@@ -750,10 +777,10 @@ function checkShipUnlocks() {
     if (saved.unlockedShips.includes(ship.id)) continue;
     const cond = ship.unlockCondition;
     let unlock = false;
-    if (cond.type === 'level'         && (saved.level || 1) >= cond.value)                      unlock = true;
-    if (cond.type === 'correct_total' && (saved.totalCorrect || 0) >= cond.value)               unlock = true;
-    if (cond.type === 'fever_total'   && (saved.feverTotal || 0) >= cond.value)                 unlock = true;
-    if (cond.type === 'streak'        && (saved.bestCombo || 0) >= cond.value)                  unlock = true;
+    if      (cond.type === 'level'         && (saved.level || 1) >= cond.value)        unlock = true;
+    else if (cond.type === 'correct_total' && (saved.totalCorrect || 0) >= cond.value) unlock = true;
+    else if (cond.type === 'fever_total'   && (saved.feverTotal || 0) >= cond.value)   unlock = true;
+    else if (cond.type === 'streak'        && (saved.bestCombo || 0) >= cond.value)    unlock = true;
     if (unlock) { saved.unlockedShips.push(ship.id); changed = true; }
   }
   if (changed) saveStats(saved);
@@ -762,10 +789,14 @@ function checkShipUnlocks() {
 // ============================================================
 // UPGRADE HELPERS
 // ============================================================
-function upgLevel(id) { return (loadStats().upgrades || {})[id] || 0; }
+// Use cached upgrade levels from gs.upgrades when in-game, else read from localStorage
+function upgLevel(id) {
+  if (gs.upgrades) return (gs.upgrades[id] || 0);
+  return (loadStats().upgrades || {})[id] || 0;
+}
 
-function getShieldMax() {
-  const lv = upgLevel('shield_boost');
+function getShieldMax(overrideUpgrades) {
+  const lv = overrideUpgrades ? (overrideUpgrades['shield_boost'] || 0) : upgLevel('shield_boost');
   return Math.round(CFG.shield.max * Math.pow(1.20, lv));
 }
 
@@ -1271,9 +1302,13 @@ function endGame(completed) {
   while (lv < t.length - 1 && saved.xp >= t[lv]) lv++;
   saved.level = lv;
 
-  // Strand stats
+  // Strand stats — merge run stats into persistent record
   saved.strandStats = saved.strandStats || {};
-  // (basic: just track totalCorrect per type via missionProgress if available)
+  Object.entries(gs.runStrandStats || {}).forEach(([type, d]) => {
+    if (!saved.strandStats[type]) saved.strandStats[type] = { correct: 0, total: 0 };
+    saved.strandStats[type].correct += d.correct;
+    saved.strandStats[type].total   += d.total;
+  });
 
   checkShipUnlocks();
   saveStats(saved);
@@ -1418,6 +1453,7 @@ function renderUpgradeTabs() {
     const btn = document.createElement('button');
     btn.className = 'cat-tab' + (idx === 0 ? ' active' : '');
     btn.textContent = cat.label;
+    btn.dataset.category = cat.id;
     btn.addEventListener('click', () => {
       container.querySelectorAll('.cat-tab').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
@@ -1477,7 +1513,7 @@ function buyUpgrade(id) {
   updateShopCoins();
   // Re-render current tab
   const activeTab = document.querySelector('#upgrade-tabs .cat-tab.active');
-  const catId = activeTab ? UPGRADE_CATEGORIES.find(c => c.label === activeTab.textContent)?.id || 'survival' : 'survival';
+  const catId = activeTab ? (activeTab.dataset.category || 'survival') : 'survival';
   renderUpgradesList(catId);
 }
 
@@ -1578,10 +1614,14 @@ function renderMissionsList() {
 }
 
 function startMission(missionId) {
-  gs.ageBandId = gs.ageBandId || 'age8_9';
-  gs.modeId    = 'mission';
   gs.missionId = missionId;
-  startGame();
+  gs.modeId    = 'mission';
+  // Go to age select if no age band is set yet
+  if (!gs.ageBandId) {
+    showScreen('screen-age');
+  } else {
+    startGame();
+  }
 }
 
 // ============================================================
@@ -1763,8 +1803,13 @@ function wireButtons() {
   document.querySelectorAll('[data-age]').forEach(c => {
     c.addEventListener('click', () => {
       gs.ageBandId = c.dataset.age;
-      gs.missionId = null;
-      showScreen('screen-mode');
+      // If coming from mission flow, skip mode screen and start directly
+      if (gs.modeId === 'mission' && gs.missionId) {
+        startGame();
+      } else {
+        gs.missionId = null;
+        showScreen('screen-mode');
+      }
     });
   });
 
