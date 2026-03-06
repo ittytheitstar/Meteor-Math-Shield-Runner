@@ -1,0 +1,239 @@
+{
+  "version": "1.0.0",
+  "questionTypes": [
+    {
+      "id": "number_add",
+      "strand": "number",
+      "label": "Addition",
+      "ageBands": ["age6_7", "age8_9", "age10_12"],
+      "difficulties": [
+        { "level": 1, "rangeA": [0,10],  "rangeB": [0,10],  "carry": false },
+        { "level": 2, "rangeA": [0,20],  "rangeB": [0,20],  "carry": false },
+        { "level": 3, "rangeA": [10,50], "rangeB": [10,50], "carry": false },
+        { "level": 4, "rangeA": [10,99], "rangeB": [10,99], "carry": true  },
+        { "level": 5, "rangeA": [50,500],"rangeB": [50,500],"carry": true  }
+      ],
+      "template": "{a} + {b} = ?",
+      "answerType": "integer",
+      "displayHints": ["ten_frame", "number_line"],
+      "distractorRules": [
+        { "type": "near_miss_pm",   "delta": [1,2,10] },
+        { "type": "place_value_swap" }
+      ]
+    },
+    {
+      "id": "number_sub",
+      "strand": "number",
+      "label": "Subtraction",
+      "ageBands": ["age6_7", "age8_9", "age10_12"],
+      "difficulties": [
+        { "level": 1, "rangeA": [0,10],  "rangeB": [0,10],  "borrow": false },
+        { "level": 2, "rangeA": [0,20],  "rangeB": [0,20],  "borrow": false },
+        { "level": 3, "rangeA": [10,99], "rangeB": [5,50],  "borrow": false },
+        { "level": 4, "rangeA": [20,99], "rangeB": [10,80], "borrow": true  },
+        { "level": 5, "rangeA": [100,999],"rangeB": [10,500],"borrow": true }
+      ],
+      "template": "{a} − {b} = ?",
+      "answerType": "integer",
+      "displayHints": ["number_line"],
+      "distractorRules": [
+        { "type": "reversal",      "compute": "b - a if b < a else near_miss" },
+        { "type": "near_miss_pm",  "delta": [1,2,10] }
+      ]
+    },
+    {
+      "id": "number_mul",
+      "strand": "number",
+      "label": "Multiplication",
+      "ageBands": ["age8_9", "age10_12"],
+      "difficulties": [
+        { "level": 2, "tables": [2,5,10], "rangeB": [1,10] },
+        { "level": 3, "tables": [3,4,6],  "rangeB": [1,12] },
+        { "level": 4, "tables": [7,8,9],  "rangeB": [1,12] },
+        { "level": 5, "rangeA": [11,20],  "rangeB": [2,9], "twoDigit": true },
+        { "level": 6, "rangeA": [10,50],  "rangeB": [10,50],"areaModel": true }
+      ],
+      "template": "{a} × {b} = ?",
+      "answerType": "integer",
+      "displayHints": ["array"],
+      "distractorRules": [
+        { "type": "addInstead",    "compute": "a + b" },
+        { "type": "near_miss_mul", "delta": ["a","b"] }
+      ]
+    },
+    {
+      "id": "number_div",
+      "strand": "number",
+      "label": "Division",
+      "ageBands": ["age8_9", "age10_12"],
+      "difficulties": [
+        { "level": 2, "tables": [2,5,10], "rangeQ": [1,10] },
+        { "level": 3, "tables": [3,4,6],  "rangeQ": [1,12] },
+        { "level": 4, "tables": [7,8,9],  "rangeQ": [1,12] },
+        { "level": 5, "rangeA": [10,100], "rangeB": [2,9]  },
+        { "level": 6, "rangeA": [100,500],"rangeB": [2,12] }
+      ],
+      "template": "{a} ÷ {b} = ?",
+      "answerType": "integer",
+      "displayHints": ["array"],
+      "distractorRules": [
+        { "type": "mulInstead",    "compute": "a * b" },
+        { "type": "near_miss_pm",  "delta": [1,2] }
+      ]
+    },
+    {
+      "id": "fraction",
+      "strand": "number",
+      "label": "Fractions",
+      "ageBands": ["age8_9", "age10_12"],
+      "difficulties": [
+        { "level": 3, "fractions": ["1/2","1/4","1/3","3/4"], "amount": [4,40],   "context": "simple"   },
+        { "level": 4, "fractions": ["2/3","3/4","2/5","1/5"], "amount": [10,100], "context": "moderate" },
+        { "level": 5, "fractions": ["3/8","5/6","2/3"],       "amount": [12,120], "context": "harder"   },
+        { "level": 6, "percentages": [10,20,25,50,75],        "amount": [20,200], "context": "percent"  },
+        { "level": 7, "decimals": [0.1,0.2,0.25,0.5,0.75],   "amount": [20,500], "context": "decimal"  }
+      ],
+      "templateFraction": "Find {r} of {a}",
+      "templatePercent":  "{p}% of {a} = ?",
+      "templateDecimal":  "{d} × {a} = ?",
+      "answerType": "number",
+      "distractorRules": [
+        { "type": "denominator_only", "compute": "a / denom" },
+        { "type": "near_miss_pm",     "delta": [1,2] }
+      ]
+    },
+    {
+      "id": "algebra",
+      "strand": "algebra",
+      "label": "Missing Number",
+      "ageBands": ["age6_7", "age8_9", "age10_12"],
+      "difficulties": [
+        { "level": 1, "form": "add",  "range": [1,10],  "template": "☐ + {b} = {c}" },
+        { "level": 2, "form": "sub",  "range": [1,20],  "template": "{a} − ☐ = {c}" },
+        { "level": 3, "form": "mul",  "tables": [2,3,4,5,10], "template": "☐ × {b} = {c}" },
+        { "level": 4, "form": "div",  "range": [1,144], "template": "☐ ÷ {b} = {c}" },
+        { "level": 5, "form": "twoStep", "range": [1,50], "template": "2 × ☐ + {b} = {c}" },
+        { "level": 6, "form": "balance", "range": [1,100], "template": "☐ + {b} = {c} + {d}" }
+      ],
+      "answerType": "integer",
+      "distractorRules": [
+        { "type": "wrong_inverse", "compute": "c + b instead of c - b" },
+        { "type": "near_miss_pm",  "delta": [1,2] }
+      ]
+    },
+    {
+      "id": "money",
+      "strand": "measurement",
+      "label": "NZ Money",
+      "ageBands": ["age6_7", "age8_9", "age10_12"],
+      "difficulties": [
+        { "level": 1, "maxTotal": 20,  "coins": true,  "template": "Coins: {items}. Total?" },
+        { "level": 2, "maxTotal": 50,  "twoItems": true, "template": "Cost: ${cost}. You pay ${paid}. Change?" },
+        { "level": 3, "maxTotal": 100, "changeFrom": [10,20], "template": "Items cost ${cost}. Pay $20. Change?" },
+        { "level": 4, "maxTotal": 200, "multiItem": true, "template": "3 items: ${a}, ${b}, ${c}. Total?" },
+        { "level": 5, "discount": [10,20,25,50], "maxPrice": 200, "template": "{p}% off ${price}. New price?" },
+        { "level": 6, "multiStep": true, "template": "Bought {n} × ${a}. Paid ${paid}. Change?" }
+      ],
+      "answerType": "currency",
+      "distractorRules": [
+        { "type": "near_miss_currency", "delta": [0.50,1,2,5] },
+        { "type": "common_error" }
+      ],
+      "currency": "NZD",
+      "context": "New Zealand"
+    },
+    {
+      "id": "time",
+      "strand": "measurement",
+      "label": "Time",
+      "ageBands": ["age8_9", "age10_12"],
+      "difficulties": [
+        { "level": 2, "increments": [5,10,15,30], "maxDuration": 60,  "template": "Start {t}. Add {d} min. Finish?" },
+        { "level": 3, "increments": [15,20,25,30,45], "crossHour": true, "template": "Start {t}. Add {d} min. Finish?" },
+        { "level": 4, "hours": true, "crossNoon": true, "template": "Movie starts {t}. Runs {h}h {m}min. Finish?" },
+        { "level": 5, "timetable": true, "template": "Bus leaves {t}. Journey: {d} min. Arrive?" },
+        { "level": 6, "multiStep": true, "template": "Arrived {t1}. Left {t2}. Duration?" }
+      ],
+      "answerType": "time",
+      "distractorRules": [
+        { "type": "carry_error", "compute": "minutes overflow without hour carry" },
+        { "type": "near_miss_time", "delta": [5,10,15] }
+      ]
+    },
+    {
+      "id": "geometry",
+      "strand": "geometry",
+      "label": "Shapes & Measures",
+      "ageBands": ["age8_9", "age10_12"],
+      "difficulties": [
+        { "level": 2, "task": "perimeter", "w": [1,20], "h": [1,20], "template": "Perimeter of {w}cm × {h}cm rect?" },
+        { "level": 3, "task": "area",      "w": [1,20], "h": [1,20], "template": "Area of {w}cm × {h}cm rect?" },
+        { "level": 4, "task": "both",      "w": [2,30], "h": [2,30], "template": "{task} of {w}cm × {h}cm rect?" },
+        { "level": 5, "task": "composite", "template": "Area of this L-shape? ({w1}×{h1} + {w2}×{h2})" },
+        { "level": 6, "task": "missing_side", "template": "Perimeter = {p}cm. One side = {s}cm. Other side?" }
+      ],
+      "answerType": "integer",
+      "units": "cm²",
+      "distractorRules": [
+        { "type": "swap_formula",  "compute": "perimeter when asked area, vice-versa" },
+        { "type": "near_miss_pm",  "delta": [2,4,10] }
+      ]
+    },
+    {
+      "id": "statistics",
+      "strand": "statistics",
+      "label": "Read the Graph",
+      "ageBands": ["age6_7", "age8_9", "age10_12"],
+      "difficulties": [
+        { "level": 1, "categories": 3, "valueRange": [1,10],  "question": "max",  "template": "Which has the most?" },
+        { "level": 2, "categories": 4, "valueRange": [1,20],  "question": "value","template": "How many {cat}?" },
+        { "level": 3, "categories": 4, "valueRange": [1,50],  "question": "total","template": "Total of all?" },
+        { "level": 4, "categories": 5, "valueRange": [2,50],  "question": "diff", "template": "Difference: {cat1} − {cat2}?" },
+        { "level": 5, "categories": 5, "valueRange": [5,100], "question": "mean", "template": "Mean (average) of all?" }
+      ],
+      "answerType": "integer",
+      "distractorRules": [
+        { "type": "adjacent_bar",  "compute": "nearby bar value" },
+        { "type": "near_miss_pm",  "delta": [1,2,5] }
+      ]
+    },
+    {
+      "id": "probability",
+      "strand": "probability",
+      "label": "Probability",
+      "ageBands": ["age8_9", "age10_12"],
+      "difficulties": [
+        { "level": 2, "context": "coin",    "question": "p_heads",   "template": "Fair coin. P(heads) = ?" },
+        { "level": 3, "context": "dice",    "question": "p_number",  "template": "Roll a dice. P({n}) = ?" },
+        { "level": 4, "context": "spinner", "question": "p_colour",  "template": "{total}-section spinner, {fav} are {colour}. P({colour}) = ?" },
+        { "level": 5, "context": "bag",     "question": "p_draw",    "template": "Bag: {red} red, {blue} blue, {green} green. P(red) = ?" },
+        { "level": 6, "twoStep": true,      "question": "compound",  "template": "Roll dice AND flip coin. P(6 AND heads) = ?" }
+      ],
+      "answerType": "fraction",
+      "displayAs": "fraction",
+      "distractorRules": [
+        { "type": "reciprocal",    "compute": "total/fav instead of fav/total" },
+        { "type": "near_miss_frac","delta": [1] }
+      ]
+    },
+    {
+      "id": "number_pattern",
+      "strand": "algebra",
+      "label": "Number Patterns",
+      "ageBands": ["age6_7", "age8_9", "age10_12"],
+      "difficulties": [
+        { "level": 1, "step": [1,2],     "start": [1,10],  "length": 4, "template": "Next: {seq}, ?" },
+        { "level": 2, "step": [2,3,5],   "start": [2,20],  "length": 5, "template": "Next: {seq}, ?" },
+        { "level": 3, "step": [10,20,25],"start": [10,100],"length": 5, "template": "Next: {seq}, ?" },
+        { "level": 4, "step": [-1,-2,-5],"start": [20,100],"length": 5, "template": "Next: {seq}, ?" },
+        { "level": 5, "rule": "double",  "start": [1,10],  "length": 5, "template": "Rule: double. Next: {seq}, ?" },
+        { "level": 6, "rule": "squares", "start": 1,       "length": 5, "template": "Next square number: {seq}, ?" }
+      ],
+      "answerType": "integer",
+      "distractorRules": [
+        { "type": "wrong_step",  "compute": "add wrong step amount" },
+        { "type": "near_miss_pm","delta": [1,2] }
+      ]
+    }
+  ]
+}

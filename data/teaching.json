@@ -1,0 +1,122 @@
+{
+  "version": "1.0.0",
+  "tips": {
+    "number_add": {
+      "general": "Try counting on from the bigger number.",
+      "strategy": "Make a 10 first! e.g. 8 + 7 → 8+2=10, then +5 = 15",
+      "visual": "ten_frame",
+      "examples": [
+        { "q": "8 + 7", "a": "15", "steps": ["8 + 7", "8 + 2 = 10", "10 + 5 = 15"] },
+        { "q": "6 + 8", "a": "14", "steps": ["6 + 8", "6 + 4 = 10", "10 + 4 = 14"] }
+      ]
+    },
+    "number_sub": {
+      "general": "Count back or find the difference by counting up.",
+      "strategy": "Count up from the smaller number to the bigger one.",
+      "visual": "number_line",
+      "examples": [
+        { "q": "13 − 8", "a": "5", "steps": ["8 → 10 = +2", "10 → 13 = +3", "Total jump = 5"] }
+      ]
+    },
+    "number_mul": {
+      "general": "Times tables are like skip-counting!",
+      "strategy": "6 × 7: try 6×6=36, then +6 = 42",
+      "visual": "array",
+      "examples": [
+        { "q": "7 × 8", "a": "56", "steps": ["7 × 8", "7 × 4 = 28", "28 × 2 = 56"] }
+      ]
+    },
+    "number_div": {
+      "general": "Division is sharing equally — or the inverse of multiplication.",
+      "strategy": "Ask: what × the divisor = the dividend?",
+      "visual": "array",
+      "examples": [
+        { "q": "56 ÷ 7", "a": "8", "steps": ["? × 7 = 56", "7 × 8 = 56", "Answer: 8"] }
+      ]
+    },
+    "fraction": {
+      "general": "Fractions of amounts: divide first, then multiply.",
+      "strategy": "Find 3/4 of 20: 20÷4=5, then ×3=15",
+      "visual": "bar_model",
+      "examples": [
+        { "q": "Find 3/4 of 20", "a": "15", "steps": ["20 ÷ 4 = 5 (one quarter)", "5 × 3 = 15 (three quarters)"] }
+      ]
+    },
+    "algebra": {
+      "general": "Use inverse (opposite) operations to find the missing number.",
+      "strategy": "☐ + 5 = 12 → 12 − 5 = 7",
+      "visual": "balance",
+      "examples": [
+        { "q": "☐ + 5 = 12", "a": "7", "steps": ["12 − 5 = 7", "Check: 7 + 5 = 12 ✓"] },
+        { "q": "3 × ☐ = 24", "a": "8", "steps": ["24 ÷ 3 = 8", "Check: 3 × 8 = 24 ✓"] }
+      ]
+    },
+    "money": {
+      "general": "For change: count up from the price to the amount paid.",
+      "strategy": "Price $3.50, pay $5: $3.50→$4 = 50¢, $4→$5 = $1, total = $1.50",
+      "visual": "coins",
+      "examples": [
+        { "q": "Cost $3.50, pay $5", "a": "$1.50", "steps": ["$3.50 → $4.00 = $0.50", "$4.00 → $5.00 = $1.00", "Total change = $1.50"] }
+      ]
+    },
+    "time": {
+      "general": "Add hours and minutes separately; remember 60 minutes = 1 hour.",
+      "strategy": "Start 2:45, add 30min → 2:45+15=3:00, then +15 more = 3:15",
+      "visual": "clock",
+      "examples": [
+        { "q": "2:45 + 30 min", "a": "3:15", "steps": ["2:45 + 15 min = 3:00", "3:00 + 15 min = 3:15"] }
+      ]
+    },
+    "geometry": {
+      "general": "Perimeter = distance all the way around. Area = space inside.",
+      "strategy": "Perimeter = 2×(length + width). Area = length × width",
+      "visual": "grid",
+      "examples": [
+        { "q": "4cm × 3cm rectangle", "a": "Area=12cm², Perimeter=14cm", "steps": ["Area: 4×3=12 cm²", "Perimeter: 2×(4+3)=14 cm"] }
+      ]
+    },
+    "statistics": {
+      "general": "Read bar heights carefully — check the scale!",
+      "strategy": "For the mean (average): add all values, then divide by how many there are.",
+      "visual": "bar_graph",
+      "examples": [
+        { "q": "Mean of 4, 6, 8, 6", "a": "6", "steps": ["4+6+8+6 = 24", "24 ÷ 4 = 6"] }
+      ]
+    },
+    "probability": {
+      "general": "Probability = favourable outcomes ÷ total outcomes",
+      "strategy": "P(red) from 3 red, 5 blue: 3 ÷ (3+5) = 3/8",
+      "visual": "spinner",
+      "examples": [
+        { "q": "3 red, 5 blue. P(red)?", "a": "3/8", "steps": ["Favourable: 3 red", "Total: 3+5=8", "P(red) = 3/8"] }
+      ]
+    },
+    "number_pattern": {
+      "general": "Find the rule: what do you add (or subtract or multiply) each time?",
+      "strategy": "Check the gap between numbers: 2, 5, 8, 11 → gap is +3 each time",
+      "visual": "number_line",
+      "examples": [
+        { "q": "2, 5, 8, 11, ?", "a": "14", "steps": ["Gap: +3 each time", "11 + 3 = 14"] }
+      ]
+    }
+  },
+  "missedFeedback": {
+    "templates": [
+      "Almost! The answer was {answer}. {tip}",
+      "Not quite — it's {answer}. {tip}",
+      "Great try! Answer: {answer}. {tip}"
+    ]
+  },
+  "correctFeedback": [
+    "⭐ Brilliant!",
+    "🔥 Awesome!",
+    "💥 Correct!",
+    "🌟 Nailed it!",
+    "✨ Ka rawe! (Excellent!)",
+    "🎯 Spot on!",
+    "🚀 Superb!",
+    "💯 Perfect!",
+    "🥇 Champion!",
+    "👏 Tino pai! (Very good!)"
+  ]
+}

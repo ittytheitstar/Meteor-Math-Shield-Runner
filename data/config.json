@@ -1,0 +1,148 @@
+{
+  "version": "1.0.0",
+  "game": {
+    "lanes": 3,
+    "canvasWidth": 480,
+    "canvasHeight": 800,
+    "initialMeteorSpeed": 120,
+    "meteorSpeedIncreasePerLevel": 18,
+    "maxMeteorSpeed": 420,
+    "meteorSpawnInterval": 3.2,
+    "meteorSpawnIntervalMin": 1.4,
+    "meteorSpawnIntervalDecreasePerLevel": 0.12,
+    "laneWidth": 160,
+    "meteorRadius": 52,
+    "shipWidth": 64,
+    "shipHeight": 80,
+    "shipLaneSwitchDuration": 0.18,
+    "tapCooldown": 0.25
+  },
+  "shield": {
+    "maxCapacity": 100,
+    "initialShield": 100,
+    "drainPerSecond": 2.8,
+    "rechargeOnCorrect": 18,
+    "penaltyOnWrong": 22,
+    "feverDrainMultiplier": 0.5,
+    "criticalThreshold": 25
+  },
+  "scoring": {
+    "xpPerCorrect": 10,
+    "xpComboMultiplierStep": 0.5,
+    "xpMaxMultiplier": 4,
+    "coinsPerCorrect": 5,
+    "coinsFeverMultiplier": 2,
+    "levelThresholds": [0,80,180,320,500,720,990,1320,1710,2170,2710,3340,4070,4910,5870,6970],
+    "speedBonusXP": 5
+  },
+  "combo": {
+    "feverThresholds": [5, 10, 15],
+    "feverDuration": 8,
+    "comboDecayDelay": 5,
+    "comboDecayRate": 1
+  },
+  "adaptive": {
+    "window": 10,
+    "targetAccuracy": 0.78,
+    "increaseIfAbove": 0.85,
+    "decreaseIfBelow": 0.65,
+    "difficultyMin": 1,
+    "difficultyMax": 7,
+    "responseTimeBonus": 1.5
+  },
+  "modes": {
+    "quickRun": {
+      "id": "quickRun",
+      "label": "Quick Run",
+      "description": "2–3 min blast! How far can you go?",
+      "icon": "🚀",
+      "durationSeconds": 150,
+      "hasFailure": true
+    },
+    "mission": {
+      "id": "mission",
+      "label": "Mission",
+      "description": "Complete the challenge to win!",
+      "icon": "🎯",
+      "hasFailure": true
+    },
+    "zen": {
+      "id": "zen",
+      "label": "Zen Practice",
+      "description": "Chill out — no failure, slower speed",
+      "icon": "🌊",
+      "speedMultiplier": 0.55,
+      "hasFailure": false,
+      "shieldDrain": false
+    }
+  },
+  "ageBands": [
+    {
+      "id": "age6_7",
+      "label": "Age 6–7 (Year 2–3)",
+      "emoji": "🌱",
+      "difficultyStart": 1,
+      "difficultyMax": 3,
+      "initialSpeed": 90,
+      "strandWeights": {
+        "number_add": 0.30,
+        "number_sub": 0.25,
+        "number_pattern": 0.15,
+        "money": 0.10,
+        "shape": 0.10,
+        "statistics": 0.10
+      }
+    },
+    {
+      "id": "age8_9",
+      "label": "Age 8–9 (Year 4–5)",
+      "emoji": "⭐",
+      "difficultyStart": 2,
+      "difficultyMax": 5,
+      "initialSpeed": 110,
+      "strandWeights": {
+        "number_add": 0.20,
+        "number_sub": 0.15,
+        "number_mul": 0.20,
+        "number_div": 0.10,
+        "fraction": 0.10,
+        "money": 0.10,
+        "time": 0.10,
+        "statistics": 0.05
+      }
+    },
+    {
+      "id": "age10_12",
+      "label": "Age 10–12 (Year 6–8)",
+      "emoji": "🔥",
+      "difficultyStart": 3,
+      "difficultyMax": 7,
+      "initialSpeed": 130,
+      "strandWeights": {
+        "number_mul": 0.15,
+        "number_div": 0.10,
+        "fraction": 0.15,
+        "decimal": 0.10,
+        "algebra": 0.15,
+        "money": 0.08,
+        "time": 0.07,
+        "geometry": 0.10,
+        "probability": 0.10
+      }
+    }
+  ],
+  "upgrades": {
+    "offeredCount": 3,
+    "maxPerCategory": 3
+  },
+  "audio": {
+    "masterVolume": 0.6,
+    "sfxVolume": 0.8,
+    "musicVolume": 0.4
+  },
+  "particles": {
+    "correctBlastCount": 18,
+    "wrongBlastCount": 8,
+    "feverParticleRate": 3
+  }
+}

@@ -1,0 +1,186 @@
+{
+  "version": "1.0.0",
+  "ships": [
+    {
+      "id": "scout",
+      "name": "Scout",
+      "description": "The classic starter ship — nimble and reliable",
+      "emoji": "🚀",
+      "color": "#00e5ff",
+      "trailColor": "#0077ff",
+      "unlockCondition": "default",
+      "unlockLabel": "Default Ship"
+    },
+    {
+      "id": "kiwi_cruiser",
+      "name": "Kiwi Cruiser",
+      "description": "A sturdy ship with NZ flair — silver fern markings",
+      "emoji": "🥝",
+      "color": "#b5e853",
+      "trailColor": "#4caf50",
+      "unlockCondition": { "type": "level", "value": 3 },
+      "unlockLabel": "Reach Level 3"
+    },
+    {
+      "id": "pohutukawa",
+      "name": "Pōhutukawa",
+      "description": "Blazes red like the NZ Christmas tree",
+      "emoji": "🌺",
+      "color": "#ff3d00",
+      "trailColor": "#ff6d00",
+      "unlockCondition": { "type": "correct_total", "value": 100 },
+      "unlockLabel": "Answer 100 correctly"
+    },
+    {
+      "id": "tui",
+      "name": "Tui Jet",
+      "description": "Iridescent blue-green like the native Tui bird",
+      "emoji": "🐦",
+      "color": "#1de9b6",
+      "trailColor": "#00b0ff",
+      "unlockCondition": { "type": "streak", "value": 10 },
+      "unlockLabel": "Get a 10-answer streak"
+    },
+    {
+      "id": "pounamu",
+      "name": "Pounamu",
+      "description": "Precious green like New Zealand jade",
+      "emoji": "💚",
+      "color": "#00c853",
+      "trailColor": "#69f0ae",
+      "unlockCondition": { "type": "level", "value": 7 },
+      "unlockLabel": "Reach Level 7"
+    },
+    {
+      "id": "star_blazer",
+      "name": "Star Blazer",
+      "description": "Golden champion ship — for the top mathematician",
+      "emoji": "⭐",
+      "color": "#ffd600",
+      "trailColor": "#ff6f00",
+      "unlockCondition": { "type": "level", "value": 12 },
+      "unlockLabel": "Reach Level 12"
+    },
+    {
+      "id": "rainbow_rider",
+      "name": "Rainbow Rider",
+      "description": "All the colours of Aotearoa's skies",
+      "emoji": "🌈",
+      "color": "#e040fb",
+      "trailColor": "#7c4dff",
+      "unlockCondition": { "type": "fever_total", "value": 5 },
+      "unlockLabel": "Trigger Fever Mode 5 times"
+    },
+    {
+      "id": "taniwha",
+      "name": "Taniwha",
+      "description": "Mythical guardian of the waters — fearsome and fast",
+      "emoji": "🐉",
+      "color": "#aa00ff",
+      "trailColor": "#d500f9",
+      "unlockCondition": { "type": "correct_total", "value": 500 },
+      "unlockLabel": "Answer 500 correctly"
+    }
+  ],
+  "trails": [
+    {
+      "id": "sparks",
+      "name": "Sparks",
+      "description": "Electric sparks trail behind you",
+      "unlockCondition": "default"
+    },
+    {
+      "id": "bubbles",
+      "name": "Bubbles",
+      "description": "Soft glowing orbs",
+      "unlockCondition": { "type": "level", "value": 4 }
+    },
+    {
+      "id": "stars",
+      "name": "Stardust",
+      "description": "Leave a trail of stars across the cosmos",
+      "unlockCondition": { "type": "level", "value": 8 }
+    },
+    {
+      "id": "rainbow",
+      "name": "Rainbow Blast",
+      "description": "Full spectrum rainbow trail",
+      "unlockCondition": { "type": "correct_total", "value": 250 }
+    },
+    {
+      "id": "fire",
+      "name": "Afterburner",
+      "description": "Blazing fire trail — you're on fire!",
+      "unlockCondition": { "type": "fever_total", "value": 10 }
+    }
+  ],
+  "pets": [
+    {
+      "id": "none",
+      "name": "No Pet",
+      "emoji": "",
+      "description": "Flying solo",
+      "unlockCondition": "default"
+    },
+    {
+      "id": "kiwi",
+      "name": "Kiwi Buddy",
+      "emoji": "🥝",
+      "description": "A little kiwi flutters alongside your ship",
+      "unlockCondition": { "type": "level", "value": 2 }
+    },
+    {
+      "id": "penguin",
+      "name": "Penguin Pal",
+      "emoji": "🐧",
+      "description": "A little penguin co-pilot",
+      "unlockCondition": { "type": "correct_total", "value": 50 }
+    },
+    {
+      "id": "tuatara",
+      "name": "Tuatara Copilot",
+      "emoji": "🦎",
+      "description": "Ancient and wise — helps you stay calm under pressure",
+      "unlockCondition": { "type": "level", "value": 6 }
+    },
+    {
+      "id": "whale",
+      "name": "Tohorā",
+      "emoji": "🐋",
+      "description": "A tiny whale soars through space beside you",
+      "unlockCondition": { "type": "streak", "value": 20 }
+    }
+  ],
+  "stickers": [
+    {
+      "id": "star",
+      "name": "Gold Star",
+      "emoji": "⭐",
+      "unlockCondition": { "type": "correct_total", "value": 10 }
+    },
+    {
+      "id": "fire",
+      "name": "On Fire",
+      "emoji": "🔥",
+      "unlockCondition": { "type": "fever_total", "value": 1 }
+    },
+    {
+      "id": "trophy",
+      "name": "Champion",
+      "emoji": "🏆",
+      "unlockCondition": { "type": "level", "value": 10 }
+    },
+    {
+      "id": "koru",
+      "name": "Koru",
+      "emoji": "🌀",
+      "unlockCondition": { "type": "correct_total", "value": 200 }
+    },
+    {
+      "id": "silver_fern",
+      "name": "Silver Fern",
+      "emoji": "🍃",
+      "unlockCondition": { "type": "level", "value": 5 }
+    }
+  ]
+}

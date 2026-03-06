@@ -1,0 +1,148 @@
+{
+  "version": "1.0.0",
+  "missions": [
+    {
+      "id": "first_flight",
+      "title": "First Flight",
+      "description": "Answer 10 questions correctly",
+      "icon": "🚀",
+      "difficulty": "easy",
+      "ageBands": ["age6_7", "age8_9", "age10_12"],
+      "goal": { "type": "correct_answers", "target": 10 },
+      "rewards": { "xp": 50, "coins": 20, "unlocks": null },
+      "order": 1
+    },
+    {
+      "id": "lucky_streak",
+      "title": "Lucky Streak",
+      "description": "Get 5 correct answers in a row",
+      "icon": "🔥",
+      "difficulty": "easy",
+      "ageBands": ["age6_7", "age8_9", "age10_12"],
+      "goal": { "type": "streak", "target": 5 },
+      "rewards": { "xp": 80, "coins": 30, "unlocks": null },
+      "order": 2
+    },
+    {
+      "id": "coin_collector",
+      "title": "Coin Collector",
+      "description": "Collect 100 coins in a single run",
+      "icon": "🪙",
+      "difficulty": "easy",
+      "ageBands": ["age6_7", "age8_9", "age10_12"],
+      "goal": { "type": "coins_in_run", "target": 100 },
+      "rewards": { "xp": 60, "coins": 40, "unlocks": null },
+      "order": 3
+    },
+    {
+      "id": "hot_streak",
+      "title": "Hot Streak",
+      "description": "Get 10 correct answers in a row",
+      "icon": "🌡️",
+      "difficulty": "medium",
+      "ageBands": ["age6_7", "age8_9", "age10_12"],
+      "goal": { "type": "streak", "target": 10 },
+      "rewards": { "xp": 150, "coins": 60, "unlocks": "tui_ship" },
+      "order": 4
+    },
+    {
+      "id": "fever_mode",
+      "title": "Fever Activated!",
+      "description": "Trigger Fever Mode",
+      "icon": "🌡️",
+      "difficulty": "medium",
+      "ageBands": ["age6_7", "age8_9", "age10_12"],
+      "goal": { "type": "fever_triggers", "target": 1 },
+      "rewards": { "xp": 120, "coins": 50, "unlocks": null },
+      "order": 5
+    },
+    {
+      "id": "century",
+      "title": "Century Club",
+      "description": "Answer 100 questions correctly in total",
+      "icon": "💯",
+      "difficulty": "medium",
+      "ageBands": ["age6_7", "age8_9", "age10_12"],
+      "goal": { "type": "correct_total", "target": 100 },
+      "rewards": { "xp": 300, "coins": 100, "unlocks": "pohutukawa_ship" },
+      "order": 6
+    },
+    {
+      "id": "math_blitz",
+      "title": "Math Blitz",
+      "description": "Answer 20 questions correctly in a single run",
+      "icon": "⚡",
+      "difficulty": "medium",
+      "ageBands": ["age8_9", "age10_12"],
+      "goal": { "type": "correct_in_run", "target": 20 },
+      "rewards": { "xp": 200, "coins": 80, "unlocks": null },
+      "order": 7
+    },
+    {
+      "id": "number_master",
+      "title": "Number Master",
+      "description": "Answer 10 number strand questions correctly in a run",
+      "icon": "🔢",
+      "difficulty": "medium",
+      "ageBands": ["age8_9", "age10_12"],
+      "goal": { "type": "strand_correct_in_run", "strand": "number", "target": 10 },
+      "rewards": { "xp": 180, "coins": 70, "unlocks": null },
+      "order": 8
+    },
+    {
+      "id": "money_savvy",
+      "title": "Money Savvy",
+      "description": "Answer 10 NZ money questions correctly",
+      "icon": "💰",
+      "difficulty": "medium",
+      "ageBands": ["age6_7", "age8_9", "age10_12"],
+      "goal": { "type": "type_correct", "questionType": "money", "target": 10 },
+      "rewards": { "xp": 160, "coins": 90, "unlocks": null },
+      "order": 9
+    },
+    {
+      "id": "double_fever",
+      "title": "Double Fever",
+      "description": "Trigger Fever Mode twice in one run",
+      "icon": "🔥🔥",
+      "difficulty": "hard",
+      "ageBands": ["age8_9", "age10_12"],
+      "goal": { "type": "fever_in_run", "target": 2 },
+      "rewards": { "xp": 350, "coins": 120, "unlocks": "rainbow_rider_ship" },
+      "order": 10
+    },
+    {
+      "id": "level_5_challenge",
+      "title": "Level 5 Champion",
+      "description": "Reach Game Level 5 in a single run",
+      "icon": "🏅",
+      "difficulty": "hard",
+      "ageBands": ["age8_9", "age10_12"],
+      "goal": { "type": "reach_level", "target": 5 },
+      "rewards": { "xp": 400, "coins": 150, "unlocks": "pounamu_ship" },
+      "order": 11
+    },
+    {
+      "id": "algebra_ace",
+      "title": "Algebra Ace",
+      "description": "Answer 15 algebra questions correctly",
+      "icon": "🔡",
+      "difficulty": "hard",
+      "ageBands": ["age8_9", "age10_12"],
+      "goal": { "type": "type_correct", "questionType": "algebra", "target": 15 },
+      "rewards": { "xp": 300, "coins": 110, "unlocks": null },
+      "order": 12
+    },
+    {
+      "id": "survival_expert",
+      "title": "Survival Expert",
+      "description": "Keep your shield above 75% for 30 questions",
+      "icon": "🛡️",
+      "difficulty": "hard",
+      "ageBands": ["age8_9", "age10_12"],
+      "goal": { "type": "shield_above", "threshold": 75, "count": 30 },
+      "rewards": { "xp": 500, "coins": 200, "unlocks": "star_blazer_ship" },
+      "order": 13
+    }
+  ]
+}

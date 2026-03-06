@@ -1,0 +1,167 @@
+{
+  "version": "1.0.0",
+  "upgrades": [
+    {
+      "id": "shield_boost",
+      "category": "survival",
+      "name": "Reinforced Shield",
+      "icon": "🛡️",
+      "description": "Increase max shield capacity by 20%",
+      "effect": { "type": "shield_max", "multiplier": 1.20 },
+      "maxLevel": 3,
+      "levelDescriptions": [
+        "+20% max shield",
+        "+44% max shield total",
+        "+73% max shield total"
+      ],
+      "unlockAtGameLevel": 1
+    },
+    {
+      "id": "shield_regen",
+      "category": "survival",
+      "name": "Shield Regen+",
+      "icon": "💚",
+      "description": "Recharge more shield per correct answer",
+      "effect": { "type": "shield_recharge", "addPerCorrect": 6 },
+      "maxLevel": 3,
+      "levelDescriptions": [
+        "+6 shield per correct answer",
+        "+12 shield per correct answer",
+        "+18 shield per correct answer"
+      ],
+      "unlockAtGameLevel": 1
+    },
+    {
+      "id": "second_chance",
+      "category": "survival",
+      "name": "Second Chance",
+      "icon": "🍀",
+      "description": "Ignore one wrong answer per run — no shield damage once",
+      "effect": { "type": "second_chance", "charges": 1 },
+      "maxLevel": 3,
+      "levelDescriptions": [
+        "1 free wrong answer per run",
+        "2 free wrong answers per run",
+        "3 free wrong answers per run"
+      ],
+      "unlockAtGameLevel": 2
+    },
+    {
+      "id": "slow_drain",
+      "category": "survival",
+      "name": "Shield Insulator",
+      "icon": "⏳",
+      "description": "Shield drains 15% slower over time",
+      "effect": { "type": "drain_multiplier", "multiplier": 0.85 },
+      "maxLevel": 3,
+      "levelDescriptions": [
+        "Shield drains 15% slower",
+        "Shield drains 30% slower",
+        "Shield drains 40% slower"
+      ],
+      "unlockAtGameLevel": 3
+    },
+    {
+      "id": "combo_decay",
+      "category": "speed_score",
+      "name": "Combo Lock",
+      "icon": "🔗",
+      "description": "Combo meter decays more slowly",
+      "effect": { "type": "combo_decay_multiplier", "multiplier": 0.7 },
+      "maxLevel": 3,
+      "levelDescriptions": [
+        "Combo decays 30% slower",
+        "Combo decays 50% slower",
+        "Combo decays 70% slower"
+      ],
+      "unlockAtGameLevel": 1
+    },
+    {
+      "id": "xp_boost",
+      "category": "speed_score",
+      "name": "XP Overdrive",
+      "icon": "⚡",
+      "description": "Earn 25% more XP for each correct answer",
+      "effect": { "type": "xp_multiplier", "multiplier": 1.25 },
+      "maxLevel": 3,
+      "levelDescriptions": [
+        "+25% XP per correct",
+        "+56% XP per correct",
+        "+95% XP per correct"
+      ],
+      "unlockAtGameLevel": 2
+    },
+    {
+      "id": "coin_magnet",
+      "category": "speed_score",
+      "name": "Coin Magnet",
+      "icon": "🧲",
+      "description": "Earn +3 bonus coins per correct answer",
+      "effect": { "type": "bonus_coins", "perCorrect": 3 },
+      "maxLevel": 3,
+      "levelDescriptions": [
+        "+3 coins per correct answer",
+        "+6 coins per correct answer",
+        "+10 coins per correct answer"
+      ],
+      "unlockAtGameLevel": 1
+    },
+    {
+      "id": "tap_speed",
+      "category": "speed_score",
+      "name": "Quick Tap",
+      "icon": "👆",
+      "description": "Reduce tap cooldown so you can answer faster",
+      "effect": { "type": "tap_cooldown", "multiplier": 0.75 },
+      "maxLevel": 2,
+      "levelDescriptions": [
+        "25% faster tap cooldown",
+        "50% faster tap cooldown"
+      ],
+      "unlockAtGameLevel": 3
+    },
+    {
+      "id": "eliminate_wrong",
+      "category": "math_helper",
+      "name": "Eliminate!",
+      "icon": "❌",
+      "description": "Once every 8 questions, one wrong option dims out",
+      "effect": { "type": "eliminate_one", "everyN": 8 },
+      "maxLevel": 3,
+      "levelDescriptions": [
+        "Eliminate one wrong answer every 8 questions",
+        "Eliminate one wrong answer every 5 questions",
+        "Eliminate one wrong answer every 3 questions"
+      ],
+      "unlockAtGameLevel": 1
+    },
+    {
+      "id": "slow_time",
+      "category": "math_helper",
+      "name": "Time Warp",
+      "icon": "🌀",
+      "description": "After 3 correct in a row, meteors slow for 2 sec",
+      "effect": { "type": "slow_on_streak", "streakNeeded": 3, "duration": 2, "speedMultiplier": 0.5 },
+      "maxLevel": 3,
+      "levelDescriptions": [
+        "Slow meteors for 2s after 3-streak",
+        "Slow meteors for 3s after 3-streak",
+        "Slow meteors for 3s after 2-streak"
+      ],
+      "unlockAtGameLevel": 2
+    },
+    {
+      "id": "place_value_hint",
+      "category": "math_helper",
+      "name": "Place Value Lens",
+      "icon": "🔍",
+      "description": "Highlights tens and ones digits in colour for 2-digit questions",
+      "effect": { "type": "place_value_highlight", "active": true },
+      "maxLevel": 1,
+      "levelDescriptions": [
+        "Highlight tens/ones on 2-digit questions"
+      ],
+      "unlockAtGameLevel": 1
+    }
+  ]
+}
