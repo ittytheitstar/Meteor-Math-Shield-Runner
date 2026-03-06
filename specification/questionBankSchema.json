@@ -1,0 +1,38 @@
+{
+  "id": "number_addition_within_100",
+  "strand": "number",
+  "topic": "operations_addition",
+  "ageBand": ["age6_7", "age8_9"],
+  "difficulty": {
+    "min": 1,
+    "max": 4,
+    "steps": [
+      { "level": 1, "rangeA": [0, 20], "rangeB": [0, 20], "carry": false },
+      { "level": 2, "rangeA": [0, 50], "rangeB": [0, 50], "carry": false },
+      { "level": 3, "rangeA": [10, 99], "rangeB": [10, 99], "carry": true },
+      { "level": 4, "rangeA": [0, 999], "rangeB": [0, 999], "carry": true }
+    ]
+  },
+  "prompt": {
+    "template": "{a} + {b} = ?",
+    "display": { "supports": ["ten_frame_optional", "number_line_optional"] }
+  },
+  "answer": {
+    "type": "integer",
+    "compute": "a + b",
+    "tolerance": 0
+  },
+  "distractors": {
+    "rules": [
+      { "type": "near_miss", "compute": "a + b + choice([-1, 1, -2, 2])" },
+      { "type": "misconception", "compute": "abs(a - b)" },
+      { "type": "place_value_error", "when": "carry==true", "compute": "(a + b) - 10" }
+    ]
+  },
+  "constraints": {
+    "noNegativeAnswers": true,
+    "uniqueOptions": true
+  },
+  "scoringTags": ["fluency", "mental_math"]
+}
+``
