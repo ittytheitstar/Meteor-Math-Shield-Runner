@@ -1896,7 +1896,7 @@ function drawBullet() {
   ctx.restore();
 }
 
-
+function drawShip() {
   const x = gs.shipX;
   const y = SHIP_Y;
   const w = SHIP_W;
