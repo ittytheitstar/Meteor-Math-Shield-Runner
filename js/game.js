@@ -1199,15 +1199,57 @@ function checkMissionComplete(mission, mp) {
 }
 
 // ============================================================
+// PROFILE SYSTEM
+// ============================================================
+const PROFILE_ICONS = [
+  '🦊','🐺','🦁','🐯','🐸','🦋',
+  '🐬','🦄','🐧','🦅','🐉','🌟',
+  '🔥','⭐','🌈','🚀','🌺','🥝',
+  '🐙','🦖','🐨','🦩','🎮','🏆'
+];
+
+function loadProfiles() {
+  try { return JSON.parse(localStorage.getItem('mmsr_profiles') || '[]'); }
+  catch { return []; }
+}
+
+function saveProfiles(profiles) {
+  try { localStorage.setItem('mmsr_profiles', JSON.stringify(profiles)); } catch {}
+}
+
+function getActiveProfileId() {
+  return localStorage.getItem('mmsr_active_profile') || null;
+}
+
+function setActiveProfileId(id) {
+  if (id === null) {
+    localStorage.removeItem('mmsr_active_profile');
+  } else {
+    localStorage.setItem('mmsr_active_profile', String(id));
+  }
+}
+
+function getActiveProfile() {
+  const id = getActiveProfileId();
+  if (!id) return null;
+  return loadProfiles().find(p => p.id === id) || null;
+}
+
+function getStatsKey() {
+  const id = getActiveProfileId();
+  return id ? `mmsr_stats_${id}` : 'mmsr_stats';
+}
+
+// ============================================================
 // PERSISTENCE
 // ============================================================
 function loadStats() {
-  try { return JSON.parse(localStorage.getItem('mmsr_stats') || '{}'); }
+  try { return JSON.parse(localStorage.getItem(getStatsKey()) || '{}'); }
   catch { return {}; }
 }
 
 function saveStats(s) {
-  try { localStorage.setItem('mmsr_stats', JSON.stringify(s)); } catch { }
+  try { localStorage.setItem(getStatsKey(), JSON.stringify(s)); } catch { }
 }
 
 // ============================================================
@@ -1219,7 +1261,9 @@ function getTodayDateNum() {
 }
 
 function getDailyKey() {
-  return 'mmsr_daily_' + getTodayDateNum();
+  const id = getActiveProfileId();
+  const dateNum = getTodayDateNum();
+  return id ? `mmsr_daily_${id}_${dateNum}` : `mmsr_daily_${dateNum}`;
 }
 
 function getDailyResult() {
@@ -1911,7 +1955,8 @@ function hideTip() {
 const ALL_SCREENS = [
   'screen-landing', 'screen-age', 'screen-mode',
   'screen-gameover', 'screen-results',
-  'screen-missions', 'screen-upgrades', 'screen-cosmetics', 'screen-stats'
+  'screen-missions', 'screen-upgrades', 'screen-cosmetics', 'screen-stats',
+  'screen-profiles'
 ];
 
 function showScreen(id) {
@@ -1981,6 +2026,13 @@ function updateLanding() {
     parts.push(`<span class="daily-badge">📅 Daily available!</span>`);
   }
   el.innerHTML = parts.join('  &middot;  ');
+
+  // Update profile indicator
+  const profile = getActiveProfile();
+  const iconEl = document.getElementById('profile-landing-icon');
+  const nameEl = document.getElementById('profile-landing-name');
+  if (iconEl) iconEl.textContent = profile ? profile.icon : '👤';
+  if (nameEl) nameEl.textContent = profile ? profile.name : 'Guest';
 }
 
 // ============================================================
@@ -2321,6 +2373,329 @@ function resizeCanvas() {
 }
 
 // ============================================================
+// PROFILE SCREEN
+// ============================================================
+function showProfilesScreen() {
+  renderProfilesList();
+  showScreen('screen-profiles');
+}
+
+function renderProfilesList() {
+  const container = document.getElementById('profiles-list');
+  if (!container) return;
+  const profiles = loadProfiles();
+  const activeId = getActiveProfileId();
+
+  container.innerHTML = '';
+
+  // Guest card
+  const guestCard = document.createElement('div');
+  guestCard.className = `profile-card profile-card-guest${!activeId ? ' active' : ''}`;
+  guestCard.innerHTML = `
+    <div class="profile-card-icon">👤</div>
+    <div class="profile-card-name">Guest</div>
+    <div class="profile-card-sub">${!activeId ? '✅ Active' : 'Play without saving to a profile'}</div>
+  `;
+  guestCard.addEventListener('click', () => switchToGuest());
+  container.appendChild(guestCard);
+
+  // Named profile cards
+  profiles.forEach(profile => {
+    const isActive = profile.id === activeId;
+    const card = document.createElement('div');
+    card.className = `profile-card${isActive ? ' active' : ''}`;
+    card.innerHTML = `
+      <button class="profile-card-edit" data-id="${profile.id}" title="Edit profile" aria-label="Edit ${profile.name}">✏️</button>
+      <div class="profile-card-icon">${profile.icon}</div>
+      <div class="profile-card-name">${profile.name}</div>
+      <div class="profile-card-sub">${isActive ? '✅ Active' : (profile.passcode ? '🔒 Has passcode' : 'Tap to switch')}</div>
+    `;
+    card.querySelector('.profile-card-edit').addEventListener('click', e => {
+      e.stopPropagation();
+      showProfileCreateOverlay(profile.id);
+    });
+    card.addEventListener('click', e => {
+      if (e.target.closest('.profile-card-edit')) return;
+      if (isActive) return;
+      if (profile.passcode) {
+        showPasscodeOverlay(profile.id);
+      } else {
+        activateProfile(profile.id);
+      }
+    });
+    container.appendChild(card);
+  });
+}
+
+function switchToGuest() {
+  setActiveProfileId(null);
+  showScreen('screen-landing');
+  updateLanding();
+}
+
+function activateProfile(profileId) {
+  setActiveProfileId(profileId);
+  hidePasscodeOverlay();
+  showScreen('screen-landing');
+  updateLanding();
+}
+
+// ============================================================
+// PROFILE CREATE / EDIT OVERLAY
+// ============================================================
+let _editingProfileId = null;
+let _selectedIcon = PROFILE_ICONS[0];
+
+function showProfileCreateOverlay(profileId) {
+  _editingProfileId = profileId || null;
+  const profiles = loadProfiles();
+  const existing = profileId ? profiles.find(p => p.id === profileId) : null;
+
+  _selectedIcon = existing ? existing.icon : PROFILE_ICONS[0];
+
+  // Populate modal
+  const titleEl = document.getElementById('profile-modal-title');
+  if (titleEl) titleEl.textContent = existing ? 'Edit Profile' : 'New Profile';
+
+  const previewEl = document.getElementById('profile-icon-preview');
+  if (previewEl) previewEl.textContent = _selectedIcon;
+
+  const nameInput = document.getElementById('profile-name-input');
+  if (nameInput) nameInput.value = existing ? existing.name : '';
+
+  const pinInput = document.getElementById('profile-pin-input');
+  if (pinInput) pinInput.value = '';
+
+  const deleteBtn = document.getElementById('profile-delete-btn');
+  if (deleteBtn) deleteBtn.classList.toggle('hidden', !existing);
+
+  // Build icon grid
+  const grid = document.getElementById('profile-icon-grid');
+  if (grid) {
+    grid.innerHTML = '';
+    PROFILE_ICONS.forEach(icon => {
+      const btn = document.createElement('button');
+      btn.className = `profile-icon-option${icon === _selectedIcon ? ' selected' : ''}`;
+      btn.textContent = icon;
+      btn.type = 'button';
+      btn.addEventListener('click', () => {
+        _selectedIcon = icon;
+        grid.querySelectorAll('.profile-icon-option').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        if (previewEl) previewEl.textContent = icon;
+      });
+      grid.appendChild(btn);
+    });
+  }
+
+  const overlay = document.getElementById('profile-overlay');
+  if (overlay) overlay.classList.remove('hidden');
+}
+
+function hideProfileCreateOverlay() {
+  const overlay = document.getElementById('profile-overlay');
+  if (overlay) overlay.classList.add('hidden');
+}
+
+function saveProfileFromOverlay() {
+  const nameInput = document.getElementById('profile-name-input');
+  const pinInput  = document.getElementById('profile-pin-input');
+  const name = (nameInput ? nameInput.value.trim() : '') || 'Player';
+  const pin  = pinInput ? pinInput.value.trim() : '';
+
+  // Validate PIN: must be exactly 4 digits or empty
+  if (pin && !/^\d{4}$/.test(pin)) {
+    if (pinInput) {
+      pinInput.style.borderColor = 'var(--red)';
+      setTimeout(() => { pinInput.style.borderColor = ''; }, 1200);
+    }
+    return;
+  }
+
+  const profiles = loadProfiles();
+
+  if (_editingProfileId) {
+    // Edit existing
+    const idx = profiles.findIndex(p => p.id === _editingProfileId);
+    if (idx !== -1) {
+      profiles[idx].name = name;
+      profiles[idx].icon = _selectedIcon;
+      if (pin) profiles[idx].passcode = pin; // else: passcode unchanged (empty field = keep existing)
+    }
+  } else {
+    // Create new profile — use crypto.randomUUID when available, fall back to timestamp+random
+    const id = 'p_' + (
+      typeof crypto !== 'undefined' && crypto.randomUUID
+        ? crypto.randomUUID().replace(/-/g, '').slice(0, 16)
+        : Date.now().toString(36) + Math.random().toString(36).slice(2, 8)
+    );
+    profiles.push({ id, name, icon: _selectedIcon, passcode: pin || '' });
+  }
+
+  saveProfiles(profiles);
+  hideProfileCreateOverlay();
+  renderProfilesList();
+}
+
+function deleteProfile(profileId) {
+  if (!profileId) return;
+  const profiles = loadProfiles().filter(p => p.id !== profileId);
+  saveProfiles(profiles);
+  // Clear stats for this profile
+  try { localStorage.removeItem(`mmsr_stats_${profileId}`); } catch {}
+  // If this was the active profile, switch to guest
+  if (getActiveProfileId() === profileId) {
+    setActiveProfileId(null);
+  }
+  hideProfileCreateOverlay();
+  renderProfilesList();
+}
+
+// ============================================================
+// PASSCODE OVERLAY
+// ============================================================
+let _passcodeProfileId = null;
+let _passcodeBuffer = '';
+
+function showPasscodeOverlay(profileId) {
+  _passcodeProfileId = profileId;
+  _passcodeBuffer = '';
+
+  const profiles = loadProfiles();
+  const profile = profiles.find(p => p.id === profileId);
+  if (!profile) return;
+
+  const iconEl = document.getElementById('passcode-profile-icon');
+  const nameEl = document.getElementById('passcode-profile-name');
+  if (iconEl) iconEl.textContent = profile.icon;
+  if (nameEl) nameEl.textContent = profile.name;
+
+  updatePasscodeDots();
+  hidePasscodeError();
+
+  const overlay = document.getElementById('passcode-overlay');
+  if (overlay) overlay.classList.remove('hidden');
+}
+
+function hidePasscodeOverlay() {
+  const overlay = document.getElementById('passcode-overlay');
+  if (overlay) overlay.classList.add('hidden');
+  _passcodeBuffer = '';
+  _passcodeProfileId = null;
+}
+
+function updatePasscodeDots() {
+  const dots = document.querySelectorAll('#passcode-dots .passcode-dot');
+  dots.forEach((dot, i) => {
+    dot.classList.toggle('filled', i < _passcodeBuffer.length);
+  });
+}
+
+function hidePasscodeError() {
+  const el = document.getElementById('passcode-error');
+  if (el) el.classList.add('hidden');
+}
+
+function showPasscodeError() {
+  const el = document.getElementById('passcode-error');
+  if (el) { el.classList.remove('hidden'); }
+  // Shake dots
+  const dotsEl = document.getElementById('passcode-dots');
+  if (dotsEl) {
+    dotsEl.style.animation = 'none';
+    void dotsEl.offsetWidth; // reflow
+    dotsEl.style.animation = '';
+  }
+  _passcodeBuffer = '';
+  updatePasscodeDots();
+}
+
+function onPasscodeKey(digit) {
+  hidePasscodeError();
+  if (_passcodeBuffer.length >= 4) return;
+  _passcodeBuffer += digit;
+  updatePasscodeDots();
+  if (_passcodeBuffer.length === 4) {
+    verifyPasscode();
+  }
+}
+
+function onPasscodeBackspace() {
+  if (_passcodeBuffer.length > 0) {
+    _passcodeBuffer = _passcodeBuffer.slice(0, -1);
+    updatePasscodeDots();
+    hidePasscodeError();
+  }
+}
+
+function verifyPasscode() {
+  const profiles = loadProfiles();
+  const profile = profiles.find(p => p.id === _passcodeProfileId);
+  if (!profile) { hidePasscodeOverlay(); return; }
+
+  if (profile.passcode === _passcodeBuffer) {
+    activateProfile(_passcodeProfileId);
+  } else {
+    showPasscodeError();
+  }
+}
+
+function wireProfileButtons() {
+  // Landing profile button
+  const btnProfile = document.getElementById('btn-profile');
+  if (btnProfile) btnProfile.addEventListener('click', () => showProfilesScreen());
+
+  // Profile screen back
+  const profilesBack = document.getElementById('profiles-back');
+  if (profilesBack) profilesBack.addEventListener('click', () => { showScreen('screen-landing'); updateLanding(); });
+
+  // Add profile button
+  const btnAddProfile = document.getElementById('btn-add-profile');
+  if (btnAddProfile) btnAddProfile.addEventListener('click', () => showProfileCreateOverlay(null));
+
+  // Profile save button
+  const profileSaveBtn = document.getElementById('profile-save-btn');
+  if (profileSaveBtn) profileSaveBtn.addEventListener('click', () => saveProfileFromOverlay());
+
+  // Profile cancel button
+  const profileCancelBtn = document.getElementById('profile-cancel-btn');
+  if (profileCancelBtn) profileCancelBtn.addEventListener('click', () => hideProfileCreateOverlay());
+
+  // Profile delete button
+  const profileDeleteBtn = document.getElementById('profile-delete-btn');
+  if (profileDeleteBtn) {
+    profileDeleteBtn.addEventListener('click', () => {
+      if (_editingProfileId && confirm(`Delete this profile? All progress will be lost.`)) {
+        deleteProfile(_editingProfileId);
+        updateLanding();
+      }
+    });
+  }
+
+  // Passcode cancel
+  const passcodeCancelBtn = document.getElementById('passcode-cancel-btn');
+  if (passcodeCancelBtn) passcodeCancelBtn.addEventListener('click', () => hidePasscodeOverlay());
+
+  // Passcode backspace
+  const passcodeBackspaceBtn = document.getElementById('passcode-backspace-btn');
+  if (passcodeBackspaceBtn) passcodeBackspaceBtn.addEventListener('click', () => onPasscodeBackspace());
+
+  // Passcode digit keys
+  document.querySelectorAll('.passcode-key[data-key]').forEach(btn => {
+    btn.addEventListener('click', () => onPasscodeKey(btn.dataset.key));
+  });
+
+  // Keyboard support for passcode overlay
+  document.addEventListener('keydown', e => {
+    const overlay = document.getElementById('passcode-overlay');
+    if (!overlay || overlay.classList.contains('hidden')) return;
+    if (e.key >= '0' && e.key <= '9') onPasscodeKey(e.key);
+    if (e.key === 'Backspace') onPasscodeBackspace();
+    if (e.key === 'Escape') hidePasscodeOverlay();
+  });
+}
+
+// ============================================================
 // BUTTON WIRING
 // ============================================================
 function wireButtons() {
@@ -2430,6 +2805,8 @@ function wireButtons() {
 
   const btnShare = document.getElementById('btn-share');
   if (btnShare) btnShare.addEventListener('click', () => shareScore());
+
+  wireProfileButtons();
 }
 
 function startGame() {
